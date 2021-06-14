@@ -239,14 +239,14 @@
   \end{block}
 \end{frame}
 
-\section{A Single Qubit}
+\section{Single Qubit System}
 \begin{frame}
-  A Single Qubit
+  Single-Qubit System
 \end{frame}
 \subsection{Basis}
 \begin{frame}{Basis}
   {\tiny
-  A quantum system modeled as a two-dimensional complex vector space can be viewed as a qubit, denated as $\ket{\psi}$:
+    All possible states of a one-qubit (quantum) system is viewed as a two-dimensional complex vector space. One state can be denated as a vector $\ket{\psi}$ in this space:
   \begin{align*}
     \ket{\psi}&=\alpha\ket{0}+\beta\ket{1} \\
               &=\alpha\begin{bmatrix}1\\0\end{bmatrix}+\beta\begin{bmatrix}0\\1\end{bmatrix}
@@ -258,7 +258,7 @@
 \end{frame}
 
 \subsection{Bloch Sphere}
-\begin{frame}{Derivation of qubit state\tiny\cite{blochsphere}}
+\begin{frame}{State of Single-Qubit System\tiny\cite{blochsphere}}
   \framesubtitle{From 2-Dimensional Complex Vector Space to 3-Dimensional Real Space}
   {\tiny
   A single qubit can be written as:
@@ -291,7 +291,7 @@
   }%
 \end{frame}
 
-\begin{frame}{Derivation of qubit state\tiny\cite{blochsphere}}
+\begin{frame}{State of Single-Qubit System\tiny\cite{blochsphere}}
   \framesubtitle{Bloch Sphere}
   {\tiny
   Following is derived already:
@@ -315,7 +315,7 @@
   }%
 \end{frame}
 
-\begin{frame}{Special Qubit States on the Bloch Sphere}
+\begin{frame}{Special States on the Bloch Sphere}
   {\tiny
   $\ket{\psi} = \cos(\frac{\theta}2)\ket{0}+e^{i\phi}\sin(\frac{\theta}2)\ket{1}$, where $0\leqslant\theta\leqslant\pi$, $0\leqslant\phi\leqslant2\pi$.
   \begin{figure}
@@ -664,6 +664,49 @@
   }%
 \end{frame}
 
+\section{Multiple-Qubit System}
+\begin{frame}
+  Multiple-Qubit System
+\end{frame}
+
+\begin{frame}{State Space of 2-Qubit System}
+  {\tiny
+  All possible states of a single-qubit system is viewed as a two-dimensional complex vector space.\\
+  All possible states of a 2-qubit system is viewed as the tensor product $\otimes$ of two such vector spaces.
+  This tensor product is a vecor space as well. Its dimension is $2^2$.\\
+  Let $\mathbf{V}$ and $\mathbf{W}$ be two-dimensional complex vector spaces with
+  bases $A=\{\ket{\alpha_1}, \ket{\alpha_2}\}$ and $B=\{\ket{\beta_1}, \ket{\beta_2}\}$ respectively. \\
+  One basis of $\mathbf{V} \otimes \mathbf{W}$ is:
+  \begin{align*}
+    \{\ket\alpha_1 \otimes \ket\beta_1,
+       \ket\alpha_1 \otimes \ket\beta_2,
+       \ket\alpha_2 \otimes \ket\beta_1,
+       \ket\alpha_2 \otimes \ket\beta_2 \}
+  \end{align*}
+  With standard basis on both vector spaces, one basis of the tensor product is:
+  \begin{align*}
+    \{\ket0 \otimes \ket0, \ket0 \otimes \ket1, \ket1 \otimes \ket0, \ket1 \otimes \ket1 \}
+    &= \{\ket{00}, \ket{01}, \ket{10}, \ket{11} \} \\
+    &= \{
+      \begin{bmatrix} 1 \\ 0 \\ 0 \\ 0 \end{bmatrix},
+      \begin{bmatrix} 0 \\ 1 \\ 0 \\ 0 \end{bmatrix},
+      \begin{bmatrix} 0 \\ 0 \\ 1 \\ 0 \end{bmatrix},
+      \begin{bmatrix} 0 \\ 0 \\ 0 \\ 1 \end{bmatrix}
+    \}
+  \end{align*}
+  Examples: \\
+  Let state $\ket{v}=a_1\ket0 + a_2\ket1$ and state $\ket{w}=b_1\ket0 + b_2\ket1$, the tensor product of these two states is:
+  \begin{align*}
+  a_1b_1\ket{00} + a_1b_2\ket{01} + a_2b_1\ket{10} + a_2b_2\ket{11}
+  \end{align*}
+  Can you find $a_1$, $a_2$, $b_1$, and $b_2$ which satisfy following?
+  \begin{align*}
+  (a_1\ket0 + a_2\ket1) \otimes (b_1\ket0 + b_2\ket1) = \frac{1}{\sqrt2}(\ket{00} + \ket{11})
+  \end{align*}
+  It turns out that some states of 2-qubit quantum system cannot be described in terms of the state of two separate single-qubit systems.
+  These states stand for \textbf{entanglement} of the 2-qubit quantum system.
+  }%
+\end{frame}
 
 \begin{frame}
   Not give up yet.
