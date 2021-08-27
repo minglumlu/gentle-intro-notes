@@ -1,8 +1,10 @@
 \documentclass{beamer}
 \usepackage{animate}
 \usepackage{amsmath}
+\usepackage{amssymb}
 \usepackage{braket}
 \usepackage{caption}
+\usepackage{hyperref}
 \usepackage{subcaption}
 \usepackage[utf8]{inputenc}
 \usepackage{csquotes}
@@ -204,7 +206,7 @@
       \item Bob meansures the qubit by randomly picking a basis as well;
       \item through classical channel, Bob tells Alice that the qubit has been received;
       \item through classical channel, Bob and Alice exchange the bases they used;
-      \item if they same basis, the result bit by measuring the qubit is kept as one basis-matching bit;
+      \item if they are same basis, the result of measuring the qubit is kept as one basis-matching bit;
       \item else, the result is dropped;
       \item continue steps above until Bob and Alice have enough basis-matching bits;
       \item Bob and Alice agree to select half from those basis-matching bits, and exchange the values of these bits through classical channel;
@@ -227,7 +229,7 @@
   \setbeamerfont{block title}{size=\scriptsize}
   \begin{block}{Why there are unmatched values?}
     {\scriptsize
-      Because Eve doesn't know the basis Alice used to encode the qubit, she has to pick one basis \textbf{randomly} to encode/clone the qubit again. 
+      Because Eve doesn't know the basis Alice used to encode the qubit, she has to pick one basis \textbf{randomly} to encode/clone the qubit again.
       When Eve picked wrong basis, Bob's measurement would get unmatched value in \textbf{possibility}.
       \par
       Can you calculate the possibility exactly?
@@ -243,6 +245,7 @@
 \begin{frame}
   Single-Qubit System
 \end{frame}
+
 \subsection{Basis}
 \begin{frame}{Basis}
   {\tiny
@@ -269,7 +272,7 @@
                &= r_{\alpha}(\cos\phi_{\alpha} + i\,\sin\phi_{\alpha})\ket{0}+\beta\ket{1} \\
                &= r_{\alpha}e^{i\phi_{\alpha}}\ket{0} + r_{\beta}e^{i\phi_{\beta}}\ket{1}
     \\
-    e^{-i\phi_{\alpha}}\ket{\psi} &= r_{\alpha}\ket{0} + r_{\beta}e^{i\phi}\ket{1} \\
+    e^{-i\phi_{\alpha}}\ket{\psi} &= r_{\alpha}\ket{0} + r_{\beta}e^{i(\phi_{\beta} - \phi_{\alpha})}\ket{1} \\
                                   &= r_{\alpha}\ket{0} + (x+i\,y)\ket{1} \\
                                   &= \ket{\psi'}
   \end{align*}
@@ -386,8 +389,8 @@
                                                                        1 & 0 \\
                                                                        0 & 1
                                                                      \end{bmatrix}
-                  &&= e^{-i\frac{\alpha}2\mathbf{X}}
-                  &&= \cos\frac{\alpha}2\mathbf{I} - i\sin\frac{\alpha}2 \mathbf{X}
+                  &= e^{-i\frac{\alpha}2\mathbf{X}}
+                  &= \cos\frac{\alpha}2\mathbf{I} - i\sin\frac{\alpha}2 \mathbf{X}
                   &&=\begin{bmatrix}
                     \cos\frac{\alpha}2 & -i\sin\frac{\alpha}2 \\
                     -i\sin\frac{\alpha}2 & \cos\frac{\alpha}2
@@ -397,8 +400,8 @@
                                                                        0 & -i \\
                                                                        i & 0
                                                                      \end{bmatrix}
-                  &&= e^{-i\frac{\alpha}2\mathbf{Y}}
-                  &&= \cos\frac{\alpha}2\mathbf{I} - i\sin\frac{\alpha}2 \mathbf{Y}
+                  &= e^{-i\frac{\alpha}2\mathbf{Y}}
+                  &= \cos\frac{\alpha}2\mathbf{I} - i\sin\frac{\alpha}2 \mathbf{Y}
                   &&=\begin{bmatrix}
                     \cos\frac{\alpha}2 & -\sin\frac{\alpha}2 \\
                     \sin\frac{\alpha}2 & \cos\frac{\alpha}2
@@ -406,10 +409,10 @@
       R_z(\alpha) &\equiv \cos\frac{\alpha}2\mathbf{I} - i\sin\frac{\alpha}2
                                                                      \begin{bmatrix}
                                                                        1 & 0 \\
-                                                                       0 & -1 
+                                                                       0 & -1
                                                                      \end{bmatrix}
-                  &&= e^{-i\frac{\alpha}2\mathbf{Z}}
-                  &&= \cos\frac{\alpha}2\mathbf{I} - i\sin\frac{\alpha}2 \mathbf{Z}
+                  &= e^{-i\frac{\alpha}2\mathbf{Z}}
+                  &= \cos\frac{\alpha}2\mathbf{I} - i\sin\frac{\alpha}2 \mathbf{Z}
                   &&=\begin{bmatrix}
                     e^{-i\frac{\alpha}2} & 0 \\
                     0 & e^{i\frac{\alpha}2}
@@ -433,7 +436,7 @@
                               \end{bmatrix} \\
                           &= \begin{bmatrix}
                                e^{-i\frac{\alpha}2}\cos{\frac{\theta}2} \\
-                               e^{i\frac{\alpha}2}\sin{\frac{\theta}2} 
+                               e^{i\frac{\alpha}2}\sin{\frac{\theta}2}
                              \end{bmatrix} \\
      e^{i\frac{\alpha}2}R_z(\alpha)\ket{\psi}
                           &= \begin{bmatrix}
@@ -460,7 +463,7 @@
 
 \begin{frame}{The Density Operator\tiny\cite{rotationsonblochsphere}}
   {\tiny
-  Another representation of a qubit $\ket{\psi}$:
+  Another representation of a qubit state $\ket{\psi}$:
     \begin{align*}
       \rho &= \ket{\psi} \otimes \bra{\psi} = \ket{\psi} \otimes \ket{\psi}^{\dagger} \\
            &= \begin{bmatrix}
@@ -501,7 +504,7 @@
                 \cos\theta
                 \begin{bmatrix}
                   1 & 0 \\
-                  0 & -1 
+                  0 & -1
                 \end{bmatrix}
               \end{pmatrix} \\
             &= \frac{1}2(\mathbf{I} + \mathbf{X}\cos\phi\sin\theta + \mathbf{Y}\sin\phi\sin\theta + \mathbf{Z}\cos\theta) \\
@@ -521,7 +524,7 @@
             &= R_z(\alpha)(\ket{\psi} \otimes \bra{\psi})R_z(\alpha)^{\dagger} \\
             &= R_z(\alpha) \rho R_z(\alpha)^{\dagger} \\
             &= \frac{1}2(\mathbf{I}  + r_x R_z(\alpha) \mathbf{X} R_z(\alpha)^{\dagger}
-                                     + r_y R_z(\alpha) \mathbf{Y} R_z(\alpha)^{\dagger} 
+                                     + r_y R_z(\alpha) \mathbf{Y} R_z(\alpha)^{\dagger}
                                      + r_z R_z(\alpha) \mathbf{Z} R_z(\alpha)^{\dagger} \\
       \\
       R_z(\alpha) \mathbf{X} R_z(\alpha)^{\dagger}
@@ -574,7 +577,7 @@
     \begin{align*}
       \rho' &= R_x(\alpha) \rho R_x(\alpha)^{\dagger} \\
             &= \frac{1}2(\mathbf{I}  + r_x R_x(\alpha) \mathbf{X} R_x(\alpha)^{\dagger}
-                                     + r_y R_x(\alpha) \mathbf{Y} R_x(\alpha)^{\dagger} 
+                                     + r_y R_x(\alpha) \mathbf{Y} R_x(\alpha)^{\dagger}
                                      + r_z R_x(\alpha) \mathbf{Z} R_x(\alpha)^{\dagger} \\
       \\
       R_x(\alpha) \mathbf{X} R_x(\alpha)^{\dagger}
@@ -620,7 +623,7 @@
     \begin{align*}
       \rho' &= R_y(\alpha) \rho R_y(\alpha)^{\dagger} \\
             &= \frac{1}2(\mathbf{I}  + r_x R_y(\alpha) \mathbf{X} R_y(\alpha)^{\dagger}
-                                     + r_y R_y(\alpha) \mathbf{Y} R_y(\alpha)^{\dagger} 
+                                     + r_y R_y(\alpha) \mathbf{Y} R_y(\alpha)^{\dagger}
                                      + r_z R_y(\alpha) \mathbf{Z} R_y(\alpha)^{\dagger} \\
       \\
       R_y(\alpha) \mathbf{X} R_y(\alpha)^{\dagger}
@@ -669,10 +672,51 @@
   Multiple-Qubit System
 \end{frame}
 
+\subsection{Tensor Product}
+\begin{frame}{Tensor Product}
+  {\tiny
+    If A is a $m \times n$ matrix and B a $m' \times n'$ matrix, then their tensor product $\otimes$ is a $mm' \times nn'$ matrix
+    \begin{align*}
+      A \otimes B = \begin{bmatrix}
+                      A_{11}B & \dots & A_{1n}B \\
+                      A_{21}B & \dots & A_{2n}B \\
+                              & \ddots &        \\
+                      A_{m1}B & \dots & A_{mn}B \\
+                    \end{bmatrix}
+    \end{align*}
+    Examples:
+    \begin{align*}
+      \begin{bmatrix} 1 \\ 0 \end{bmatrix} \otimes \begin{bmatrix} 1 \\ 0 \end{bmatrix} &=
+          \begin{bmatrix}
+            1 \begin{bmatrix} 1 \\ 0 \end{bmatrix} \\
+            \\
+            0 \begin{bmatrix} 1 \\ 0 \end{bmatrix}
+          \end{bmatrix}
+          = \begin{bmatrix} 1 \\ 0 \\ 0 \\ 0 \end{bmatrix} \\
+      \begin{bmatrix} 1 \\ 0 \end{bmatrix} \begin{bmatrix} 1 & 0 \end{bmatrix} &= \begin{bmatrix}
+                                                                                    1 & 0 \\
+                                                                                    0 & 0
+                                                                                  \end{bmatrix} \\
+      \begin{bmatrix} 1 \\ 0 \end{bmatrix} \otimes \begin{bmatrix} 0 \\ 1 \\ 0 \\ 0 \end{bmatrix} &=
+          \begin{bmatrix}
+            1 \begin{bmatrix} 0 \\ 1 \\ 0 \\ 0 \end{bmatrix} \\
+            \\
+            0 \begin{bmatrix} 0 \\ 1 \\ 0 \\ 0 \end{bmatrix}
+          \end{bmatrix}
+          = \begin{bmatrix} 0 \\ 1 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \end{bmatrix} \\
+      \begin{bmatrix} 1 \\ 0 \end{bmatrix} \begin{bmatrix} 0 & 1 & 0 & 0 \end{bmatrix} &= \begin{bmatrix}
+                                                                                            0 & 1 & 0 & 0\\
+                                                                                            0 & 0 & 0 & 0
+                                                                                          \end{bmatrix}
+    \end{align*}
+  }%
+\end{frame}
+
+\subsection{State Space of Qubit System}
 \begin{frame}{State Space of 2-Qubit System}
   {\tiny
-  All possible states of a single-qubit system is viewed as a two-dimensional complex vector space.\\
-  All possible states of a 2-qubit system is viewed as the tensor product $\otimes$ of two such vector spaces.
+  All possible states of a single-qubit system is viewed as a two-dimensional complex vector space.
+  All possible states of a 2-qubit system is viewed as the tensor product ($\otimes$) of two such vector spaces.
   This tensor product is a vecor space as well. Its dimension is $2^2$.\\
   Let $\mathbf{V}$ and $\mathbf{W}$ be two-dimensional complex vector spaces with
   bases $A=\{\ket{\alpha_1}, \ket{\alpha_2}\}$ and $B=\{\ket{\beta_1}, \ket{\beta_2}\}$ respectively. \\
@@ -683,7 +727,7 @@
        \ket\alpha_2 \otimes \ket\beta_1,
        \ket\alpha_2 \otimes \ket\beta_2 \}
   \end{align*}
-  With standard basis on both vector spaces, one basis of the tensor product is:
+  With standard basis on both vector spaces, one basis of the tensor product is defined as:
   \begin{align*}
     \{\ket0 \otimes \ket0, \ket0 \otimes \ket1, \ket1 \otimes \ket0, \ket1 \otimes \ket1 \}
     &= \{\ket{00}, \ket{01}, \ket{10}, \ket{11} \} \\
@@ -694,7 +738,7 @@
       \begin{bmatrix} 0 \\ 0 \\ 0 \\ 1 \end{bmatrix}
     \}
   \end{align*}
-  Examples: \\
+  Examples (Tensor Product: Vector $\ket{v} \otimes \ket{w}$ vs Vector Space $\mathbf{V} \otimes \mathbf{W}$): \\
   Let state $\ket{v}=a_1\ket0 + a_2\ket1$ and state $\ket{w}=b_1\ket0 + b_2\ket1$, the tensor product of these two states is:
   \begin{align*}
   a_1b_1\ket{00} + a_1b_2\ket{01} + a_2b_1\ket{10} + a_2b_2\ket{11}
@@ -703,56 +747,875 @@
   \begin{align*}
   (a_1\ket0 + a_2\ket1) \otimes (b_1\ket0 + b_2\ket1) = \frac{1}{\sqrt2}(\ket{00} + \ket{11})
   \end{align*}
-  It turns out that some states of 2-qubit quantum system cannot be described in terms of the state of two separate single-qubit systems.
+  It turns out that most \textbf{states} of a 2-qubit quantum system cannot be described in terms of the \textbf{states} of two separate single-qubit systems.
   These states stand for \textbf{entanglement} of the 2-qubit quantum system.
   }%
 \end{frame}
 
-\begin{frame}
-  Not give up yet.
-  \par
-  To be continued\dots
+\begin{frame}{State Space of N-Qubit System}
+  {\tiny
+  The standard basis for an n-qubit system is written as
+  \begin{align*}
+    \{\ket{0\dots00}, \ket{0\dots01}, \ket{0\dots10}, \dots, \ket{1\dots11}\}
+  \end{align*}
+  or
+  \begin{align*}
+    \{\ket{0}, \ket{1}, \ket{2}, \dots, \ket{2^{n-1}}\}
+  \end{align*}
+  Example:
+  \begin{align*}
+    \frac{1}{2} (\ket{1} + \ket{2} + \ket{4} + \ket{7}) = \frac{1}{2} (\ket{001} + \ket{010} + \ket{100} + \ket{111})
+  \end{align*}
+  We use the standard basis predominantly, but we use other bases from time to time. E.g. Bell basis:
+  \begin{align*}
+    \ket{\Phi^+} &= 1/\sqrt2(\ket{00} + \ket{11}) \\
+    \ket{\Phi^-} &= 1/\sqrt2(\ket{00} - \ket{11}) \\
+    \ket{\Psi^+} &= 1/\sqrt2(\ket{01} + \ket{10}) \\
+    \ket{\Psi^-} &= 1/\sqrt2(\ket{01} - \ket{10})
+  \end{align*}
+  }%
 \end{frame}
 
-\begin{frame}{Rotation on the Bloch Sphere}
-  \framesubtitle{Spectual Decomposition, Operator Functions and Power Series}
+\begin{frame}{Develop Our Understanding on Superposition}
   {\tiny
-    Suppose $\mathbf{u}_1$, $\dots$, $\mathbf{u}_n$ are eigenvectors of $\mathbf{A}$.
-    $\lambda_1$, $\dots$, $\lambda_n$ are corresponding eigenvalues of these eigenvectors.
+  Superposition can not be described as in multiple states “at the same time”. It is not probabilistic mixture. It is only caused by what we human beings can observe/measure.
+  Consider
+  \begin{align*}
+    \frac{1}{\sqrt{2}} (\ket{00} + \ket{11}) \\
+    \frac{1}{\sqrt{2}} (\ket{00} + \textbf{i}\ket{11})
+  \end{align*}.
+  They behave differently under a variety of circumstances. And 
+  \begin{align*}
+    \frac{1}{\sqrt{2}} (\ket{00} + \ket{11}) \\
+    \frac{1}{\sqrt{2}} (\ket{++} + \ket{--})
+  \end{align*}
+  represent the same state of a quantum system. Thus they behave precisely same at all circumstances.
+  }%
+\end{frame}
+
+\subsection{Entanglement}
+\begin{frame}{Entanglement}
+  {\tiny
+    Example: A 4-qubit system
     \begin{align*}
-      \mathbf{A} &= \begin{bmatrix}
-                      \mathbf{u}_1 & \dots & \mathbf{u}_n
-                    \end{bmatrix}
-                    \begin{bmatrix}
-                      \lambda_1 &  & 0 \\
-                      & \ddots & \\
-                      0 & &  \lambda_n
-                    \end{bmatrix}
-                    \begin{bmatrix}
-                      \mathbf{u}^{T}_1 \\
-                      \vdots \\
-                      \mathbf{u}^{T}_n
-                    \end{bmatrix} \\
+      \ket{\Psi} &= \frac{1}{2} (\ket{00} + \ket{11} + \ket{22} + \ket{33}) \\
+                 &= \frac{1}{2} (\ket{0}_1\ket{0}_2\ket{0}_3\ket{0}_4 + \ket{0}_1\ket{1}_2\ket{0}_3\ket{1}_4 + \ket{1}_1\ket{0}_2\ket{1}_3\ket{0}_4 + \ket{1}_1\ket{1}_2\ket{1}_3\ket{1}_4 \\
+                   &  \text{(Can't be written as decomposition of 4 1-qubit systems)} \\
+                   &  \text{(Can be written as decomposition of 2 2-qubit systems)} \\
+                 &= \frac{1}{\sqrt{2}} (\ket{0}_1\ket{0}_3  + \ket{1}_1\ket{1}_3) \otimes  \frac{1}{\sqrt{2}} (\ket{0}_2\ket{0}_4  + \ket{1}_2\ket{1}_4) \\
+                 &= \frac{1}{2} ( \begin{bmatrix} 1 \\ 0 \\ 0 \\ 0 \end{bmatrix}_{13} \otimes  \begin{bmatrix} 1 \\ 0 \\ 0 \\ 0 \end{bmatrix}_{24} +
+                                  \begin{bmatrix} 0 \\ 0 \\ 0 \\ 0 \end{bmatrix}_{13} \otimes  \begin{bmatrix} 0 \\ 0 \\ 0 \\ 1 \end{bmatrix}_{24} +
+                                  \begin{bmatrix} 0 \\ 0 \\ 0 \\ 1 \end{bmatrix}_{13} \otimes  \begin{bmatrix} 1 \\ 0 \\ 0 \\ 0 \end{bmatrix}_{24} +
+                                  \begin{bmatrix} 0 \\ 0 \\ 0 \\ 1 \end{bmatrix}_{13} \otimes  \begin{bmatrix} 0 \\ 0 \\ 0 \\ 1 \end{bmatrix}_{24} )
+    \end{align*}
+
+    “Strictly speaking, entanglement is always with respect to a specified tensor product decomposition of the state \textbf{space}.
+    More formally, given a state $\ket\psi$ of some quantum system with associated vector space V and a tensor decomposition of V, $V = V1 \otimes \dots \otimes V_n$,
+    the state $\ket\psi$ is separable, or unentangled, with respect to that decomposition if it can be written as \\
+    $\ket\psi = \ket{v_1} \otimes \dots \otimes \ket{v_n} $, where $\ket{v_i}$ is contained in $V_i$. Otherwise, $\ket\psi$ is entangled with respect to this decomposition.”
+    \par
+    “\dots; states entangled with respect to the single-qubit decomposition may be unentangled with respect to other decompositions into subsystems.”
+    \par
+    “It is important to recognize that the notion of entanglement is \textbf{NOT} basis dependent, even though it depends on the tensor decomposition under consideration;”
+  }%
+\end{frame}
+
+\begin{frame}{SVD: Singular Value Decomposition: Preparation}
+  \framesubtitle{Review knowledge Learned in School}
+  {\tiny
+  \begin{block}{}
+    If $\textbf{v}_1,\dots,\textbf{v}_r$ are eigenvectors that correspond to distinct eigenvalues $\lambda_1,\dots,\lambda_r$ of an $n{\times}n$ matrix A, then the set ${\textbf{v}_1,\dots,\textbf{v}_r}$ is linearly independent.
+  \end{block}
+  \begin{block}{}
+    An $n{\times}n$ matrix A is diagonalizable ($A=PDP^{-1}$) if and only if A has n linearly independent eigenvectors.
+  \end{block}
+  \begin{block}{}
+    If A is symmetric ($A^T=A$), then any two eigenvectors from different eigenspaces are orthogonal.
+    \begin{align*}
+      \lambda_1 \textbf{v}_1 \cdot \textbf{v}_2 &= (\lambda_1 \textbf{v}_1)^T \textbf{v}_2 = (A \textbf{v}_1)^T \textbf{v}_2 = \textbf{v}_1^T A^T \textbf{v}_2 \\
+                                                &= \textbf{v}_1^T A \textbf{v}_2 = \textbf{v}_1^T (\lambda_2 \textbf{v}_2) = \lambda_2 \textbf{v}_1^T \textbf{v}_2 \\
+                                                &= \lambda_2 \textbf{v}_1 \cdot \textbf{v}_2
+    \end{align*}
+  \end{block}
+  \begin{block}{}
+    An $n{\times}n$ matrix A is orthogonally diagonalizable if and only if A is a symmetric matrix.
+    \begin{enumerate}[I]
+      \item $A = PDP^T = PDP^{-1}$
+      \item $A$ has $n$ real eigenvalues, counting multiplicities.
+      \item The eigenspaces are mutually orthogonal, in the sense that eigenvectors corresponding to different eigenvalues are orthogonal.
+    \end{enumerate}
+  \end{block}
+  }%
+\end{frame}
+
+\begin{frame}{SVD: Singular Value Decomposition}
+  \framesubtitle{Review knowledge Learned in School}
+  {\tiny
+    Let A be an $m{\times}n$ matrix. Then $A^{T}A$ is $n{\times}n$ symmetric matrix. Let $\{\textbf{v}_1,\dots,\textbf{v}_n\}$ be an orthonormal basis for $\mathbb{R}^n$ consisting of eigenvectors of $A^{T}A$, and let $\lambda_1,\dots,\lambda_n$ be the associated eigenvalues of $A^{T}A$.
+    Then, for $1 \leq i \leq n$,
+    \begin{align*}
+      \Vert A \textbf{v}_i \Vert^2 &= (A \textbf{v}_i)^T A \textbf{v}_i = \textbf{v}_i^T (A^T A \textbf{v}_i) = \textbf{v}_i^T (\lambda_i \textbf{v}_i) \\
+                                   &= \lambda_i
+    \end{align*}
+    These eigenvalues of $A^TA$ can be arranged to satisfy $\lambda_1 \geq \dots \geq \lambda_n \geq 0$.
+    Suppose there are r nonzero eigenvalues ${\lambda_1,\dots,\lambda_r}$, and let $\sigma_i = \sqrt{\lambda_i}$, then
+    \begin{align*}
+      \textbf{u}_i &= \frac{1}{\Vert A \textbf{v}_i \Vert} A \textbf{v}_i = \frac{1}{\sigma_i} A \textbf{v}_i
+    \end{align*}
+    and $A \textbf{v}_i = \sigma_i \textbf{u}_i \quad ( 1 \leq i \leq r)$.
+    Now extend $\{\textbf{u}_1,\dots,\textbf{u}_r\}$ to an orthonormal basis $\{\textbf{u}_1,\dots,\textbf{u}_r,\dots,\textbf{u}_m\}$ of $\mathbb{R}^m$, and then
+    \begin{align*}
+      U\Sigma &=
+      \begin{bmatrix} \textbf{u}_1 & \textbf{u}_1 & \dots & \textbf{u}_m \end{bmatrix}
+      \begin{bmatrix}
+        \sigma_1   &        & 0          & 0      \\
+                   & \ddots &            & \vdots \\
+        0          &        & \sigma_r   & 0      \\
+        0          & \cdots & 0          & 0
+      \end{bmatrix} \\
+      &= \begin{bmatrix} \sigma_1 \textbf{u}_1 & \dots & \sigma_r \textbf{u}_r & \textbf{0} & \dots & \textbf{0} \end{bmatrix} \\
+      &= \begin{bmatrix} A \textbf{v}_1        & \dots & A \textbf{v}_r        & \textbf{0} & \dots & \textbf{0} \end{bmatrix} = AV \\
+      A &= U \Sigma V^T
+         =  \begin{bmatrix} \textbf{u}_1 & \textbf{u}_1 & \dots & \textbf{u}_m \end{bmatrix} 
+            \begin{bmatrix}
+              \sigma_1   &        & 0          & 0      \\
+                         & \ddots &            & \vdots \\
+              0          &        & \sigma_r   & 0      \\
+              0          & \cdots & 0          & 0
+            \end{bmatrix}
+            \begin{bmatrix}
+              \textbf{v}_1^T \\
+              \textbf{v}_2^T \\
+              \vdots \\
+              \textbf{v}_n^T \\
+            \end{bmatrix} \\
+            &= \sigma_1 \textbf{u}_1 \textbf{v}_1^T + \sigma_2 \textbf{u}_2 \textbf{v}_2^T + \dots + \sigma_r \textbf{u}_r \textbf{v}_r^T
+    \end{align*}
+  }%
+\end{frame}
+
+\begin{frame}{SVD: Excercise - I}
+  {\tiny
+    \begin{align*}
+      A &=
+      \begin{bmatrix} 
+        4 & 11 & 14 \\
+        8 & 7  & -2
+      \end{bmatrix} \\
+      A^TA &= 
+      \begin{bmatrix} 
+        4  & 8 \\
+        11 & 7 \\
+        14 & -2
+      \end{bmatrix}
+      \begin{bmatrix} 
+        4 & 11 & 14 \\
+        8 & 7  & -2
+      \end{bmatrix}
+      = 
+      \begin{bmatrix} 
+        80  &  100 & 40 \\
+        100 & 170  & 140 \\
+        40  & 140  & 200
+      \end{bmatrix} \\
+      (A^TA -{\lambda}I)\textbf{x} &= \textbf{0} \\
+      det(A^TA -{\lambda}I) &= 
+      det\begin{bmatrix} 
+          80-\lambda & 100           & 40            \\
+          100        & 170 - \lambda & 140           \\
+          40         & 140           & 200 - \lambda 
+         \end{bmatrix}
+    \end{align*}
+    With help of online calculators like: \href{https://www.wolframalpha.com/input/}{wolframalpha} and \href{https://matrixcalc.org/en/vectors.html}{matrixcalc}:
+    $\lambda_1 = 360$, $\lambda_2 = 90$, $\lambda_3 = 0$.\\
+    And the singular values are: $\sigma_1 = 6\sqrt{10}$, $\sigma_2 = 3\sqrt{10}$, $\sigma_3 = 0$.
+    \begin{align*}
+      V &= \begin{bmatrix} \textbf{v}_1 &  \textbf{v}_2 & \textbf{v}_3 \end{bmatrix} 
+         = \begin{bmatrix}
+             1/3 & -2/3 & 2/3 \\
+             2/3 & -1/3 & -2/3 \\
+             2/3 & 2/3  & 1/3
+           \end{bmatrix} \\
+      \Sigma &= \begin{bmatrix}
+                  6\sqrt{10} & 0          & 0 \\
+                  0          & 3\sqrt{10} & 0
+                \end{bmatrix} \\
+      U &= \begin{bmatrix} \textbf{u}_1                 & \textbf{u}_2 \end{bmatrix}
+         = \begin{bmatrix} \frac1{\sigma_1}A\textbf{v}_1 & \frac1{\sigma_2}A\textbf{v}_2 \end{bmatrix}
+         = \begin{bmatrix}
+           3/\sqrt{10} & 1/\sqrt{10} \\
+           1/\sqrt{10} & -3/\sqrt{10}
+           \end{bmatrix} \\
+      A &= \begin{bmatrix}
+           3/\sqrt{10} & 1/\sqrt{10} \\
+           1/\sqrt{10} & -3/\sqrt{10}
+           \end{bmatrix} 
+           \begin{bmatrix}
+             6\sqrt{10} & 0          & 0 \\
+             0          & 3\sqrt{10} & 0
+           \end{bmatrix}
+           \begin{bmatrix}
+           1/3  & 2/3  & 2/3 \\
+           -2/3 & -1/3 & 2/3 \\
+           2/3  & -2/3 & 1/3
+           \end{bmatrix} \\
+        &= 6\sqrt{10} \begin{bmatrix}
+                      3/\sqrt{10}\\
+                      1/\sqrt{10}
+                      \end{bmatrix}
+                      \begin{bmatrix} 1/3  & 2/3  & 2/3 \end{bmatrix}
+           +
+           3\sqrt{10} \begin{bmatrix}
+                      1/\sqrt{10}\\
+                      -3/\sqrt{10}
+                      \end{bmatrix}
+                      \begin{bmatrix} -2/3  & -1/3  & 2/3 \end{bmatrix}
+    \end{align*}
+  }%
+\end{frame}
+
+\begin{frame}{Entanglement: from SVD to Schmidt Decomposition\tiny\cite{understandingentanglementwithsvd}}
+  \href{https://www.math3ma.com/blog/understanding-entanglement-with-svd}{Understand Entanglement with SVD}
+\end{frame}
+
+\section{Measurement}
+\begin{frame}
+  Measurement
+\end{frame}
+
+
+\begin{frame}{Dirac's Bra/Ket Notation for Linear Transformations}
+  {\tiny
+  The notation $\ket{0}\bra{1}$ represents the linear transformation that maps $\ket{1}$ to $\ket{0}$ and $\ket{0}$ to the null vector.
+  $\ket{0}\bra{1}$ can be written in matrix notation:
+    \begin{align*}
+      \ket{0}\bra{0} &= \begin{bmatrix}
+                        1 & 0 \\
+                        0 & 0
+                        \end{bmatrix} \\
+      \ket{0}\bra{1} &= \begin{bmatrix}
+                        0 & 1 \\
+                        0 & 0
+                        \end{bmatrix}
+    \end{align*}
+
+  A linear transformation $X=\ket{0}\bra{1} + \ket{1}\bra{0}$:
+    \begin{align*}
+      (\begin{bmatrix}
+       0 & 1 \\
+       0 & 0
+       \end{bmatrix}
+       + 
+       \begin{bmatrix}
+       0 & 0 \\
+       1 & 0
+       \end{bmatrix}) \ket{0} = \ket{1} \\
+      (\begin{bmatrix}
+       0 & 1 \\
+       0 & 0
+       \end{bmatrix}
+       + 
+       \begin{bmatrix}
+       0 & 0 \\
+       1 & 0
+       \end{bmatrix}) \ket{1} = \ket{0}
+    \end{align*}
+  Generally, let $O = \sum_{i}\sum_{j}a_{ij}\ket{i}\bra{j}$,
+    \begin{align*}
+      O\ket{\psi} &= (\sum_{i}\sum_{j}a_{ij}\ket{i}\bra{j}) (\sum_{k}b_{k}\ket{k}) \\
+                  &= \sum_{i}\sum_{j}\sum_{k} a_{ij}b_{k}\ket{i}\bra{j}\ket{k} \\
+                  &= \sum_{i}\sum_{j}a_{ij}b_{j}\ket{i}
+    \end{align*}
+  }%
+\end{frame}
+
+\begin{frame}{Projection Operators for Measurement}
+  \framesubtitle{How to represent meansurement of a quantum state in math}
+  {\tiny
+    A measuring device with associated decomposition $V=S_1 \bigoplus \dots \bigoplus S_k$ actiong on a state $\ket{\psi}$ results in state
+    \begin{align*}
+      \ket{\phi} = \frac {P_i\ket{\psi}} {|P_i\ket{\psi}|}
+    \end{align*}
+    with probability $|P_i\ket{\psi}|^2$.
+    There are k related projection operators $P_i: V \rightarrow S_i$ where $P_i\ket{v}=\overrightarrow{s_i}$ where $\ket{v} = \overrightarrow{s_1} + \dots + \overrightarrow{s_k}$ with $s_i \in S_i$.
+  \begin{block}{A qubit}
+    “A quibit must be measured in one certain basis.” E.g. \{$\ket0, \ket1$\}.
+  \end{block}
+  \begin{block}{A quantum state}
+    A quantum state must be measured with a decomposition (subspaces) of its state space.
+  \end{block}
+  Let $P_s$ be the projection operator from an n-dimenional vector space V onto an s-dimenional subspace S with basis \{$\ket{\alpha_0}, \dots, \ket{\alpha_{s-1}}$\}. Then
+  \begin{align*}
+    P_s = \sum^{s-1}_{i=0} \ket{\alpha_i} \bra{\alpha_i} = \ket{\alpha_0}\bra{\alpha_0} + \dots + \ket{\alpha_{s-1}}\bra{\alpha_{s-1}}
+  \end{align*}
+  }%
+\end{frame}
+
+\begin{frame}{Measurement with Decomposition}
+  {\tiny
+    \begin{columns}
+    \column{0.02\textwidth}
+    \column{0.98\textwidth}
+    Let $V$ be the vector space associated with a 2-qubit system. Measure following state in $V$:
+    \begin{align*}
+      \ket{\phi} = a_{00}\ket{00} + a_{01}\ket{01} + a_{10}\ket{10} + a_{11}\ket{11}.
+    \end{align*}
+    Examples:
+    \begin{block}{A projector on a subspace}
+      Consider a projector $\ket{10}\bra{10}$: \\
+      $(\ket{10}\bra{10}) \ket{\phi} = a_{10}\ket{10}$
+    \end{block}
+    \begin{block}{A measurement on all subspaces in a decomposition}
+      Consider a measurement with associated direct sum decomposition $V = S_1 \bigoplus S_2$ , where $S_1$ is the subspace generated by \{$\ket{00}, \ket{11}$\},
+      and $S_2$ is the subspace generated by \{$\ket{01}, \ket{10}$\}. \\
+      After meansurement, the state will be:\\
+      $\ket{u} = \frac{1}{c_1}(a_{00}\ket{00} + a_{11}\ket{11})$ with probability $|c_1|^2 = |a_{00}|^2 + |a_{11}|^2$ and \\
+      $\ket{v} = \frac{1}{c_2}(a_{01}\ket{01} + a_{10}\ket{10})$ with probability $|c_2|^2 = |a_{01}|^2 + |a_{10}|^2$. \\
+      It's not necessary to measure the exact value in this case. It's possible to keep part of the coherency of the quantum state in measuring.
+    \end{block}
+    \begin{block}{A measurement on all subspaces in another decomposition}
+      A subspace decomposition is $V = S_1 \bigoplus S_2$, where $S_1$ is spanned by \{$\ket{00}, \ket{01}$\},
+      and $S_2$ is spanned by \{$\ket{10}, \ket{11}$\}.
+    \end{block}
+    \end{columns}
+  }%
+\end{frame}
+
+\begin{frame}{Spectual Decomposition}
+  {\tiny
+    \begin{columns}
+    \column{0.05\textwidth}
+    \column{0.65\textwidth}
+    Suppose $\mathbf{A} = PDP^{-1}$,
+    where the columns of P are \textbf{orthonormal} eigenvectors $\mathbf{u}_1$, $\dots$, $\mathbf{u}_n$ are eigenvectors of $\mathbf{A}$
+    and the corresponding eigenvalues $\lambda_1$, $\dots$, $\lambda_n$ are in the diagonal matrix D. \\
+    Then, since $P^{-1} = P^T$,
+    \begin{align*}
+      \mathbf{A} &= PDP^T =
+                            \begin{bmatrix}
+                              \mathbf{u}_1 & \dots & \mathbf{u}_n
+                            \end{bmatrix}
+                            \begin{bmatrix}
+                              \lambda_1 &  & 0 \\
+                              & \ddots & \\
+                              0 & &  \lambda_n
+                            \end{bmatrix}
+                            \begin{bmatrix}
+                              \mathbf{u}^{T}_1 \\
+                              \vdots \\
+                              \mathbf{u}^{T}_n
+                            \end{bmatrix} \\
                   &=   \lambda_1\mathbf{u}_1\mathbf{u}^{T}_1
                      + \lambda_2\mathbf{u}_2\mathbf{u}^{T}_2
                      + \dots
                      + \lambda_n\mathbf{u}_n\mathbf{u}^{T}_n \\
                      &= \sum\limits_{i=1}^n \lambda_i\ket{u_i}\bra{u_i}
     \end{align*}
-  }%
-\end{frame}
+    The matrix $\mathbf{A}$ defines a unique orthogonal subspace decomposition, which is just its eigenspace decomposition.
 
-\begin{frame}{Review math knowledge we learned in school}
-  {\tiny
-    \setbeamerfont{block title}{size=\tiny}
-    \begin{block}{The Invertible Matrix Theorem for $A^{-1}$}
-      $\begin{bmatrix}A&I\end{bmatrix}$ is row equivalent to $\begin{bmatrix}I&A^{-1}\end{bmatrix}$  \\
-      $Ax=e_1, Ax=e_2,  \dots, Ax=e_n$ \\
-      $A$ is row equivalent to the $n{\times}n$ identity matrix \\
-      The equation $Ax=0$ has only the trivial solution
+    \column{0.3\textwidth}
+    \begin{block}{}
+      An $m \times n$ matrix U has orthonormal columns if and only if $U^TU = I$.
+      \begin{align*}
+        U^TU &=
+          \begin{bmatrix}
+            \mathbf{u}_1^T \\
+            \mathbf{u}_2^T \\
+            \mathbf{u}_3^T
+          \end{bmatrix}
+          \begin{bmatrix} \mathbf{u}_1 \mathbf{u}_2 \mathbf{u}_3 \end{bmatrix} \\
+          &= 
+          \begin{bmatrix}
+            \mathbf{u}_1^T \mathbf{u}_1 & \mathbf{u}_1^T \mathbf{u}_2 & \mathbf{u}_1^T \mathbf{u}_3 \\
+            \mathbf{u}_2^T \mathbf{u}_1 & \mathbf{u}_2^T \mathbf{u}_2 & \mathbf{u}_2^T \mathbf{u}_3 \\
+            \mathbf{u}_3^T \mathbf{u}_1 & \mathbf{u}_3^T \mathbf{u}_2 & \mathbf{u}_3^T \mathbf{u}_3
+          \end{bmatrix}
+      \end{align*}
     \end{block}
+    \begin{block}{}
+      If A is symmetric, then any two eigenvectors from different eigenspaces are orthogonal.
+      \begin{align*}
+        \lambda_1 \mathbf{v}_1 \cdot \mathbf{v}_2
+        &= (\lambda_1 \mathbf{v}_1)^T \mathbf{v}_2 = (A \mathbf{v}_1)^T \mathbf{v}_2 \\
+        &= (\mathbf{v}_1^TA^T) \mathbf{v}_2 = \mathbf{v}_1^T (A \mathbf{v}_2) \\
+        &= \mathbf{v}_1^T(\lambda_2 \mathbf{v}_2) \\
+        &= \lambda_2 \mathbf{v}_1 \cdot \mathbf{v}_2
+      \end{align*}
+    \end{block}
+    \end{columns}
   }%
 \end{frame}
 
+\begin{frame}{Adjoints and Hermitian Operators - I}
+  {\tiny
+    \begin{columns}
+    \column{0.05\textwidth}
+    \column{0.65\textwidth}
+    Suppose $O$ is any linear operator on a 
+    \href{https://mathworld.wolfram.com/HilbertSpace.html}{\textbf{Hilbert space}} $V$.
+    It turns out that there exists a unique linear operator $O^{\dagger}$ on $V$ such that for all vectors $\ket{v}, \ket{w} \in V$,
+    \begin{align*}
+      \braket{\ket{v}, O\ket{w}} = \braket{O^{\dagger} \ket{v}, \ket{w}}.
+    \end{align*}
+    This linear operator is known as the \textbf{adjoint} or \textbf{Hermitian conjugate} of the operator $O$. \\
+
+    \vspace{0.3cm}
+    Suppose $O$ is a linear operator on a Hilbert space $V$ and that for all vectors $\ket{v}, \ket{w} \in V$,
+    \begin{align*}
+      \braket{\ket{v}, O\ket{w}} = \braket{O \ket{v}, \ket{w}},
+    \end{align*}
+    this operator $O: V \rightarrow V$ is \textbf{Hermitian} or \textbf{self-adjoint}. \\
+
+    \vspace{0.3cm}
+    \textbf{Theorem}\cite{thespectraltheoremforhermitianmatrice}: A matrix $O$ with complex elements is Hermitian if and only if \\
+    \begin{align*}
+      O = O^{\dagger} = \overline{O^T},
+    \end{align*}
+    where $\overline{x + yi} \equiv x - yi$. \\
+
+    \vspace{0.3cm}
+    \textbf{Lemma}\cite{thespectraltheoremforhermitianmatrice}: The eigenvectors of a Hermitian matrix $O \in \mathbb{C}^{n \times n}$ have real eigenvalues. \\
+
+    \column{0.3\textwidth}
+    \begin{block}{}
+    \begin{align*}
+                 \braket{\ket{v}, O\ket{w}} &= \bra{v} (\overline{O} \overline{\ket{w}}) \\
+      \braket{O^{\dagger} \ket{v}, \ket{w}} &= (\bra{v} O^{T}) \overline{\ket{w}} \\
+      \bra{v} \overline{O} \overline{\ket{w}} &= \bra{v} O^{T} \overline{\ket{w}} \\
+      O^{T} &= \overline{O}
+    \end{align*}
+    \end{block}
+
+    \begin{block}{}
+    Let $\ket{v}$ be an eigenvector with eigenvalue $\lambda$:
+    \begin{align*}
+      \lambda \braket{\ket{v}, \ket{v}}
+      &= \braket{\lambda \ket{v}, \ket{v}} \\
+      &= \braket{O \ket{v}, \ket{v}} \\
+      &= \braket{\ket{v}, O \ket{v}} \\
+      &= \overline{\lambda} \braket{\ket{v}, \ket{v}} \\
+      \lambda &= \overline{\lambda}
+    \end{align*}
+    \end{block}
+
+    \end{columns}
+  }%
+\end{frame}
+
+\begin{frame}{Adjoints and Hermitian Operators - II\tiny{\cite{thespectraltheoremforhermitianmatrice}}}
+  {\tiny
+    \textbf{Lemma}: If $\mathbf{x}$ is orthogonal to an eigenvector $\mathbf{v}$ of a Hermitian matrix $O$, then $Ox$ is orthogonal to $\mathbf{v}$ as well. \\
+    \begin{align*}
+      \braket{Ox, v} &= \braket{x, Ov} = \braket{x, \lambda v} = \lambda \braket{x, v} \\
+                     & = 0
+    \end{align*}
+
+    \vspace{0.3cm}
+    \textbf{Lemma}: Let $U \in \mathbb{C}^{m \times n}$ be a matrix
+    with $m \leq n$ orthonormal rows $\mathbf{u}_1^{T}, \mathbf{u}_2^{T}, \dots, \mathbf{u}_m^{T}$,
+    and $S$ be the space spanned by these vectors. Then \\
+    1. $UU^{\dagger} = I_m$ \\
+    2. $U^{\dagger}U\mathbf{v} = \mathbf{v}$ for all $\mathbf{v} \in S$
+    \begin{columns}
+    \column{0.5\textwidth}
+    \begin{align*}
+      UU^{\dagger}
+      &=
+      \begin{bmatrix}
+        \mathbf{u}_1^T \\
+        \mathbf{u}_2^T
+      \end{bmatrix}
+      \begin{bmatrix}
+        \overline{\mathbf{u}_1} & \overline{\mathbf{u}_2}
+      \end{bmatrix} \\
+      &= 
+      \begin{bmatrix}
+        \mathbf{u}_1^T \overline{\mathbf{u}_1} & \mathbf{u}_1^T \overline{\mathbf{u}_2} \\
+        \mathbf{u}_2^T \overline{\mathbf{u}_1} & \mathbf{u}_2^T \overline{\mathbf{u}_2}
+      \end{bmatrix}
+    \end{align*}
+
+    \column{0.5\textwidth}
+    \begin{align*}
+      \mathbf{v} 
+      &= x_1\overline{\mathbf{u}_1} + x_2\overline{\mathbf{u}_2} + \dots + x_m\overline{\mathbf{u}_m} \\
+      &= 
+      \begin{bmatrix}
+        \overline{\mathbf{u}_1} & \overline{\mathbf{u}_2} & \dots & \overline{\mathbf{u}_m}
+      \end{bmatrix}
+      \begin{bmatrix}
+        x_1 \\
+        x_2 \\
+        \vdots \\
+        x_m
+      \end{bmatrix} \\
+      &= U^{\dagger} \mathbf{w} \\
+      U^{\dagger}U\mathbf{v}
+      &= U^{\dagger}UU^{\dagger}\mathbf{w} \\
+      &= U^{\dagger} \mathbf{w} \\
+      &= \mathbf{v}
+    \end{align*}
+    \end{columns}
+  }%
+\end{frame}
+
+\begin{frame}{The Spectual Theorem of Hermitian I\tiny{\cite{thespectraltheoremforhermitianmatrice}}}
+  {\tiny
+  \textbf{Theorem}: A Hermitian matrix $O \in \mathbb{C}^{n \times n}$  has $n$ orthogonal eigenvectors. \\
+  \textbf{Proof}:
+  Use induction on the number of eigenvalues of $O \in \mathbb{C}^{n \times n}$. \\
+  The base case: there is an eigenvalue $\lambda$ of $O$: $O\mathbf{v} = \lambda \mathbf{v}$.
+  Induction step:
+  There are $n-m$ orthogonal eigenvectors \{$\mathbf{v}_1, \mathbf{v}_2, \dots, \mathbf{v}_{n-m}$\}. \\
+  Let \{$\mathbf{u}_1, \mathbf{u}_2, \dots, \mathbf{u}_m$\} be \textbf{an orthonormal basis} of the space that is orthogonal to all the eigenvectors. \\
+  Define $U$ is the matrix with \{$\mathbf{u}_1^T, \mathbf{u}_2^T, \dots, \mathbf{u}_m^T$\} as its rows,
+  then $UOU^{\dagger}$ is \textbf{Hermitian} as well:
+  \begin{align*}
+  (UOU^{\dagger})^{\dagger} &= (U^{\dagger})^{\dagger} O^{\dagger} U^{\dagger} = UOU^{\dagger}.
+  \end{align*}
+  Given the base case, there must be at least one eigenvector $\mathbf{v}$ with eigenvalue $\lambda$:
+  \begin{align*}
+    UOU^{\dagger} \mathbf{v} &= \lambda \mathbf{v} \\
+    U^{\dagger}UOU^{\dagger} \mathbf{v} &= \lambda U^{\dagger}\mathbf{v}.
+  \end{align*}
+  Define $\mathbf{v}' = U^{\dagger}\mathbf{v}$, then
+  \begin{align*}
+    U^{\dagger}U O \mathbf{v}' &= \lambda \mathbf{v}'. & Derived\ from\ base\ case.
+  \end{align*}
+  Since \{$\mathbf{v}'$\} $\perp$ \{$\mathbf{v}_1, \mathbf{v}_2, \dots, \mathbf{v}_{n-m}$\},
+  $O\mathbf{v}'$ is also orthogonal to all these eigenvectors as well (Lemma). \\
+  And this implies $O \mathbf{v}'$ is spanned from \{$\mathbf{u}_1, \mathbf{u}_2, \dots, \mathbf{u}_m$\} as well, so:
+  \begin{align*}
+    U^{\dagger}U O \mathbf{v}' &= O \mathbf{v}'. & Derived\ from\ the\ Lemma.
+  \end{align*}
+  Eventually $\mathbf{v}'$ is an eigenvector which is orthogonal to existing ones \{$\mathbf{v}_1, \mathbf{v}_2, \dots, \mathbf{v}_{n-m}$\}
+  \begin{align*}
+    O \mathbf{v}' = \lambda \mathbf{v}'
+  \end{align*}.
+  }%
+\end{frame}
+
+\begin{frame}{The Spectual Theorem of Hermitian II\tiny{\cite{thespectraltheoremforhermitianmatrice}}}
+  {\tiny
+    \textbf{Theorem}: A Hermitian matrix $O \in \mathbb{C}^{n \times n}$ can be written as
+    \begin{align*}
+      O = U \Lambda U^{\dagger}
+    \end{align*}
+    where $U$ is a unitary matrix ($U^{-1} = U^{\dagger}$), and $\Lambda$ is a diagonal matrix with nonnegative elements. \\
+    \textbf{Proof}:
+    Let $\mathbf{u}_1, \mathbf{u}_2, \dots, \mathbf{u}_n$ be orthonormal eigenvectors of $O$,
+    and $\lambda_1, \lambda_2, \dots, \lambda_n$ be the corresponding eigenvalues.
+    Take $U$ to be the matrix $\begin{bmatrix} \mathbf{u}_1 & \mathbf{u}_2 & \dots & \mathbf{u}_n\end{bmatrix}$,
+    and $\Lambda$ to be the matrix
+    \begin{align*}
+      \Lambda =
+                \begin{bmatrix}
+                  \lambda_1 &  & 0 \\
+                  & \ddots & \\
+                  0 & &  \lambda_n
+                \end{bmatrix}.
+    \end{align*}
+    Then,
+    \begin{align*}
+      UU^{\dagger} &= 
+                \begin{bmatrix}
+                  \braket{\mathbf{u}_1, \mathbf{u}_1} & \braket{\mathbf{u}_1, \mathbf{u}_2} &         & \dots & \braket{\mathbf{u}_1, \mathbf{u}_n} \\
+                  \braket{\mathbf{u}_2, \mathbf{u}_1} & \braket{\mathbf{u}_2, \mathbf{u}_2} &         & \dots & \braket{\mathbf{u}_n, \mathbf{u}_n} \\
+                                                      &                                     &  \ddots &       &                                     \\
+                  \braket{\mathbf{u}_n, \mathbf{u}_1} & \braket{\mathbf{u}_1, \mathbf{u}_2} &         & \dots & \braket{\mathbf{u}_1, \mathbf{u}_n}
+                \end{bmatrix} \\
+                &= I
+    \end{align*}
+    Then,
+    \begin{align*}
+      OU &= \begin{bmatrix} O\mathbf{u}_1 & O\mathbf{u}_2 & \dots & O\mathbf{u}_n \end{bmatrix} \\
+      U\Lambda &= \begin{bmatrix} \lambda_1 \mathbf{u}_1 & \lambda_2 \mathbf{u}_2 & \dots & \lambda_n \mathbf{u}_n \end{bmatrix} \\
+      OU &= U\Lambda \\
+      OUU^{\dagger} &= U\Lambda U^{\dagger} \Rightarrow O = U \Lambda U^{\dagger}
+    \end{align*}
+  }%
+\end{frame}
+
+\begin{frame}{Subspace decomposition and Hermitian}
+  {\tiny
+    While a Hermitian operator uniquely specifies a subspace decomposition,
+    for a given subspace decomposition there are many Hermitian operators whose eigenspace decomposition is that decomposition.\\
+    The Hermitian operator is only a convenient bookkeeping trick, a concise way of specifying the subspace decomposition associated with the measurement.\\
+    Hermitian operators ($O$ and $Z$) associated with the subspace decomposition of a single qubit in \textbf{standard basis}:
+    \begin{align*}
+      O &= 2 \ket0 \bra0 - 3 \ket1 \bra1
+        = \begin{bmatrix}
+             2 & 0 \\
+             0 & -3
+           \end{bmatrix} \\
+      Z &= 2 \ket0 \bra0 - \ket1 \bra1
+        = \begin{bmatrix}
+             1 & 0 \\
+             0 & -1
+           \end{bmatrix}
+    \end{align*}
+    A Hermitian operator $X$ associated with the subspace decomposition of a single qubit in \textbf{Hadamard basis} {$\ket+, \ket-$}:
+    \begin{align*}
+      \ket+ = 1/\sqrt2 ( \ket0 + \ket1), & \ket- = 1/\sqrt2 ( \ket0 - \ket1)
+    \end{align*}
+    \begin{align*}
+      P_+ &= \ket+ \bra+ = \frac{1}{2} ( \ket0\bra0 + \ket0\bra1 + \ket1\bra0 + \ket1\bra1 ) \\
+      P_- &= \ket- \bra- = \frac{1}{2} ( \ket0\bra0 - \ket0\bra1 - \ket1\bra0 + \ket1\bra1 ) \\
+    \end{align*}
+    \begin{align*}
+      X &= P_+ - P_- = \ket0\bra1 + \ket1\bra0 \\
+      &= \begin{bmatrix}
+        0 & 1 \\
+        1 & 0
+      \end{bmatrix}
+    \end{align*}
+  }%
+\end{frame}
+
+\begin{frame}{Examples of Hermitian Operators}
+  {\tiny
+  \begin{align*}
+    O_1 &= 
+    \begin{bmatrix} 
+      0 & 0 & 0 & 0 \\
+      0 & 1 & 0 & 0 \\
+      0 & 0 & 2 & 0 \\
+      0 & 0 & 0 & 3
+    \end{bmatrix}  \rightarrow
+    V = \{\ket{00}\} \bigoplus \{\ket{01}\} \bigoplus \{\ket{10}\} \bigoplus \{\ket{11}\} \\
+    O_2 &= 
+    \begin{bmatrix} 
+      1 & 0 & 0 & 0 \\
+      0 & 1 & 0 & 0 \\
+      0 & 0 & \pi & 0 \\
+      0 & 0 & 0 & \pi 
+    \end{bmatrix} \rightarrow
+    V = \{\ket{00}, \ket{01}\} \bigoplus \{\ket{10}, \ket{11}\} \\
+    O_3 &= 
+    \begin{bmatrix} 
+      2 & 0 & 0 & 0 \\
+      0 & 3 & 0 & 0 \\
+      0 & 0 & 3 & 0 \\
+      0 & 0 & 0 & 2
+    \end{bmatrix} \rightarrow
+    V = \{\ket{00}, \ket{11}\} \bigoplus \{\ket{01}, \ket{10}\} \\
+    O_4 &= 
+    \begin{bmatrix} 
+      0 & 0 & 0 & 0 \\
+      0 & 0 & 0 & 0 \\
+      0 & 0 & 0 & 0 \\
+      0 & 0 & 0 & 1
+    \end{bmatrix} \rightarrow
+    V = \{\ket{00}, \ket{01}, \ket{10}\} \bigoplus \{\ket{11}\}
+  \end{align*}
+  Measuring $\ket{\psi} = 1/\sqrt2 (\ket{01}+\ket{10})$ with $O_4$ remains unchanged state.
+  But measuring with $O_1$ would result in either $\ket{01}$ or $\ket{10}$.
+  }%
+\end{frame}
+
+\begin{frame}{Tensor Product of Hermitians}
+  {\tiny
+    Most Hermitian operators $O$ on $V_0 \otimes V_1$ cannot be written as $O_0 \otimes O_1$,
+    in which $O_0$ acts on $V_0$ and $O_1$ acts on $V_1$. \\
+    Such a decomposition is possible only if each subspace in the subspace decomposition described by $O$
+    can be written as $S = S_0 \bigoplus S_1$
+    for $S_0$ and $S_1$ in the subspace decompositions associated to $O_1$ and $O_2$ respectively. \\
+    \begin{align*}
+      \begin{bmatrix} 
+        1 & 0 \\
+        0 & \pi
+      \end{bmatrix} \otimes I
+      &=
+      \begin{bmatrix}
+        1 & 0 & 0 & 0 \\
+        0 & 1 & 0 & 0 \\
+        0 & 0 & \pi & 0 \\
+        0 & 0 & 0 & \pi 
+      \end{bmatrix}
+      = \ket{00} \bra{00} + \ket{01} \bra{01} + \pi \ket{10} \bra{10} + \pi \ket{11} \bra{11} \\
+      & \rightarrow \{\ket{00}, \ket{01}\} \bigoplus \{\ket{10}, \ket{11}\} \\
+      I \otimes
+      \begin{bmatrix} 
+        1 & 0 \\
+        0 & \pi
+      \end{bmatrix}
+      &=
+      \begin{bmatrix}
+        1 & 0 & 0 & 0 \\
+        0 & \pi & 0 & 0 \\
+        0 & 0 & 1 & 0 \\
+        0 & 0 & 0 & \pi 
+      \end{bmatrix}
+      = \ket{00} \bra{00} + \pi \ket{01} \bra{01} + \ket{10} \bra{10} + \pi \ket{11} \bra{11} \\
+      & \rightarrow \{\ket{00}, \ket{10}\} \bigoplus \{\ket{01}, \ket{11}\}
+    \end{align*}
+
+    \vspace{0.2cm}
+    When talking about measurement of an n-qubit system, there are two totally distinct types of
+    decompositions of the vector space V under consideration:\\
+    \begin{enumerate}[I]
+      \item the tensor product decomposition into the n separate qubits, and
+      \item the direct sum decomposition into k $\leq$ 2n subspaces associated with the measuring device. 
+    \end{enumerate}
+    These decompositions could not be more different.
+    In particular, a tensor component $V_i$ of $V = V_1 \otimes \dots \otimes V_n$ is not a subspace of $V$.
+    Similarly, the subspaces associated with measurements do not correspond to the subsystems,
+    such as individual qubits, of the whole system.
+  }%
+\end{frame}
+
+
+\begin{frame}{EPR Paradox and Bell's Theorem - I}
+  {\tiny
+  \begin{columns}
+  \column{0.03\textwidth}
+  \column{0.57\textwidth}
+  A pair of photons in state:
+  \begin{align*}
+    \ket{\psi} = 1/\sqrt2(\ket{00} + \ket{11})
+  \end{align*}
+  is called EPR pair in honor of \textbf{E}insten, \textbf{P}odolsky, and \textbf{R}osen.
+
+  \column{0.4\textwidth}
+  \begin{figure}
+    \includegraphics[scale=0.15]{figures/EPR}
+    \caption{EPR}
+  \end{figure}
+  \end{columns}
+  The special relativity; the speed of light; the symmetry of observers. \\
+  Even though the results themselves are perfectly compatible with relativity theory, the behavior remains mysterious.
+  But this mysterious behavior could also be explained by a classical theory that postulates that
+  particles have an internal \textbf{hidden} state that determines the result of the measurement.
+
+  \vspace{0.3cm}
+  Let $O_{\theta}$ be a single-qubit Hermitian associated with two-subspace decomposition:
+    $\{\ket{\mathbf{v}}\} \bigoplus \{\ket{\mathbf{v}^{\perp}}\}$
+  \begin{align*}
+    \ket{\mathbf{v}} &= \cos \theta \ket0 + \sin \theta \ket1 \\
+    \ket{\mathbf{v}^{\perp}} &= -\sin \theta \ket0 + \cos \theta \ket1
+  \end{align*}
+  Let
+  \begin{align*}
+    O_{\theta_{1}} &\rightarrow \{\ket{\mathbf{v}_1}\} \bigoplus \{\ket{\mathbf{v}_1^{\perp}}\} \\
+    O_{\theta_{2}} &\rightarrow \{\ket{\mathbf{v}_2}\} \bigoplus \{\ket{\mathbf{v}_2^{\perp}}\} \\
+    P^{\mathbf{v}_1} &= \ket{\mathbf{v}_1} \bra{\mathbf{v}_1}
+    \qquad
+    P^{\mathbf{v}_1^{\perp}} = \ket{\mathbf{v}_1^{\perp}} \bra{\mathbf{v}_1^{\perp}}
+    \\
+    P^{\mathbf{v}_2} &= \ket{\mathbf{v}_2} \bra{\mathbf{v}_2}
+    \qquad
+    P^{\mathbf{v}_2^{\perp}} = \ket{\mathbf{v}_2^{\perp}} \bra{\mathbf{v}_2^{\perp}}
+  \end{align*}
+  }%
+\end{frame}
+
+\begin{frame}{EPR Paradox and Bell's Theorem - II\tiny{\cite{solutionofexercise420}}}
+  {\tiny
+    \begin{align*}
+      P &= (P^{\mathbf{v}_1} \otimes I)(I \otimes P^{\mathbf{v}_2}) +
+           (P^{\mathbf{v}_1^{\perp}} \otimes I) (I \otimes P^{\mathbf{v}_2^{\perp}}) \\
+      &=
+      (P^{\mathbf{v}_1} \otimes P^{\mathbf{v}_2}) +
+      (P^{\mathbf{v}_1^{\perp}} \otimes P^{\mathbf{v}_2^{\perp}})
+      \\
+      P^{\mathbf{v}_1\mathbf{v}_2} &= P^{\mathbf{v}_1} \otimes P^{\mathbf{v}_2} \\
+      &= (\ket{\mathbf{v}_1}\bra{\mathbf{v}_1}) \otimes (\ket{\mathbf{v}_2}\bra{\mathbf{v}_2}) \\
+      &= (\ket{\mathbf{v}_1} \otimes \ket{\mathbf{v}_2}) \; (\bra{\mathbf{v}_1} \otimes \bra{\mathbf{v}_2}) \\
+      &= (\ket{\mathbf{v}_1} \otimes \ket{\mathbf{v}_2}) \;
+         [
+           (\cos \theta_1 \cos \theta_2) \ket{00}
+         + (\cos \theta_1 \sin \theta_2) \ket{01}
+         + (\sin \theta_1 \cos \theta_2) \ket{10}
+         + (\sin \theta_1 \sin \theta_2) \ket{11}
+         ]
+      \\
+      P^{\mathbf{v}_1^{\perp} \mathbf{v}_2^{\perp}} &= 
+         (\ket{\mathbf{v}_1^{\perp}} \otimes \ket{\mathbf{v}_2^{\perp}}) \;
+         [
+           (\sin \theta_1 \sin\theta_2) \ket{00}
+         - (\sin \theta_1 \cos \theta_2) \ket{01}
+         - (\cos \theta_1 \sin \theta_2) \ket{10}
+         + (\cos \theta_1 \cos \theta_2) \ket{11}
+         ]
+      \\
+      P\ket{\psi} &= P \frac{1}{\sqrt2} (\ket{00} + \ket{11}) \\
+      &= \frac{1}{\sqrt2} 
+                     [
+                       (\ket{\mathbf{v}_1} \otimes \ket{\mathbf{v}_2}) (\cos \theta_1 \cos \theta_2 + \sin \theta_1 \sin \theta_2)
+                     + (\ket{\mathbf{v}_1^{\perp}} \otimes \ket{\mathbf{v}_2^{\perp}}) (\sin \theta_1 \sin\theta_2 + \cos \theta_1 \cos \theta_2)
+                     ] \\
+      &= \frac{1}{\sqrt2} 
+         [
+           (\ket{\mathbf{v}_1} \otimes \ket{\mathbf{v}_2}) \cos (\theta_1 - \theta_2) 
+         + (\ket{\mathbf{v}_1^{\perp}} \otimes \ket{\mathbf{v}_2^{\perp}}) \cos (\theta_1 - \theta_2)
+         ] \\
+      &= \frac{1}{\sqrt2} \cos (\theta_1 - \theta_2)
+         [
+           \ket{\mathbf{v}_1} \otimes \ket{\mathbf{v}_2}
+         + \ket{\mathbf{v}_1^{\perp}} \otimes \ket{\mathbf{v}_2^{\perp}}
+         ]
+      \\
+      p = \braket{\psi|P|\psi}
+      &= \frac{1}{2} \cos (\theta_1 - \theta_2) [ \bra{00} \ket{\mathbf{v_1}} \ket{\mathbf{v}_2}
+                                                + \bra{00} \ket{\mathbf{v}_1^{\perp}} \ket{\mathbf{v}_2^{\perp}}
+                                                + \bra{11} \ket{\mathbf{v}_1} \ket{\mathbf{v}_2}
+                                                + \bra{11} \ket{\mathbf{v}_1^{\perp}} \ket{\mathbf{v}_2^{\perp}}
+                                                ] \\
+      &= \frac{1}{2} \cos (\theta_1 - \theta_2) [ \cos \theta_1 \cos \theta_2
+                                                + \sin \theta_1 \sin \theta_2
+                                                + \sin \theta_1 \sin \theta_2
+                                                + \cos \theta_1 \cos \theta_2
+                                                ] \\
+      &= \cos^2 (\theta_1 - \theta_2)
+    \end{align*}
+  }%
+\end{frame}
+
+\begin{frame}{EPR Paradox and Bell's Theorem - III}
+  {\tiny
+    If the polaroids are set randomly for a series of EPR pairs emanating from the source, then
+    \begin{enumerate}[I]
+    \item with probability $1/3$ the polaroid orientation will be the same and the measurements will agree,
+    \item with probability $2/3$ the polaroid orientation will differ and the measurements will agree with probability $1/4$.
+    \end{enumerate}
+  }%
+  Thus, overall, the measurements will agree half the time and disagree half the time. When such
+  an experiment is performed, these are indeed the probabilities that are seen.
+\end{frame}
+
+\begin{frame}{EPR Paradox and Bell's Theorem - IV}
+  {\tiny
+  \begin{table}[h!]
+  \begin{center}
+    \caption{Hidden Variable}
+    \label{tab:table1}
+    \begin{tabular}{c|c|c|c|c|c|c|c|c}
+                          & $\mathbf{h}_0$                & $\mathbf{h}_1$                & $\mathbf{h}_2$                & $\mathbf{h}_3$                & $\mathbf{h}_4$                & $\mathbf{h}_5$                & $\mathbf{h}_6$                & $\mathbf{h}_7$ \\
+                          & $\nearrow  \uparrow \nwarrow$ & $\nearrow  \uparrow \nwarrow$ & $\nearrow  \uparrow \nwarrow$ & $\nearrow  \uparrow \nwarrow$ & $\nearrow  \uparrow \nwarrow$ & $\nearrow  \uparrow \nwarrow$ & $\nearrow  \uparrow \nwarrow$ & $\nearrow  \uparrow \nwarrow$ \\
+        Polaroids Setting & P          P        P         & P          P        A         & P          A        P         & P          A        A         & A          P        P         & A          P        A         & A          A        P         & A          A        A         \\
+      \hline
+      $\nwarrow \nwarrow$ & P          P                  & A          A                  & P          P                  & A          A                  & P          P                  & A          A                  & P          P                  & A          A                  \\
+      $\nwarrow \uparrow$ & P          P                  & A          P                  & P          A                  & A          A                  & P          P                  & A          P                  & P          A                  & A          A                  \\
+      $\nwarrow \nearrow$ & P          P                  & A          P                  & P          P                  & A          P                  & P          A                  & A          A                  & P          A                  & A          A                  \\
+      $\uparrow \nwarrow$ & P          P                  & P          A                  & A          P                  & A          A                  & P          P                  & P          A                  & A          P                  & A          A                  \\
+      $\uparrow \uparrow$ & P          P                  & P          P                  & A          A                  & A          A                  & P          P                  & P          P                  & A          A                  & A          A                  \\
+      $\uparrow \nearrow$ & P          P                  & P          P                  & A          P                  & A          P                  & P          A                  & P          A                  & A          A                  & A          A                  \\
+      $\nearrow \nwarrow$ & P          P                  & P          A                  & P          P                  & P          A                  & A          P                  & A          A                  & A          P                  & A          A                  \\
+      $\nearrow \uparrow$ & P          P                  & P          P                  & P          A                  & P          A                  & A          P                  & A          P                  & A          A                  & A          A                  \\
+      $\nearrow \nearrow$ & P          P                  & P          P                  & P          P                  & P          P                  & A          A                  & A          A                  & A          A                  & A          A                  \\
+      \hline
+     Possibility of Agree & $1$                           & $5/9$                         & $5/9$                         & $5/9$                         & $5/9$                         & $5/9$                         & $5/9$                         & $1$                           \\
+    \end{tabular}
+  \end{center}
+  \end{table}
+  }%
+\end{frame}
+
+\section{To be continued}
+\begin{frame}
+  Not give up yet.
+  \par
+  To be continued\dots
+\end{frame}
 
 \end{document}
