@@ -18,6 +18,28 @@
 ]{biblatex}
 \addbibresource{refs.bib}
 
+
+%BEGIN
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{graphicx}
+
+\usepackage[frame,line,arrow,matrix,tips]{xy}	% all that is usually necessary
+\CompilePrefix{xygui-}
+\makeindex
+\pagestyle{empty}
+
+\setlength{\oddsidemargin}{-0.5in}	% 1.25in left margin 
+\setlength{\evensidemargin}{-0.5in}	% 1.25in left margin (even pages)
+
+\setlength{\topmargin}{0.0in}		% 1in top margin
+\setlength{\textwidth}{6.25in}		% 6.0in text - 1.25in rt margin
+\setlength{\textheight}{8.6in}		% Body ht for 1in margins
+\addtolength{\topmargin}{-\headheight}	% No header, so compensate
+\addtolength{\topmargin}{-\headsep}	% for header height and separation
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%END
+
+
 \setbeamertemplate{bibliography item}{\insertbiblabel}
 
 \usetheme{Boadilla}
@@ -29,15 +51,101 @@
 \author{Ming Lu}
 \date{\today}
 
-
 \begin{document}
+
+%BEGIN
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% wires
+
+\def\w{\ar@{-}[l]}
+\def\W{\ar@{=}[l]}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% labels
+
+% simple label
+\def\A#1{\save []="#1" \restore}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% single qubit operations
+
+\def\op#1{*+[F]{\rule[-0.2ex]{0ex}{2.1ex}#1}}	% operator in box
+\def\b{*={\bullet}}
+\def\o{*={\oplus}}
+\def\t{*={\times}}				% for swap gate
+\def\sq{*=<6pt,6pt>[F]{}}			% square, for controlled-phase
+\def\m#1{\left[\matrix{#1}\right]}		% matrix shortcut
+\def\z{*+[]{\rule[-0.2ex]{0ex}{2.1ex}~|0\>}}	% re-init to |0>
+\def\discard{*[]{\rule[-0.2ex]{0.75pt}{2.1ex}~}}	% vertical ``|''
+\def\slash{*={/}}				% slash for wire bundles
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% nop's
+
+\def\N{*-{}\W}
+\def\n{*-{}\w}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% misc definitions
+
+\def\>{\rangle}
+\def\<{\langle}
+\def\ua{\uparrow}
+
+% measurement box
+\def\meter{*+[]{\put(-3,0){\includegraphics[scale=.5]{meter.epsf}}~~~~}%
+		\ar@{-}[l]}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% qubit names (and also revert to qubit wires, vs, cbit wires)
+
+\def\q#1{*+{\rule[-0.2ex]{0ex}{2.1ex}|#1\>}}
+\def\qv#1#2{*+{\rule[-0.2ex]{0ex}{2.1ex}|#1\>=|#2\>}}
+	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% multiple qubit gates
+
+% % utulity text box for figuring out width of things
+% commented out by mingl
+% \newbox{\sbox}
+
+% empty space of width determined by the text argument
+\def\gspace#1{*+{\rule[-0.2ex]{0ex}{2.1ex}%
+	\setbox\sbox=\hbox{$#1$}%
+	\hspace*{\wd\sbox}}}
+
+% n-qubit operation #1=box label, #2=number of qubits (eg d=2 qubits, ddd=4)
+\def\gnqubit#1#2{\gspace{#1}
+		 \save [].[#2]!C="qq"*[F]\frm{}\restore
+		 \save "qq"*[]{#1} \restore}
+
+% two-qubit operation
+\def\gtwo#1{\gnqubit{#1}{d}}
+
+% two-qubit operation
+\def\gthree#1{\gnqubit{#1}{dd}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ``D'' style measurement gate a-la-cleve, at Michael Nielsen's request
+
+\def\dmeterwide#1#2{*{\xy <0pt,-8pt>;<0pt,8pt> **@{-};
+		    <0pt,-8pt>;<#2,-8pt> **@{-} ;
+		    <0pt, 8pt>;<#2, 8pt> **@{-} ;
+		    <#2,0pt>-<5pt,0pt>*{#1} ;
+		    <#2,0pt>*\cir<8pt>{r_l}\endxy}}
+
+\def\dmeter#1{\dmeterwide{#1}{12pt}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%END
+
 
 \begin{frame}
   \titlepage
 \end{frame}
 
 \begin{frame}
-  These sslides are notes when reading book
+  These slides are notes when reading book
   \newline
   \newline
   \LARGE{\textrm{Quantum Computing: A Gentle Introduction}}\tiny\cite{gentleintroduction}
@@ -51,7 +159,7 @@
   \printbibliography
 \end{frame}
 
-\begin{frame}{Outline}
+\begin{frame}[t,allowframebreaks]{Outline}
   \tableofcontents
 \end{frame}
 
@@ -984,6 +1092,7 @@
 \end{frame}
 
 
+\subsection{Projection}
 \begin{frame}{Dirac's Bra/Ket Notation for Linear Transformations}
   {\tiny
   The notation $\ket{0}\bra{1}$ represents the linear transformation that maps $\ket{1}$ to $\ket{0}$ and $\ket{0}$ to the null vector.
@@ -1051,6 +1160,7 @@
   }%
 \end{frame}
 
+\subsection{Subspace Decomposition}
 \begin{frame}{Measurement with Decomposition}
   {\tiny
     \begin{columns}
@@ -1361,8 +1471,6 @@
     \begin{align*}
       P_+ &= \ket+ \bra+ = \frac{1}{2} ( \ket0\bra0 + \ket0\bra1 + \ket1\bra0 + \ket1\bra1 ) \\
       P_- &= \ket- \bra- = \frac{1}{2} ( \ket0\bra0 - \ket0\bra1 - \ket1\bra0 + \ket1\bra1 ) \\
-    \end{align*}
-    \begin{align*}
       X &= P_+ - P_- = \ket0\bra1 + \ket1\bra0 \\
       &= \begin{bmatrix}
         0 & 1 \\
@@ -1413,6 +1521,17 @@
   }%
 \end{frame}
 
+\begin{frame}{The Measurement Postulate}
+  {\tiny
+    Any quantum measurement can be specified by a Hermitian operator $O$ called an observable.\\
+    The possible outcomes of measuring a state $\ket{\psi}$ with an observable $O$ are labeled by the
+    eigenvalues of $O$. Measurement of state $\ket{\psi}$ results in the outcome labeled by the eigenvalue $\lambda_i$
+    of $O$ with probability $|P_i\ket{\psi}|^2$ where $P_i$ is the projector onto the $\lambda_i$-eigenspace.\\
+    (Projection) The state after measurement is the normalized projection $P_i\ket{\psi} / |P_i\ket{\psi}|$ of $\ket{\psi}$
+    onto the $\lambda_i$-eigenspace $S_i$ . Thus the state after measurement is a unit length eigenvector of $O$ with eigenvalue $\lambda_i$.
+  }%
+\end{frame}
+
 \begin{frame}{Tensor Product of Hermitians}
   {\tiny
     Most Hermitian operators $O$ on $V_0 \otimes V_1$ cannot be written as $O_0 \otimes O_1$,
@@ -1460,11 +1579,17 @@
     These decompositions could not be more different.
     In particular, a tensor component $V_i$ of $V = V_1 \otimes \dots \otimes V_n$ is not a subspace of $V$.
     Similarly, the subspaces associated with measurements do not correspond to the subsystems,
-    such as individual qubits, of the whole system.
+    such as individual qubits, of the whole system.\\
+    \vspace{0.2cm}
+    For example, with regards to a 2-qubit quantum system, it is prepared from 2 separated qubits. 
+    Once it is in a quantum state, and before measuring it, we can't say there are 2 qubits in the quantum system anymore.
+    What we can say is that we want to measure it with a specific subspace decomposition.
+    The subspace decomposition can happen to be a separation of 2 qubits.
+
   }%
 \end{frame}
 
-
+\subsection{EPR Paradox}
 \begin{frame}{EPR Paradox and Bell's Theorem - I}
   {\tiny
   \begin{columns}
@@ -1608,6 +1733,499 @@
     \end{tabular}
   \end{center}
   \end{table}
+  }%
+\end{frame}
+
+\section{Quantum State Transformations}
+\begin{frame}
+  Quantum State Transformations
+\end{frame}
+
+\subsection{Unitary Transformations}
+\begin{frame}{Quantum Transformation}
+  {\tiny
+    Quantum Transformation means a mapping from the state space of a quantum system to itself.
+    While for measurements, there are only finite outcomes, and the results are only probabilistic.\\
+    The quantum properties of the quantum system will be respected after a transformation.
+    The result of a measurement is deterministic without any quantum properties being kept.\\
+    A quantum state transformation is \textbf{reversible}, while a measurement not.\\
+    Transformation and measurement exist in Nature. What's the relation between them exactly?\\
+    \vspace{0.3cm}
+    In sense of math, measurement is modeled as a projector matrix (subspace decomposition), i.e. $P\ket{\psi}$;
+    now transformation is modeled as a matrix called unitary $U$ with property $U^{\dagger}U = I$, i.e. $U\ket{\psi}$\\
+    The unitarity condition simply ensures that the transformation does not violate any general principles of quantum theory.
+    Geometrically, all quantum state transformations are rotations of the complex vector space associated with the quantum state space.
+    \begin{align*}
+      U^TU &=
+        \begin{bmatrix}
+          \mathbf{u}_1^T \\
+          \mathbf{u}_2^T \\
+          \mathbf{u}_3^T
+        \end{bmatrix}
+        \begin{bmatrix} \mathbf{u}_1 \mathbf{u}_2 \mathbf{u}_3 \end{bmatrix} 
+        = 
+        \begin{bmatrix}
+          \mathbf{u}_1^T \mathbf{u}_1 & \mathbf{u}_1^T \mathbf{u}_2 & \mathbf{u}_1^T \mathbf{u}_3 \\
+          \mathbf{u}_2^T \mathbf{u}_1 & \mathbf{u}_2^T \mathbf{u}_2 & \mathbf{u}_2^T \mathbf{u}_3 \\
+          \mathbf{u}_3^T \mathbf{u}_1 & \mathbf{u}_3^T \mathbf{u}_2 & \mathbf{u}_3^T \mathbf{u}_3
+        \end{bmatrix}
+    \end{align*}
+    \vspace{0.3cm}
+    The product $U_1 U_2$ of two unitary transformations is again unitary. \\
+    The tensor product $U_1 \otimes U_2$ is a unitary transformation of the space $X_1 \otimes X_2$ if $U_1$ and $U_2$ are unitary transformations of $X_1$ and $X_2$ respectively.\\
+    Linear combinations of unitary operators, however, are not in general unitary.
+  }%
+\end{frame}
+
+\begin{frame}{The No-Cloning Principle}
+  {\tiny
+    Suppose $U$ is a unitary transformation that clones: $U\ket{a}\ket{0} = \ket{a}\ket{a}$
+    \begin{align*}
+      \ket{c} &= \frac{1}{\sqrt2} (\ket{a} + \ket{b}) \\
+      U\ket{c}\ket{0} &=  \frac{1}{\sqrt2} ( \ket{a}\ket{a} + \ket{b}\ket{b} ) \\
+                      &=  \ket{c}\ket{c} = \frac{1}{2} (  \ket{a}\ket{a} + \ket{a}\ket{b} + \ket{b}\ket{a} + \ket{b}\ket{b} )
+    \end{align*}
+  }%
+\end{frame}
+
+\subsection{Some Simple Quantum Transformations/Gates}
+
+\begin{frame}{The Pauli Transformations}
+  {\tiny
+    \begin{align*}
+      I &= \ket0\bra0 + \ket1\bra1 = \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix} \\
+      X &= \ket1\bra0 + \ket0\bra1 = \begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix} \\
+      Y &= -\ket1\bra0 + \ket0\bra1 = \begin{bmatrix} 0 & 1 \\ -1 & 0 \end{bmatrix} \\
+      Z &= \ket0\bra0 - \ket1\bra1 = \begin{bmatrix} 1 & 0 \\ 0 & -1 \end{bmatrix} \\
+      Y &= ZX \\
+      Y' &= -iY = \begin{bmatrix} 0 & -i \\ i & 0 \end{bmatrix} \\
+      \mathbf{X}^2 &= \mathbf{Y'}^2 = \mathbf{Z}^2 = -i\mathbf{XY'Z} = \mathbf{I} \\
+      \mathbf{XY'} &= -\mathbf{Y'X} = i\mathbf{Z} \\
+      \mathbf{Y'Z} &= -\mathbf{ZY'} = i\mathbf{X} \\
+      \mathbf{ZX} &= -\mathbf{XZ} = i\mathbf{Y'}
+    \end{align*}
+  }%
+\end{frame}
+
+\begin{frame}{The Hadamard Transformation}
+  {\tiny
+    \begin{align*}
+      H &= \frac{1}{\sqrt2}(\ket0\bra0 + \ket1\bra0 + \ket0\bra1 -\ket1\bra1) \\
+        &= \frac{1}{\sqrt2} \begin{bmatrix} 1 & 1 \\ 1 & -1 \end{bmatrix} \\
+      H\ket0 &= \ket+ = \frac{1}{\sqrt2} (\ket0 + \ket1) \\
+      H\ket1 &= \ket- = \frac{1}{\sqrt2} (\ket0 - \ket1) \\
+      HH &= I
+    \end{align*}
+    The graphical representation:
+    % definitions for the circuit elements
+    \def\gAxA{\op{H}\w\A{gAxA}}
+    
+    % definitions for bit labels and initial states
+    \def\bA{ \q{q_{0}}}
+    
+    \begin{align*}
+    % The quantum circuit as an xymatrix
+    \xymatrix@R=5pt@C=10pt{
+            & \gAxA &\n
+    }
+    \end{align*}
+  }%
+\end{frame}
+
+\begin{frame}{The Controlled-NOT - I}
+  {\tiny
+    \begin{align*}
+      \ket0\bra0 \otimes \ket1\bra1 &= \begin{bmatrix} 1 & 0 \\ 0 & 0 \end{bmatrix} \otimes \begin{bmatrix} 0 & 0 \\ 0 & 1 \end{bmatrix} \\
+      \ket{01}\bra{01}
+      &= \begin{bmatrix} 0 \\ 1 \\ 0 \\ 1 \end{bmatrix} \begin{bmatrix} 0 & 1 & 0 & 0\end{bmatrix} 
+       = \begin{bmatrix} 0 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \end{bmatrix} \\
+      \ket1\bra1 \otimes \ket1\bra0 &= \begin{bmatrix} 0 & 0 \\ 0 & 1 \end{bmatrix} \otimes \begin{bmatrix} 0 & 0 \\ 1 & 0 \end{bmatrix} \\
+      \ket{11}\bra{10}
+      &= \begin{bmatrix} 0 \\ 0 \\ 0 \\ 1 \end{bmatrix} \begin{bmatrix} 0 & 0 & 1 & 0\end{bmatrix} 
+       = \begin{bmatrix} 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 1 & 0 \end{bmatrix} \\
+    \end{align*}
+    \begin{align*}
+      C_{not} &= \ket0\bra0 \otimes I + \ket1\bra1 \otimes \mathbf{X} \\
+              &= \ket0\bra0 \otimes (\ket0\bra0 +\ket1\bra1) + \ket1\bra1 \otimes (\ket1\bra0 + \ket0\bra1) \\
+              &= \ket{00}\bra{00} + \ket{01}\bra{01} + \ket{11}\bra{10} + \ket{10}\bra{11} \\
+              &= \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 0 & 1 \\ 0 & 0 & 1 & 0 \end{bmatrix} \\
+      C_{not}C_{not} &= I
+    \end{align*}
+  }%
+\end{frame}
+
+\begin{frame}{The Controlled-NOT - II}
+  {\tiny
+    \begin{align*}
+      C_{not}\ket{00} &= \ket{00} \\
+      C_{not}\ket{01} &= \ket{01} \\
+      C_{not}\ket{10} &= \ket{11} \\
+      C_{not}\ket{11} &= \ket{10}
+    \end{align*}
+    \begin{align*}
+      \ket\psi &= \frac{1}{\sqrt2} (\ket0 + \ket1) \otimes \ket0 = \frac{1}{\sqrt2} (\ket0 \otimes \ket0 + \ket1 \otimes \ket0) \\
+      &= \frac{1}{\sqrt2} (\begin{bmatrix} 1 \\ 0 \\ 0 \\ 0 \end{bmatrix}  + \begin{bmatrix} 0 \\ 0 \\ 1 \\ 0 \end{bmatrix})
+       = \frac{1}{\sqrt2} \begin{bmatrix} 1 \\ 0 \\ 1 \\ 0 \end{bmatrix} \\
+      C_{not}\ket\psi &=
+      \frac{1}{\sqrt2} \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 0 & 1 \\ 0 & 0 & 1 & 0 \end{bmatrix}  
+                       \begin{bmatrix} 1 \\ 0 \\ 1 \\ 0 \end{bmatrix}
+      = \frac{1}{\sqrt2} \begin{bmatrix} 1 \\ 0 \\ 0 \\ 1 \end{bmatrix}
+      = \frac{1}{\sqrt2} (\begin{bmatrix} 1 \\ 0 \\ 0 \\ 0 \end{bmatrix} + \begin{bmatrix} 0 \\ 0 \\ 0 \\ 1 \end{bmatrix}) \\
+      &= \frac{1}{\sqrt2}(\ket{00} + \ket{11})
+    \end{align*}
+    The $C_{not}$ can be represented as a gate in graphical form:
+    \begin{align*}
+    % definitions for the circuit elements
+    \def\gAxA{\b\w\A{gAxA}}
+    \def\gAxB{\op{X}\w\A{gAxB}}
+    % definitions for bit labels and initial states
+    \def\bA{ \q{q_{0}}}
+    \def\bB{ \q{q_{1}}}
+    % The quantum circuit as an xymatrix
+    \xymatrix@R=5pt@C=10pt{
+        \bA & \gAxA &\n
+    \\  \bB & \gAxB &\n
+    % Vertical lines and other post-xymatrix latex
+    \ar@{-}"gAxB";"gAxA"
+    }
+    \end{align*}
+  }%
+\end{frame}
+
+\begin{frame}{Some Simple Gates}
+  {\tiny
+    \begin{align*}
+      C_{not} &= \ket0\bra0 \otimes I + \ket1\bra1 \otimes \mathbf{X} = \begin{bmatrix} I & 0 \\ 0 & X \end{bmatrix} \\
+      \Lambda Q &= \ket0\bra0 \otimes I + \ket1\bra1 \otimes \mathbf{Q} = \begin{bmatrix} I & 0 \\ 0 & Q \end{bmatrix} \\
+      \Lambda X &= C_{not}
+    \end{align*}
+
+    The swap circuit:
+    % definitions for the circuit elements
+    \def\gAxA{\b\w\A{gAxA}}
+    \def\gAxB{\o\w\A{gAxB}}
+    \def\gBxB{\b\w\A{gBxB}}
+    \def\gBxA{\o\w\A{gBxA}}
+    \def\gCxA{\b\w\A{gCxA}}
+    \def\gCxB{\o\w\A{gCxB}}
+    
+    % definitions for bit labels and initial states
+    \def\bA{ \q{q_{0}}}
+    \def\bB{ \q{q_{1}}}
+    
+    \begin{align*}
+    % The quantum circuit as an xymatrix
+    \xymatrix@R=5pt@C=10pt{
+        \bA & \gAxA &\gBxA &\gCxA &\n
+    \\  \bB & \gAxB &\gBxB &\gCxB &\n
+    %
+    % Vertical lines and other post-xymatrix latex
+    %
+    \ar@{-}"gAxB";"gAxA"
+    \ar@{-}"gBxA";"gBxB"
+    \ar@{-}"gCxB";"gCxA"
+    }
+    \end{align*}
+
+    $C_{not}$ in Hadamard basis (We have not changed the transformation at all, only the way we are thinking about it):
+    \begin{align*}
+      C_{not}\ket{++} &= \ket{++} \\
+      C_{not}\ket{+-} &= \ket{--} \\
+      C_{not}\ket{-+} &= \ket{-+} \\
+      C_{not}\ket{--} &= \ket{+-}
+    \end{align*}
+
+    Following two gates are same actually:
+    % definitions for the circuit elements
+    \def\gAxA{\op{H}\w\A{gAxA}}
+    \def\gAxB{\op{H}\w\A{gAxB}}
+    \def\gBxA{\b\w\A{gBxA}}
+    \def\gBxB{\o\w\A{gBxB}}
+    \def\gCxA{\op{H}\w\A{gCxA}}
+    \def\gCxB{\op{H}\w\A{gCxB}}
+    \def\gDxA{\b\w\A{gDxA}}
+    \def\gDxB{\o\w\A{gDxB}}
+    
+    % definitions for bit labels and initial states
+    
+    \def\bA{ \q{q_{0}}}
+    \def\bB{ \q{q_{1}}}
+    
+    \begin{align*}
+    % The quantum circuit as an xymatrix
+    \xymatrix@R=7pt@C=21pt{
+            & \gAxA &\gBxA &\gCxA &\n & & \gDxB &\n 
+    \\      & \gAxB &\gBxB &\gCxB &\n & & \gDxA &\n
+    %
+    % Vertical lines and other post-xymatrix latex
+    %
+    \ar@{-}"gBxB";"gBxA"
+    \ar@{-}"gDxB";"gDxA"
+    }
+    \end{align*}
+  }%
+\end{frame}
+
+\begin{frame}{Dense Coding}
+    {\tiny
+    Alice wants to send 2 bits to Bob with help of a EPR $\ket{\psi} = \frac{1}{\sqrt2} (\ket{00} + \ket{11} )$
+    }%
+    \begin{figure}
+      \includegraphics[scale=0.15]{figures/dense-coding}
+      \caption{Dense Coding}
+    \end{figure}
+    \begin{columns}[t]
+    \column{0.5\textwidth}
+    {\tiny
+    Alice encodes 2 bits with $q_0$ and sends the qubit to Bob:
+    \begin{align*}
+      \ket{\psi_0} &= (I \otimes I) \ket{\psi} = \frac{1}{\sqrt2} (\ket{00} + \ket{11} ) \\
+      \ket{\psi_1} &= (X \otimes I) \ket{\psi} = \frac{1}{\sqrt2} (\ket{10} + \ket{01} ) \\
+      \ket{\psi_2} &= (Z \otimes I) \ket{\psi} = \frac{1}{\sqrt2} (\ket{00} - \ket{11} ) \\
+      \ket{\psi_3} &= (Y \otimes I) \ket{\psi} = \frac{1}{\sqrt2} (\ket{01} - \ket{10} )
+    \end{align*}
+    }%
+    \column{0.5\textwidth}
+    {\tiny
+    % definitions for the circuit elements
+    \def\gAxA{\b\w\A{gAxA}}
+    \def\gAxB{\o\w\A{gAxB}}
+    \def\gBxA{\op{H}\w\A{gBxA}}
+    % definitions for bit labels and initial states
+    \def\bA{ \q{q_{0}}}
+    \def\bB{ \q{q_{1}}}
+    % The quantum circuit as an xymatrix
+    Bob decodes the qubit with gates:
+    \begin{align*}
+    \xymatrix@R=5pt@C=10pt{
+        \bA & \gAxA &\gBxA &\n
+    \\  \bB & \gAxB &\n   &\n
+    % Vertical lines and other post-xymatrix latex
+    \ar@{-}"gAxB";"gAxA"
+    }
+    \end{align*}
+    \begin{align*}
+      (H \otimes I) C_{not} \ket{\psi_0} &= (H \otimes I)\frac{1}{\sqrt2} (\ket{00} + \ket{10} ) = \ket{00} \\
+      (H \otimes I) C_{not} \ket{\psi_1} &= (H \otimes I)\frac{1}{\sqrt2} (\ket{11} + \ket{01} ) = \ket{01} \\
+      (H \otimes I) C_{not} \ket{\psi_2} &= (H \otimes I)\frac{1}{\sqrt2} (\ket{00} - \ket{10} ) = \ket{10} \\
+      (H \otimes I) C_{not} \ket{\psi_3} &= (H \otimes I)\frac{1}{\sqrt2} (\ket{01} - \ket{11} ) = \ket{11}
+    \end{align*}
+    }%
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Teleportation}
+  {\tiny
+  Alice wants to send $\ket{\phi} = a \ket{0} + b\ket{1}$ to Bob with help of a EPR $\ket{\psi} = \frac{1}{\sqrt2} (\ket{00} + \ket{11} )$.
+  }%
+  \begin{figure}
+    \includegraphics[scale=0.15]{figures/teleporation}
+    \caption{Teleportation}
+  \end{figure}
+  \begin{columns}[t]
+  \column{0.5\textwidth}
+  {\tiny
+  Alice transforms the 2 qubits she holds and then sends the result of measurement to Bob.
+  \begin{align*}
+    & ( H \otimes I \otimes I ) ( C_{not} \otimes I ) ( \ket{\phi} \otimes \ket{\psi} ) \\
+    &= ( H \otimes I \otimes I ) ( C_{not} \otimes I ) \\
+    &  \qquad \frac{1}{\sqrt2} ( a \ket{000} + a \ket{011} + b \ket{100} + b \ket{111} ) \\
+    &= ( H \otimes I \otimes I ) \frac{1}{\sqrt2} ( a \ket{000} + a \ket{011} + b \ket{110} + b \ket{101} ) \\
+    &= \frac{1}{2} ( a \ket{000} + a \ket{100} + a \ket{011} + a \ket{111} + \\
+    &  \quad \qquad   b \ket{010} - b \ket{110} + b \ket{001} - b \ket{101}) \\
+    &= \frac{1}{2} ( \ket{00} (a\ket0 + b\ket1) + \ket{01} ( a \ket1 + b \ket0) \\
+    &  \quad \qquad  \ket{10} (a\ket0 - b\ket1) + \ket{11} ( a \ket1 - b \ket0)
+  \end{align*}
+  }%
+  \column{0.5\textwidth}
+  {\tiny
+  Bob transforms the qubit he holds based on the bits he received:
+  \begin{align*}
+    00&: I (a\ket0 + b\ket1) = a\ket0 + b\ket1 \\
+    01&: X (a\ket1 + b\ket0) = a\ket0 + b\ket1 \\
+    10&: Z (a\ket0 - b\ket1) = a\ket0 + b\ket1 \\
+    11&: Y (a\ket1 - b\ket0) = a\ket0 + b\ket1
+  \end{align*}
+  }%
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Bloch Sphere of Single Qubit}
+  {\tiny
+    $\ket{\psi} = \cos(\frac{\theta}2)\ket{0}+e^{i\phi}\sin(\frac{\theta}2)\ket{1}$, where $0\leqslant\theta\leqslant\pi$, $0\leqslant\phi\leqslant2\pi$.
+    \begin{figure}
+      \centering
+      \begin{subfigure}[b]{0.5\textwidth}
+        \centering
+        \includegraphics[scale=0.2]{figures/The-spherical-polar-coordinate-system}
+        \caption{The spherical polar coordinate system\tiny\cite{sphericalpolarcoordinate}}
+      \end{subfigure}
+      \hfill
+      \begin{subfigure}[b]{0.5\textwidth}
+        \centering
+        \includegraphics[scale=0.24]{figures/singlequbitstates}
+        \caption{The special single qubit states\tiny\cite{singlequbitstates}}
+      \end{subfigure}
+      \caption{The Block Sphere}
+    \end{figure}
+  }%
+\end{frame}
+
+\begin{frame}{A Set of Primitive Transformations}
+  {\tiny
+    Defined operators $R_x(\alpha)$, $R_y(\alpha)$ and $R_z(\alpha)$:
+    \begin{align*}
+      R_x(\alpha) &\equiv \cos\frac{\alpha}2\mathbf{I} - i\sin\frac{\alpha}2
+                                                                     \begin{bmatrix}
+                                                                       1 & 0 \\
+                                                                       0 & 1
+                                                                     \end{bmatrix}
+                  &= e^{-i\frac{\alpha}2\mathbf{X}}
+                  &= \cos\frac{\alpha}2\mathbf{I} - i\sin\frac{\alpha}2 \mathbf{X}
+                  &&=\begin{bmatrix}
+                    \cos\frac{\alpha}2 & -i\sin\frac{\alpha}2 \\
+                    -i\sin\frac{\alpha}2 & \cos\frac{\alpha}2
+                    \end{bmatrix} \\
+      R_y(\alpha) &\equiv \cos\frac{\alpha}2\mathbf{I} - i\sin\frac{\alpha}2
+                                                                     \begin{bmatrix}
+                                                                       0 & -i \\
+                                                                       i & 0
+                                                                     \end{bmatrix}
+                  &= e^{-i\frac{\alpha}2\mathbf{Y}}
+                  &= \cos\frac{\alpha}2\mathbf{I} - i\sin\frac{\alpha}2 \mathbf{Y}
+                  &&=\begin{bmatrix}
+                    \cos\frac{\alpha}2 & -\sin\frac{\alpha}2 \\
+                    \sin\frac{\alpha}2 & \cos\frac{\alpha}2
+                    \end{bmatrix} \\
+      R_z(\alpha) &\equiv \cos\frac{\alpha}2\mathbf{I} - i\sin\frac{\alpha}2
+                                                                     \begin{bmatrix}
+                                                                       1 & 0 \\
+                                                                       0 & -1
+                                                                     \end{bmatrix}
+                  &= e^{-i\frac{\alpha}2\mathbf{Z}}
+                  &= \cos\frac{\alpha}2\mathbf{I} - i\sin\frac{\alpha}2 \mathbf{Z}
+                  &&=\begin{bmatrix}
+                    e^{-i\frac{\alpha}2} & 0 \\
+                    0 & e^{i\frac{\alpha}2}
+                    \end{bmatrix} \\
+    \end{align*}
+    Define transformations:
+    \begin{align*}
+      K(\delta) &= e^{i\delta}I & \mbox{A phase shift} \\
+      R(\beta)  &= \begin{bmatrix} \cos\beta & \sin\beta \\ -\sin\beta & \cos\beta \end{bmatrix}  & \mbox{A rotation $2\beta$ (left-hand) about the y-axis} \\
+      T(\alpha) &= \begin{bmatrix} e^{i\alpha} & 0 \\ 0 & e^{-i\alpha} \end{bmatrix} & \mbox{A rotation $2\alpha$ (left-hand) about the z-axis} \\
+    \end{align*}
+    \begin{align*}
+      &R(\beta)R(-\beta) = I, T(\alpha)T(-\alpha) = I \\
+      &XR(\beta)X = R(-\beta), XT(\alpha)X = T(-\alpha) \\
+      &T(\alpha)T(\gamma) = T(\alpha + \gamma)
+    \end{align*}
+  }%
+\end{frame}
+
+\begin{frame}{Decomposition to Primitive Transformations}
+  {\tiny
+    Any single-qubit transformation $Q$ can be decomposed into a sequence of transformations of the form
+    \begin{align*}
+      K(\delta)T(\alpha)R(\beta)T(\gamma) =
+       \begin{bmatrix}
+          e^{i(\delta + \alpha + \gamma)} \cos\beta & e^{i(\delta + \alpha - \gamma)} \sin\beta \\
+         -e^{i(\delta - \alpha + \gamma)} \sin\beta & e^{i(\delta - \alpha - \gamma)} \cos\beta
+       \end{bmatrix}.
+    \end{align*}
+    Given the transformation $Q$, it follows immediately from the unitary condition $QQ^{\dagger}=I$.
+    And indeed:
+    \begin{align*}
+      \begin{bmatrix}
+         e^{i(\delta + \alpha + \gamma)} \cos\beta & e^{i(\delta + \alpha - \gamma)} \sin\beta \\
+        -e^{i(\delta - \alpha + \gamma)} \sin\beta & e^{i(\delta - \alpha - \gamma)} \cos\beta
+      \end{bmatrix}
+      \begin{bmatrix}
+        e^{-i(\delta + \alpha + \gamma)} \cos\beta & -e^{-i(\delta - \alpha + \gamma)} \sin\beta \\
+        e^{-i(\delta + \alpha - \gamma)} \sin\beta &  e^{-i(\delta - \alpha - \gamma)} \cos\beta
+      \end{bmatrix} = I
+    \end{align*}
+  }%
+\end{frame}
+
+\begin{frame}{Decomposition of Single-Controlled-Not - I}
+  {\tiny
+    Let $Q=K(\delta)T(\alpha)R(\beta)T(\gamma)$, then:
+    \begin{align*}
+      \Lambda Q &= (\Lambda K(\delta)) (\Lambda (T(\alpha)R(\beta)T(\gamma))) \\
+               &= (\Lambda K(\delta)) (\Lambda Q')
+    \end{align*}
+    \begin{align*}
+      \Lambda K(\delta) &= \ket0 \bra0 \otimes I + \ket1 \bra1 K(\delta)
+       = \ket0 \bra0 \otimes I + e^{i\delta}\ket1 \bra1 I \\
+      &= (\begin{bmatrix} 1 & 0 \\ 0 & 0 \end{bmatrix} + e^{i\delta} \begin{bmatrix} 0 & 0 \\ 0 & 1 \end{bmatrix}) \otimes I
+       = (\begin{bmatrix} e^{i\frac{\delta}{2}} & 0 \\ 0 & e^{i\frac{\delta}{2}}\end{bmatrix}
+         + e^{i\delta} \begin{bmatrix} e^{-i\frac{\delta}{2}} & 0 \\ 0 & e^{i\frac{\delta}{2}} \end{bmatrix}) \otimes I \\
+      &= (K(\frac{\delta}{2})T(-\frac{\delta}{2})) \otimes I
+    \end{align*}
+    Graphically,
+    \begin{align*}
+    % definitions for the circuit elements
+    \def\gAxA{\b\w\A{gAxA}}
+    \def\gAxB{\op{K(\delta)}\w\A{gAxB}}
+    \def\gBxA{\op{T(-\frac{\delta}{2})}\w\A{gBxA}}
+    \def\gCxA{\op{K(\frac{\delta}{2})}\w\A{gCxA}}
+    % definitions for bit labels and initial states
+    \def\bA{ \q{q_{0}}}
+    \def\bB{ \q{q_{1}}}
+    % The quantum circuit as an xymatrix
+    \xymatrix@R=5pt@C=10pt{
+        \bA & \gAxA &\n & &\gBxA &\gCxA &\n
+    \\  \bB & \gAxB &\n & &\n    &\n    &\n
+    % Vertical lines and other post-xymatrix latex
+    \ar@{-}"gAxB";"gAxA"
+    }
+    \end{align*}
+  }%
+\end{frame}
+    
+\begin{frame}{Decomposition of Single-Controlled-Not - II}
+  {\tiny
+    Define:
+    \begin{align*}
+      Q_0 &= T(\alpha)R(\frac{\beta}{2}), \\
+      Q_1 &= R(-\frac{\beta}{2})T(\frac{-\gamma - \alpha}{2}), \\
+      Q_2 &= T(\frac{\gamma - \alpha}{2}).
+    \end{align*}
+    Following hold:
+    \begin{align*}
+      Q_0 Q_1 Q_2 &= T(\alpha)R(\frac{\beta}{2}) R(-\frac{\beta}{2})T(\frac{-\gamma - \alpha}{2}) T(\frac{\gamma - \alpha}{2}) = I \\
+      Q_0 X Q_1 X Q_2 &=
+      T(\alpha)R(\frac{\beta}{2}) X R(-\frac{\beta}{2}) X X T(\frac{-\gamma - \alpha}{2}) X T(\frac{\gamma - \alpha}{2}) \\
+      &= T(\alpha) R(\beta) T(\gamma) = Q'
+    \end{align*}
+    A circuit is constructed as:
+    \begin{align*}
+    % definitions for the circuit elements
+    \def\gAxB{\op{Q_2}\w\A{gAxB}}
+    \def\gBxA{\b\w\A{gBxA}}
+    \def\gBxB{\op{X}\w\A{gBxB}}
+    \def\gCxB{\op{Q_1}\w\A{gCxB}}
+    \def\gDxA{\b\w\A{gDxA}}
+    \def\gDxB{\op{X}\w\A{gDxB}}
+    \def\gExB{\op{Q_0}\w\A{gExB}}
+    % definitions for bit labels and initial states
+    \def\bA{ \q{q_{0}}}
+    \def\bB{ \q{q_{1}}}
+    % The quantum circuit as an xymatrix
+    \xymatrix@R=5pt@C=10pt{
+        \bA & \n   &\gBxA &\n   &\gDxA &\n   &\n
+    \\  \bB & \gAxB &\gBxB &\gCxB &\gDxB &\gExB &\n
+    % Vertical lines and other post-xymatrix latex
+    \ar@{-}"gBxB";"gBxA"
+    \ar@{-}"gDxB";"gDxA"
+    }
+    \end{align*}
+    This circuit performs following transformation:
+    \begin{align*}
+      \ket{0} \otimes \ket{x} & \rightarrow \ket{0} \otimes Q_0 Q_1 Q_2 \ket{x} = \ket{0} \otimes \ket{x} \\
+      \ket{1} \otimes \ket{x} & \rightarrow \ket{0} \otimes Q_0 X Q_1 X Q_2 \ket{x} = \ket{0} \otimes Q' \ket{x}
+    \end{align*}
   }%
 \end{frame}
 
