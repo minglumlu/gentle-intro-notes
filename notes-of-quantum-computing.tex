@@ -152,6 +152,9 @@
   \newline
   \newline
   \small{\textrm{Eleanor Rieffel and Wolfgang Polak}}
+  \newline
+  \newline
+  And \href{http://twoqubits.wikidot.com/start}{website (including exercises solutions)}
 \end{frame}
 
 \begin{frame}{Bibliography}
@@ -912,13 +915,13 @@
                    &  \text{(Can be written as decomposition of 2 2-qubit systems)} \\
                  &= \frac{1}{\sqrt{2}} (\ket{0}_1\ket{0}_3  + \ket{1}_1\ket{1}_3) \otimes  \frac{1}{\sqrt{2}} (\ket{0}_2\ket{0}_4  + \ket{1}_2\ket{1}_4) \\
                  &= \frac{1}{2} ( \begin{bmatrix} 1 \\ 0 \\ 0 \\ 0 \end{bmatrix}_{13} \otimes  \begin{bmatrix} 1 \\ 0 \\ 0 \\ 0 \end{bmatrix}_{24} +
-                                  \begin{bmatrix} 0 \\ 0 \\ 0 \\ 0 \end{bmatrix}_{13} \otimes  \begin{bmatrix} 0 \\ 0 \\ 0 \\ 1 \end{bmatrix}_{24} +
+                                  \begin{bmatrix} 1 \\ 0 \\ 0 \\ 0 \end{bmatrix}_{13} \otimes  \begin{bmatrix} 0 \\ 0 \\ 0 \\ 1 \end{bmatrix}_{24} +
                                   \begin{bmatrix} 0 \\ 0 \\ 0 \\ 1 \end{bmatrix}_{13} \otimes  \begin{bmatrix} 1 \\ 0 \\ 0 \\ 0 \end{bmatrix}_{24} +
                                   \begin{bmatrix} 0 \\ 0 \\ 0 \\ 1 \end{bmatrix}_{13} \otimes  \begin{bmatrix} 0 \\ 0 \\ 0 \\ 1 \end{bmatrix}_{24} )
     \end{align*}
 
     “Strictly speaking, entanglement is always with respect to a specified tensor product decomposition of the state \textbf{space}.
-    More formally, given a state $\ket\psi$ of some quantum system with associated vector space V and a tensor decomposition of V, $V = V1 \otimes \dots \otimes V_n$,
+    More formally, given a state $\ket\psi$ of some quantum system with associated vector space V and a tensor decomposition of V, $V = V_1 \otimes \dots \otimes V_n$,
     the state $\ket\psi$ is separable, or unentangled, with respect to that decomposition if it can be written as \\
     $\ket\psi = \ket{v_1} \otimes \dots \otimes \ket{v_n} $, where $\ket{v_i}$ is contained in $V_i$. Otherwise, $\ket\psi$ is entangled with respect to this decomposition.”
     \par
@@ -1779,12 +1782,15 @@
 
 \begin{frame}{The No-Cloning Principle}
   {\tiny
-    Suppose $U$ is a unitary transformation that clones: $U\ket{a}\ket{0} = \ket{a}\ket{a}$
+    Suppose $U$ is a unitary transformation that clones: $U\ket{a}\ket{0} = \ket{a}\ket{a}$, by linearity,
     \begin{align*}
       \ket{c} &= \frac{1}{\sqrt2} (\ket{a} + \ket{b}) \\
       U\ket{c}\ket{0} &=  \frac{1}{\sqrt2} ( \ket{a}\ket{a} + \ket{b}\ket{b} ) \\
                       &=  \ket{c}\ket{c} = \frac{1}{2} (  \ket{a}\ket{a} + \ket{a}\ket{b} + \ket{b}\ket{a} + \ket{b}\ket{b} )
     \end{align*}
+    Thus, there is no unitary operation that can reliably clone \textbf{all} quantum states.
+    The no-cloning theorem tells us that it is impossible to clone a specific unknown quantum state reliably.
+    It does not preclude the construction of a known quantum state from a known quantum state.
   }%
 \end{frame}
 
@@ -1848,7 +1854,8 @@
       C_{not} &= \ket0\bra0 \otimes I + \ket1\bra1 \otimes \mathbf{X} \\
               &= \ket0\bra0 \otimes (\ket0\bra0 +\ket1\bra1) + \ket1\bra1 \otimes (\ket1\bra0 + \ket0\bra1) \\
               &= \ket{00}\bra{00} + \ket{01}\bra{01} + \ket{11}\bra{10} + \ket{10}\bra{11} \\
-              &= \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 0 & 1 \\ 0 & 0 & 1 & 0 \end{bmatrix} \\
+              &= \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 0 & 1 \\ 0 & 0 & 1 & 0 \end{bmatrix} 
+              = \begin{bmatrix} I & 0 \\ 0 & X \end{bmatrix} \\
       C_{not}C_{not} &= I
     \end{align*}
   }%
@@ -1888,6 +1895,81 @@
     % Vertical lines and other post-xymatrix latex
     \ar@{-}"gAxB";"gAxA"
     }
+    \end{align*}
+  }%
+\end{frame}
+
+\begin{frame}{The Controlled-NOT - III}
+  {\tiny
+    \begin{align*}
+      % definitions for the circuit elements
+      \def\gAxA{\op{X}\w\A{gAxA}}
+      \def\gBxA{\b\w\A{gBxA}}
+      \def\gBxB{\op{X}\w\A{gBxB}}
+      \def\gCxA{\op{X}\w\A{gCxA}}
+      % definitions for bit labels and initial states
+      \def\bA{ \q{q_{0}}}
+      \def\bB{ \q{q_{1}}}
+      % The quantum circuit as an xymatrix
+      \xymatrix@R=5pt@C=10pt{
+          \bA & \gAxA &\gBxA &\gCxA &\n
+      \\  \bB & \n   &\gBxB &\n   &\n
+      % Vertical lines and other post-xymatrix latex
+      \ar@{-}"gBxB";"gBxA" \\
+      }
+    \end{align*}
+    This circuit represents transformation: $(X \otimes I) \begin{bmatrix} I & 0 \\ 0 & X \end{bmatrix} (X \otimes I)$ \\
+    Given
+    \begin{align*}
+      X \otimes I &= \begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix} \otimes \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix}
+      =\begin{bmatrix}
+        0 & 0 & 1 & 0 \\
+        0 & 0 & 0 & 1 \\
+        1 & 0 & 0 & 0 \\
+        0 & 1 & 0 & 0
+       \end{bmatrix}
+    \end{align*}
+    The transformation is:
+    \begin{align*}
+        &\begin{bmatrix}
+        0 & 0 & 1 & 0 \\
+        0 & 0 & 0 & 1 \\
+        1 & 0 & 0 & 0 \\
+        0 & 1 & 0 & 0
+        \end{bmatrix}
+        \begin{bmatrix}
+        1 & 0 & 0 & 0 \\
+        0 & 1 & 0 & 0 \\
+        0 & 0 & 0 & 1 \\
+        0 & 0 & 1 & 0
+        \end{bmatrix}
+        \begin{bmatrix}
+        0 & 0 & 1 & 0 \\
+        0 & 0 & 0 & 1 \\
+        1 & 0 & 0 & 0 \\
+        0 & 1 & 0 & 0
+        \end{bmatrix} \\
+        = &
+        \begin{bmatrix}
+        0 & 0 & 1 & 0 \\
+        0 & 0 & 0 & 1 \\
+        1 & 0 & 0 & 0 \\
+        0 & 1 & 0 & 0
+        \end{bmatrix}
+        \begin{bmatrix}
+        0 & 0 & 1 & 0 \\
+        0 & 0 & 0 & 1 \\
+        0 & 1 & 0 & 0 \\
+        1 & 0 & 0 & 0
+        \end{bmatrix} \\
+        = &
+        \begin{bmatrix}
+        0 & 1 & 0 & 0 \\
+        1 & 0 & 0 & 0 \\
+        0 & 0 & 1 & 0 \\
+        0 & 0 & 0 & 1
+        \end{bmatrix}
+        = \begin{bmatrix} X & 0 \\ 0 & I \end{bmatrix}
     \end{align*}
   }%
 \end{frame}
@@ -2050,29 +2132,24 @@
   \end{columns}
 \end{frame}
 
-\begin{frame}{Bloch Sphere of Single Qubit}
+\begin{frame}{Bloch Sphere of Single Qubit and Rotations}
   {\tiny
     $\ket{\psi} = \cos(\frac{\theta}2)\ket{0}+e^{i\phi}\sin(\frac{\theta}2)\ket{1}$, where $0\leqslant\theta\leqslant\pi$, $0\leqslant\phi\leqslant2\pi$.
     \begin{figure}
       \centering
       \begin{subfigure}[b]{0.5\textwidth}
         \centering
-        \includegraphics[scale=0.2]{figures/The-spherical-polar-coordinate-system}
+        \includegraphics[scale=0.1]{figures/The-spherical-polar-coordinate-system}
         \caption{The spherical polar coordinate system\tiny\cite{sphericalpolarcoordinate}}
       \end{subfigure}
       \hfill
       \begin{subfigure}[b]{0.5\textwidth}
         \centering
-        \includegraphics[scale=0.24]{figures/singlequbitstates}
+        \includegraphics[scale=0.12]{figures/singlequbitstates}
         \caption{The special single qubit states\tiny\cite{singlequbitstates}}
       \end{subfigure}
       \caption{The Block Sphere}
     \end{figure}
-  }%
-\end{frame}
-
-\begin{frame}{A Set of Primitive Transformations}
-  {\tiny
     Defined operators $R_x(\alpha)$, $R_y(\alpha)$ and $R_z(\alpha)$:
     \begin{align*}
       R_x(\alpha) &\equiv \cos\frac{\alpha}2\mathbf{I} - i\sin\frac{\alpha}2
@@ -2109,6 +2186,11 @@
                     0 & e^{i\frac{\alpha}2}
                     \end{bmatrix} \\
     \end{align*}
+  }%
+\end{frame}
+
+\begin{frame}{A Set of Primitive Transformations}
+  {\tiny
     Define transformations:
     \begin{align*}
       K(\delta) &= e^{i\delta}I & \mbox{A phase shift} \\
@@ -2120,11 +2202,6 @@
       &XR(\beta)X = R(-\beta), XT(\alpha)X = T(-\alpha) \\
       &T(\alpha)T(\gamma) = T(\alpha + \gamma)
     \end{align*}
-  }%
-\end{frame}
-
-\begin{frame}{Decomposition to Primitive Transformations}
-  {\tiny
     Any single-qubit transformation $Q$ can be decomposed into a sequence of transformations of the form
     \begin{align*}
       K(\delta)T(\alpha)R(\beta)T(\gamma) =
@@ -2144,6 +2221,25 @@
         e^{-i(\delta + \alpha + \gamma)} \cos\beta & -e^{-i(\delta - \alpha + \gamma)} \sin\beta \\
         e^{-i(\delta + \alpha - \gamma)} \sin\beta &  e^{-i(\delta - \alpha - \gamma)} \cos\beta
       \end{bmatrix} = I
+    \end{align*}
+  }%
+\end{frame}
+
+
+\begin{frame}{Examples of Primitive Transformations}
+  {\tiny
+    \begin{align*}
+      K(\delta)T(\alpha)R(\beta)T(\gamma) =
+       \begin{bmatrix}
+          e^{i(\delta + \alpha + \gamma)} \cos\beta & e^{i(\delta + \alpha - \gamma)} \sin\beta \\
+         -e^{i(\delta - \alpha + \gamma)} \sin\beta & e^{i(\delta - \alpha - \gamma)} \cos\beta
+       \end{bmatrix}
+    \end{align*}
+    \begin{align*}
+      Q &= K(\delta)T(\alpha)R(\beta)T(\gamma) \\
+      I &= K(0) T(0) R(0) T(0) \\
+      X &= K(-\frac{\pi}{2}) T(\frac{\pi}{2}) R(\frac{\pi}{2}) T(0) \\
+      H &= K(-\frac{\pi}{2}) T(\frac{\pi}{2}) R(\frac{\pi}{4}) T(0) = \frac{1}{\sqrt{2}}\begin{bmatrix} 1 & 1 \\ 1 & -1\end{bmatrix}
     \end{align*}
   }%
 \end{frame}
@@ -2225,6 +2321,89 @@
     \begin{align*}
       \ket{0} \otimes \ket{x} & \rightarrow \ket{0} \otimes Q_0 Q_1 Q_2 \ket{x} = \ket{0} \otimes \ket{x} \\
       \ket{1} \otimes \ket{x} & \rightarrow \ket{0} \otimes Q_0 X Q_1 X Q_2 \ket{x} = \ket{0} \otimes Q' \ket{x}
+    \end{align*}
+  }%
+\end{frame}
+
+\begin{frame}{Toffoli gate}
+  {\tiny
+    \begin{align*}
+      % definitions for the circuit elements
+      \def\gAxA{\b\w\A{gAxA}}
+      \def\gAxB{\b\w\A{gAxB}}
+      \def\gAxC{\op{X}\w\A{gAxC}}
+      % definitions for bit labels and initial states
+      \def\bA{ \q{q_{0}}}
+      \def\bB{ \q{q_{1}}}
+      \def\bC{ \q{q_{2}}}
+      % The quantum circuit as an xymatrix
+      \xymatrix@R=5pt@C=10pt{
+          \bA & \gAxA &\n
+      \\  \bB & \gAxB &\n
+      \\  \bC & \gAxC &\n
+      % Vertical lines and other post-xymatrix latex
+      \ar@{-}"gAxC";"gAxA"\ar@{-}"gAxC";"gAxB"
+      }
+    \end{align*}
+    \begin{align*}
+      \begin{bmatrix}
+        1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+        0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
+        0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\
+        0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\
+        0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 \\
+      \end{bmatrix}
+    \end{align*}
+  }%
+\end{frame}
+
+\begin{frame}{Multiply Controlled Single-Qubit Transformations}
+  {\tiny
+    \begin{align*}
+    % definitions for the circuit elements
+    \def\gAxA{\b\w\A{gAxA}}
+    \def\gAxB{\op{T(-\frac{\delta}{2})}\w\A{gAxB}}
+    \def\gBxA{\b\w\A{gBxA}}
+    \def\gBxB{\op{K(\frac{\delta}{2})}\w\A{gBxB}}
+    \def\gCxA{\b\w\A{gCxA}}
+    \def\gCxC{\op{Q_2}\w\A{gCxC}}
+    \def\gDxA{\b\w\A{gDxA}}
+    \def\gDxB{\b\w\A{gDxB}}
+    \def\gDxC{\op{X}\w\A{gDxC}}
+    \def\gExA{\b\w\A{gExA}}
+    \def\gExC{\op{Q_1}\w\A{gExC}}
+    \def\gFxA{\b\w\A{gFxA}}
+    \def\gFxB{\b\w\A{gFxB}}
+    \def\gFxC{\op{X}\w\A{gFxC}}
+    \def\gGxA{\b\w\A{gGxA}}
+    \def\gGxC{\op{Q_0}\w\A{gGxC}}
+    % definitions for bit labels and initial states
+    \def\bA{ \q{q_{0}}}
+    \def\bB{ \q{q_{1}}}
+    \def\bC{ \q{q_{2}}}
+    % The quantum circuit as an xymatrix
+    \xymatrix@R=5pt@C=10pt{
+        \bA & \gAxA &\gBxA &\gCxA &\gDxA &\gExA &\gFxA &\gGxA &\n
+    \\  \bB & \gAxB &\gBxB &\n   &\gDxB &\n   &\gFxB &\n   &\n
+    \\  \bC & \n   &\n   &\gCxC &\gDxC &\gExC &\gFxC &\gGxC &\n
+    % Vertical lines and other post-xymatrix latex
+    \ar@{-}"gAxB";"gAxA"
+    \ar@{-}"gBxB";"gBxA"
+    \ar@{-}"gCxC";"gCxA"
+    \ar@{-}"gDxC";"gDxA"\ar@{-}"gDxC";"gDxB"
+    \ar@{-}"gExC";"gExA"
+    \ar@{-}"gFxC";"gFxA"\ar@{-}"gFxC";"gFxB"
+    \ar@{-}"gGxC";"gGxA"
+    }
+    \end{align*}
+    \begin{align*}
+      \Lambda^{0}_{10}Q &= \Lambda Q \\
+      \Lambda^{0}_{11}Q &= \Lambda XQX \\
+      \Lambda^{0}_{00}Q &: \mbox{$\Lambda Q$ except the $Q$ is performed only when the control-bit has value $0$} \\
+      \Lambda^{1}_{01}Q &: \mbox{The control-bit is $b_1$}
     \end{align*}
   }%
 \end{frame}
