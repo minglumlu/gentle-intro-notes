@@ -101,7 +101,7 @@
 
 \def\q#1{*+{\rule[-0.2ex]{0ex}{2.1ex}|#1\>}}
 \def\qv#1#2{*+{\rule[-0.2ex]{0ex}{2.1ex}|#1\>=|#2\>}}
-	
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % multiple qubit gates
 
@@ -421,7 +421,7 @@
      &= -\cos(\theta')\ket{0}-e^{i\phi}\sin\theta'\ket{1} \\
      &= -\ket{\psi} .
   \end{align*}
-  It has only a global phase difference. So a hemisphere is able to represent a qubit. Finally a qubit can be modeled as a \textbf{Bloch Sphere}:
+  It has only a global phase difference. So a hemisphere is able to represent a qubit. Finally a qubit can be modelled as a \textbf{Bloch Sphere}:
   \begin{align*}
     \ket{\psi} &= \cos(\frac{\theta}2)\ket{0}+e^{i\phi}\sin(\frac{\theta}2)\ket{1}
   \end{align*}
@@ -458,7 +458,7 @@
 \subsection{Rotation on the Bloch Sphere}
 \begin{frame}{The Exponential Operator\tiny\cite{rotationsonblochsphere}}
   {\tiny
-    Suppose $f(x)$ has a power series $f(x) = \sum_{i=0}^{\infty}c_ix^n$, and define $f(\mathbf{A})$ as:
+    Suppose $f(x)$ has a power series $f(x) = \sum_{i=0}^{\infty}c_ix^n$, and \textbf{define} $f(\mathbf{A})$ as:
     \begin{align*}
     f(\mathbf{A}) \equiv c_0\mathbf{I} + c_1\mathbf{A} + c_2\mathbf{A^2} + c_3\mathbf{A^3} + \dots
     \end{align*}
@@ -493,12 +493,12 @@
     \begin{align*}
       e^{i\alpha\mathbf{A}} = \cos(\alpha)\mathbf{I} + i\sin(\alpha)\mathbf{A}
     \end{align*}
-    Define operators $R_x(\alpha)$, $R_y(\alpha)$ and $R_z(\alpha)$:
+    \textbf{Define} operators $R_x(\alpha)$, $R_y(\alpha)$ and $R_z(\alpha)$:
     \begin{align*}
       R_x(\alpha) &\equiv \cos\frac{\alpha}2\mathbf{I} - i\sin\frac{\alpha}2
                                                                      \begin{bmatrix}
-                                                                       1 & 0 \\
-                                                                       0 & 1
+                                                                       0 & 1 \\
+                                                                       1 & 0
                                                                      \end{bmatrix}
                   &= e^{-i\frac{\alpha}2\mathbf{X}}
                   &= \cos\frac{\alpha}2\mathbf{I} - i\sin\frac{\alpha}2 \mathbf{X}
