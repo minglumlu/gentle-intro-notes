@@ -547,13 +547,17 @@
                               \end{bmatrix} \\
                           &= \begin{bmatrix}
                                e^{-i\frac{\alpha}2}\cos{\frac{\theta}2} \\
-                               e^{i\frac{\alpha}2}\sin{\frac{\theta}2}
+                               e^{i\frac{\alpha}2}e^{i\phi}\sin{\frac{\theta}2}
                              \end{bmatrix} \\
-     e^{i\frac{\alpha}2}R_z(\alpha)\ket{\psi}
+     e^{-i\frac{\alpha}2}R_z(\alpha)\ket{\psi}
                           &= \begin{bmatrix}
                                \cos{\frac{\theta}2} \\
-                               e^{i\alpha}e^{i\phi}\sin{\frac{\theta}2}
+                             e^{i\frac{\alpha}2}e^{i\frac{\alpha}2}e^{i\phi}\sin{\frac{\theta}2}
                              \end{bmatrix} \\
+                          &= \begin{bmatrix}
+                               \cos{\frac{\theta}2} \\
+                               e^{i(\alpha + \phi)}\sin{\frac{\theta}2} \\
+                             \end{bmatrix} & \checkmark \\
     \\
     R_x(\alpha)\ket{\psi} &= \begin{bmatrix}
                               \cos\frac{\alpha}2 & -i\sin\frac{\alpha}2 \\
@@ -804,7 +808,7 @@
             0 \begin{bmatrix} 1 \\ 0 \end{bmatrix}
           \end{bmatrix}
           = \begin{bmatrix} 1 \\ 0 \\ 0 \\ 0 \end{bmatrix} \\
-      \begin{bmatrix} 1 \\ 0 \end{bmatrix} \begin{bmatrix} 1 & 0 \end{bmatrix} &= \begin{bmatrix}
+      \begin{bmatrix} 1 \\ 0 \end{bmatrix} \otimes \begin{bmatrix} 1 & 0 \end{bmatrix} &= \begin{bmatrix}
                                                                                     1 & 0 \\
                                                                                     0 & 0
                                                                                   \end{bmatrix} \\
@@ -815,7 +819,7 @@
             0 \begin{bmatrix} 0 \\ 1 \\ 0 \\ 0 \end{bmatrix}
           \end{bmatrix}
           = \begin{bmatrix} 0 \\ 1 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \end{bmatrix} \\
-      \begin{bmatrix} 1 \\ 0 \end{bmatrix} \begin{bmatrix} 0 & 1 & 0 & 0 \end{bmatrix} &= \begin{bmatrix}
+      \begin{bmatrix} 1 \\ 0 \end{bmatrix} \otimes \begin{bmatrix} 0 & 1 & 0 & 0 \end{bmatrix} &= \begin{bmatrix}
                                                                                             0 & 1 & 0 & 0\\
                                                                                             0 & 0 & 0 & 0
                                                                                           \end{bmatrix}
@@ -828,7 +832,7 @@
   {\tiny
   All possible states of a single-qubit system is viewed as a two-dimensional complex vector space.
   All possible states of a 2-qubit system is viewed as the tensor product ($\otimes$) of two such vector spaces.
-  This tensor product is a vecor space as well. Its dimension is $2^2$.\\
+  This tensor product is a vector space as well. Its dimension is $2^2$.\\
   Let $\mathbf{V}$ and $\mathbf{W}$ be two-dimensional complex vector spaces with
   bases $A=\{\ket{\alpha_1}, \ket{\alpha_2}\}$ and $B=\{\ket{\beta_1}, \ket{\beta_2}\}$ respectively. \\
   One basis of $\mathbf{V} \otimes \mathbf{W}$ is:
@@ -890,17 +894,17 @@
 \begin{frame}{Develop Our Understanding on Superposition}
   {\tiny
   Superposition can not be described as in multiple states “at the same time”. It is not probabilistic mixture. It is only caused by what we human beings can observe/measure.
-  Consider
+  Consider:
   \begin{align*}
     \frac{1}{\sqrt{2}} (\ket{00} + \ket{11}) \\
     \frac{1}{\sqrt{2}} (\ket{00} + \textbf{i}\ket{11})
-  \end{align*}.
-  They behave differently under a variety of circumstances. And 
+  \end{align*} \\
+  They behave differently under a variety of circumstances. And:
   \begin{align*}
     \frac{1}{\sqrt{2}} (\ket{00} + \ket{11}) \\
     \frac{1}{\sqrt{2}} (\ket{++} + \ket{--})
-  \end{align*}
-  represent the same state of a quantum system. Thus they behave precisely same at all circumstances.
+  \end{align*} \\
+  They represent the same state of a quantum system. Thus they behave precisely same at all circumstances.
   }%
 \end{frame}
 
