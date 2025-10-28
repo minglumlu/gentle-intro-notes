@@ -10,6 +10,7 @@
 \usepackage{csquotes}
 \usepackage[english]{babel}
 \usepackage{tikz-cd}
+\usepackage{xcolor}
 \usepackage[
   backend=biber,
   style=numeric,
@@ -623,8 +624,8 @@
                 \end{bmatrix}
               \end{pmatrix} \\
             &= \frac{1}2(\mathbf{I} + \mathbf{X}\cos\phi\sin\theta + \mathbf{Y}\sin\phi\sin\theta + \mathbf{Z}\cos\theta) \\
-            &= \frac{1}2(\mathbf{I} + (\mathbf{X}, \mathbf{Y}, \mathbf{Z}) \cdot (r_x, r_y, r_z)) \\
-            &= \frac{1}2 ( \mathbf{I} + \overrightarrow{\sigma} \cdot \overrightarrow{\mathbf{r}}_{\rho} )
+            &= \frac{1}2(\mathbf{I} + (r_x, r_y, r_z) \cdot (\mathbf{X}, \mathbf{Y}, \mathbf{Z}) ) \\
+            &= \frac{1}2 ( \mathbf{I} + \overrightarrow{\mathbf{r}}_{\rho} \cdot \overrightarrow{\sigma} )
     \end{align*}
   }%
 \end{frame}
@@ -652,9 +653,9 @@
                 + \sin^2\frac{\alpha}2 \mathbf{Z}\mathbf{X}\mathbf{Z} \\
             &=    \begin{pmatrix} \cos^2\frac{\alpha}2 -  \sin^2\frac{\alpha}2 \end{pmatrix} \mathbf{X}
                 + 2 \sin\frac{\alpha}2 \cos\frac{\alpha}2 \mathbf{Y} \\
-            &= \cos\alpha \mathbf{X} + \sin\alpha \mathbf{Y} \\
+            &= {\color{red}\cos\alpha \mathbf{X} + \sin\alpha \mathbf{Y}  + 0 \mathbf{Z}}\\
       R_z(\alpha) \mathbf{Y} R_z(\alpha)^{\dagger}
-            &=    \cos\alpha \mathbf{Y} - \sin\alpha \mathbf{X} \\
+            &=    {\color{blue}- \sin\alpha \mathbf{X} +\cos\alpha \mathbf{Y} + 0 \mathbf{Z}}  \\
       R_z(\alpha) \mathbf{Z} R_z(\alpha)^{\dagger}
             &=    \begin{pmatrix} \cos\frac{\alpha}2\mathbf{I} - i\sin\frac{\alpha}2 \mathbf{Z} \end{pmatrix}
                   \mathbf{Z}
@@ -663,14 +664,14 @@
                 + i\sin\frac{\alpha}2 \cos\frac{\alpha}2 \mathbf{Z}\mathbf{Z}
                 - i\sin\frac{\alpha}2 \cos\frac{\alpha}2 \mathbf{Z}\mathbf{Z}
                 + \sin^2\frac{\alpha}2 \mathbf{Z}\mathbf{Z}\mathbf{Z} \\
-            &=    \mathbf{Z} \\
+            &=    {\color{purple}0 \mathbf{X}  + 0 \mathbf{Y} + 1\mathbf{Z}} \\
       \\
-      \rho' &= \frac{1}2 ( \mathbf{I} + \overrightarrow{\sigma} \cdot \overrightarrow{\mathbf{r}}_{\rho'} )
+      \rho' &= \frac{1}2 ( \mathbf{I} + \overrightarrow{\mathbf{r}}_{\rho'} \cdot\overrightarrow{\sigma} )
             , where \overrightarrow{\mathbf{r}}_{\rho'} =
               \begin{bmatrix}
-                \cos\alpha & -\sin\alpha & 0 \\
-                \sin\alpha & \cos\alpha  & 0 \\
-                0          & 0           & 1
+                {\color{red}\cos\alpha} & {\color{blue}-\sin\alpha} & {\color{purple}0} \\
+                {\color{red}\sin\alpha} & {\color{blue}\cos\alpha}  & {\color{purple}0} \\
+                {\color{red}0}          & {\color{blue}0}           & {\color{purple}1}
               \end{bmatrix}
               \overrightarrow{\mathbf{r}}_{\rho}
     \end{align*}
@@ -720,7 +721,7 @@
       R_z(\alpha) \mathbf{Z} R_z(\alpha)^{\dagger}
             &=    \cos\alpha \mathbf{Z} - \sin\alpha \mathbf{Y} \\
       \\
-      \rho' &= \frac{1}2 ( \mathbf{I} + \overrightarrow{\sigma} \cdot \overrightarrow{\mathbf{r}}_{\rho'} )
+      \rho' &= \frac{1}2 ( \mathbf{I} + \overrightarrow{\mathbf{r}}_{\rho'} \cdot \overrightarrow{\sigma} )
             , where \overrightarrow{\mathbf{r}}_{\rho'} =
               \begin{bmatrix}
                 1 & 0          & 0 \\
@@ -770,7 +771,7 @@
                 - \sin^2\frac{\alpha}2 \mathbf{Z} \\
             &= \cos\alpha \mathbf{Z} + \sin\alpha \mathbf{X} \\
       \\
-      \rho' &= \frac{1}2 ( \mathbf{I} + \overrightarrow{\sigma} \cdot \overrightarrow{\mathbf{r}}_{\rho'} )
+      \rho' &= \frac{1}2 ( \mathbf{I} + \overrightarrow{\mathbf{r}}_{\rho'} \cdot \overrightarrow{\sigma} )
             , where \overrightarrow{\mathbf{r}}_{\rho'} =
               \begin{bmatrix}
                 \cos\alpha  & 0 & \sin\alpha \\
@@ -790,7 +791,8 @@
 \subsection{Tensor Product}
 \begin{frame}{Tensor Product}
   {\tiny
-    If A is a $m \times n$ matrix and B a $m' \times n'$ matrix, then their tensor product $\otimes$ is a $mm' \times nn'$ matrix
+    If A is a $m \times n$ matrix and B a $m' \times n'$ matrix, then their
+    tensor product $\otimes$ is a $mm' \times nn'$ matrix
     \begin{align*}
       A \otimes B = \begin{bmatrix}
                       A_{11}B & \dots & A_{1n}B \\
@@ -801,24 +803,23 @@
     \end{align*}
     Examples:
     \begin{align*}
-      \begin{bmatrix} 1 \\ 0 \end{bmatrix} \otimes \begin{bmatrix} 1 \\ 0 \end{bmatrix} &=
+      \begin{bmatrix} 1 \\ 0 \end{bmatrix} \otimes \begin{bmatrix} 0 \\ 1 \end{bmatrix} &=
           \begin{bmatrix}
-            1 \begin{bmatrix} 1 \\ 0 \end{bmatrix} \\
+            1 \begin{bmatrix} 0 \\ 1 \end{bmatrix} \\
             \\
-            0 \begin{bmatrix} 1 \\ 0 \end{bmatrix}
+            0 \begin{bmatrix} 0 \\ 1 \end{bmatrix}
           \end{bmatrix}
-          = \begin{bmatrix} 1 \\ 0 \\ 0 \\ 0 \end{bmatrix} \\
-      \begin{bmatrix} 1 \\ 0 \end{bmatrix} \otimes \begin{bmatrix} 1 & 0 \end{bmatrix} &= \begin{bmatrix}
-                                                                                    1 & 0 \\
-                                                                                    0 & 0
-                                                                                  \end{bmatrix} \\
-      \begin{bmatrix} 1 \\ 0 \end{bmatrix} \otimes \begin{bmatrix} 0 \\ 1 \\ 0 \\ 0 \end{bmatrix} &=
-          \begin{bmatrix}
-            1 \begin{bmatrix} 0 \\ 1 \\ 0 \\ 0 \end{bmatrix} \\
+          = \begin{bmatrix} 0 \\ 1 \\ 0 \\ 0 \end{bmatrix} \\
+          \\
+      \begin{bmatrix} 0 \\ 1 \end{bmatrix} \otimes \begin{bmatrix} 1 \\ 0 \end{bmatrix}
+         &= \begin{bmatrix} 0 \\ 0 \\ 1 \\ 0 \end{bmatrix} \\
+         \\
+      \begin{bmatrix} 1 \\ 0 \end{bmatrix} \otimes \begin{bmatrix} 1 & 0 \end{bmatrix}
+         &= \begin{bmatrix}
+              1 & 0 \\
+              0 & 0
+            \end{bmatrix} \\
             \\
-            0 \begin{bmatrix} 0 \\ 1 \\ 0 \\ 0 \end{bmatrix}
-          \end{bmatrix}
-          = \begin{bmatrix} 0 \\ 1 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \end{bmatrix} \\
       \begin{bmatrix} 1 \\ 0 \end{bmatrix} \otimes \begin{bmatrix} 0 & 1 & 0 & 0 \end{bmatrix} &= \begin{bmatrix}
                                                                                             0 & 1 & 0 & 0\\
                                                                                             0 & 0 & 0 & 0
@@ -828,11 +829,11 @@
 \end{frame}
 
 \subsection{State Space of Qubit System}
-\begin{frame}{State Space of 2-Qubit System}
+\begin{frame}{State Space of 2-Qubit System - I}
   {\tiny
   All possible states of a single-qubit system is viewed as a two-dimensional complex vector space.
   All possible states of a 2-qubit system is viewed as the tensor product ($\otimes$) of two such vector spaces.
-  This tensor product is a vector space as well. Its dimension is $2^2$.\\
+  This tensor product is in the vector space as well. Its dimension is $2^2$.\\
   Let $\mathbf{V}$ and $\mathbf{W}$ be two-dimensional complex vector spaces with
   bases $A=\{\ket{\alpha_1}, \ket{\alpha_2}\}$ and $B=\{\ket{\beta_1}, \ket{\beta_2}\}$ respectively. \\
   One basis of $\mathbf{V} \otimes \mathbf{W}$ is:
@@ -856,15 +857,23 @@
   Examples (Tensor Product: Vector $\ket{v} \otimes \ket{w}$ vs Vector Space $\mathbf{V} \otimes \mathbf{W}$): \\
   Let state $\ket{v}=a_1\ket0 + a_2\ket1$ and state $\ket{w}=b_1\ket0 + b_2\ket1$, the tensor product of these two states is:
   \begin{align*}
-  a_1b_1\ket{00} + a_1b_2\ket{01} + a_2b_1\ket{10} + a_2b_2\ket{11}
+    \ket{v} \otimes \ket{w} = a_1b_1\ket{00} + a_1b_2\ket{01} + a_2b_1\ket{10} + a_2b_2\ket{11}
   \end{align*}
-  Can you find $a_1$, $a_2$, $b_1$, and $b_2$ which satisfy following?
+  Can you find $a_1$, $a_2$, $b_1$, and $b_2$ which satisfy the following?
   \begin{align*}
   (a_1\ket0 + a_2\ket1) \otimes (b_1\ket0 + b_2\ket1) = \frac{1}{\sqrt2}(\ket{00} + \ket{11})
   \end{align*}
   It turns out that most \textbf{states} of a 2-qubit quantum system cannot be described in terms of the \textbf{states} of two separate single-qubit systems.
   These states stand for \textbf{entanglement} of the 2-qubit quantum system.
   }%
+\end{frame}
+
+\begin{frame}{State Space of 2-Qubit System - II}
+  Although that most \textbf{states} of a 2-qubit quantum system cannot be described in terms of the \textbf{states} of two separate single-qubit systems,
+  \textbf{any} state of a 2-qubit quantum system can be written as the following. For example:
+  \begin{align*}
+    \frac{1}{\sqrt{2}} (\ket{00} + \ket{11}) = \frac{1}{\sqrt{2}} ( \ket{0}_1 \otimes \ket{1}_2 +  \ket{0}_1 \otimes \ket{1}_2)
+  \end{align*}
 \end{frame}
 
 \begin{frame}{State Space of N-Qubit System}
@@ -966,7 +975,8 @@
 \begin{frame}{SVD: Singular Value Decomposition}
   \framesubtitle{Review knowledge Learned in School}
   {\tiny
-    Let A be an $m{\times}n$ matrix. Then $A^{T}A$ is $n{\times}n$ symmetric matrix. Let $\{\textbf{v}_1,\dots,\textbf{v}_n\}$ be an orthonormal basis for $\mathbb{R}^n$ consisting of eigenvectors of $A^{T}A$, and let $\lambda_1,\dots,\lambda_n$ be the associated eigenvalues of $A^{T}A$.
+    Let A be an $m{\times}n$ matrix. Then $A^{T}A$ is $n{\times}n$ symmetric matrix.
+    Let $\{\textbf{v}_1,\dots,\textbf{v}_n\}$ be an orthonormal basis for $\mathbb{R}^n$ consisting of eigenvectors of $A^{T}A$, and let $\lambda_1,\dots,\lambda_n$ be the associated eigenvalues of $A^{T}A$.
     Then, for $1 \leq i \leq n$,
     \begin{align*}
       \Vert A \textbf{v}_i \Vert^2 &= (A \textbf{v}_i)^T A \textbf{v}_i = \textbf{v}_i^T (A^T A \textbf{v}_i) = \textbf{v}_i^T (\lambda_i \textbf{v}_i) \\
@@ -1091,6 +1101,16 @@
 
 \begin{frame}{Entanglement: from SVD to Schmidt Decomposition\tiny\cite{understandingentanglementwithsvd}}
   \href{https://www.math3ma.com/blog/understanding-entanglement-with-svd}{Understand Entanglement with SVD}
+  \begin{align*}
+    &\ket{\Psi} = \sigma_1 u_1 v_1^{\dagger} + \sigma_2 u_2 v_2^{\dagger} + \ldots + \sigma_r u_r v_r^{\dagger} \\
+    & = \sigma_1 u_1 \otimes v_1 + \sigma_2 u_2 \otimes v_2 + \ldots + \sigma_r u_r \otimes v_r
+  \end{align*}
+  \textbf{Punchline}: \\
+  "The quantum state $\ket{\Psi}$ is said to be entangled if its Schmidt rank, or
+  the number of singular values, is strictly greater than 1, and not entangled
+  otherwise." \\
+  Entangled between what? The two subsystems $U$ and $V$ whose basis are
+  $\{u_1, \ldots, u_r\}$ and $\{v_1, \ldots, v_r\}$ accordingly.
 \end{frame}
 
 \section{Measurement}
@@ -1105,11 +1125,28 @@
   The notation $\ket{0}\bra{1}$ represents the linear transformation that maps $\ket{1}$ to $\ket{0}$ and $\ket{0}$ to the null vector.
   $\ket{0}\bra{1}$ can be written in matrix notation:
     \begin{align*}
-      \ket{0}\bra{0} &= \begin{bmatrix}
+      \ket{0}\bra{0} 
+      &=
+      \begin{bmatrix}
+        1 \\
+        0
+      \end{bmatrix}
+      \begin{bmatrix}
+        1 & 0
+      \end{bmatrix}
+      = \begin{bmatrix}
                         1 & 0 \\
                         0 & 0
                         \end{bmatrix} \\
-      \ket{0}\bra{1} &= \begin{bmatrix}
+      \ket{0}\bra{1}
+      &= \begin{bmatrix}
+        1 \\
+        0
+      \end{bmatrix}
+      \begin{bmatrix}
+        0 & 1
+      \end{bmatrix}
+      = \begin{bmatrix}
                         0 & 1 \\
                         0 & 0
                         \end{bmatrix}
@@ -1268,9 +1305,11 @@
     \begin{columns}
     \column{0.05\textwidth}
     \column{0.65\textwidth}
-    Suppose $O$ is any linear operator on a 
+    Suppose $O$ is any linear operator on a
     \href{https://mathworld.wolfram.com/HilbertSpace.html}{\textbf{Hilbert space}} $V$.
-    It turns out that there exists a unique linear operator $O^{\dagger}$ on $V$ such that for all vectors $\ket{v}, \ket{w} \in V$,
+    It turns out that there exists a unique linear operator $O^{\dagger}$ on $V$
+    such that for all vectors $\ket{v}, \ket{w} \in V$ and the inner product defined
+    on the Hilbert space:
     \begin{align*}
       \braket{\ket{v}, O\ket{w}} = \braket{O^{\dagger} \ket{v}, \ket{w}}.
     \end{align*}
@@ -1295,10 +1334,14 @@
 
     \column{0.3\textwidth}
     \begin{block}{}
+    If $O$ is a Hermitian matrix,
     \begin{align*}
-                 \braket{\ket{v}, O\ket{w}} &= \bra{v} (\overline{O} \overline{\ket{w}}) \\
-      \braket{O^{\dagger} \ket{v}, \ket{w}} &= (\bra{v} O^{T}) \overline{\ket{w}} \\
-      \bra{v} \overline{O} \overline{\ket{w}} &= \bra{v} O^{T} \overline{\ket{w}} \\
+      \braket{\ket{v}, O\ket{w}} &= \braket{O^{\dagger} \ket{v}, \ket{w}} \\
+      \braket{\ket{v}, O\ket{w}} &= \bra{v} \, \overline{(O \, \ket{w})} \\
+      \braket{\ket{v}, O\ket{w}} &= {\color{red}\bra{v} \, \overline{O} \, \overline{\ket{w}}} \\
+      O^{\dagger} \, \ket{v} &= \bra{v} \, O^{T} \\
+      \braket{O^{\dagger} \ket{v}, \ket{w}} &= {\color{blue}\bra{v} O^{T} \, \overline{\ket{w}}} \\
+      {\color{red}\bra{v} \, \overline{O} \, \overline{\ket{w}}} &= {\color{blue}\bra{v} O^{T} \, \overline{\ket{w}}} \\
       O^{T} &= \overline{O}
     \end{align*}
     \end{block}
@@ -1336,10 +1379,23 @@
     \begin{columns}
     \column{0.5\textwidth}
     \begin{align*}
-      UU^{\dagger}
-      &=
+      &U_{m \times n} =
+      \begin{bmatrix}
+        u_1^T \\
+        \\
+        u_2^T \\
+        \vdots \\
+        u_m^T
+      \end{bmatrix}  \quad
+      U^{\dagger} =
+      \begin{bmatrix}
+        \overline{u_1} & \overline{u_2} & \ldots & \overline{u_m}
+      \end{bmatrix} \\
+      &UU^{\dagger}
+      =
       \begin{bmatrix}
         \mathbf{u}_1^T \\
+        \\
         \mathbf{u}_2^T
       \end{bmatrix}
       \begin{bmatrix}
@@ -1348,6 +1404,7 @@
       &= 
       \begin{bmatrix}
         \mathbf{u}_1^T \overline{\mathbf{u}_1} & \mathbf{u}_1^T \overline{\mathbf{u}_2} \\
+        \\
         \mathbf{u}_2^T \overline{\mathbf{u}_1} & \mathbf{u}_2^T \overline{\mathbf{u}_2}
       \end{bmatrix}
     \end{align*}
@@ -1376,7 +1433,7 @@
   }%
 \end{frame}
 
-\begin{frame}{The Spectual Theorem of Hermitian I\tiny{\cite{thespectraltheoremforhermitianmatrice}}}
+\begin{frame}{The Spectual Theorem of Hermitian - I\tiny{\cite{thespectraltheoremforhermitianmatrice}}}
   {\tiny
   \textbf{Theorem}: A Hermitian matrix $O \in \mathbb{C}^{n \times n}$  has $n$ orthogonal eigenvectors. \\
   \textbf{Proof}:
@@ -1412,7 +1469,7 @@
   }%
 \end{frame}
 
-\begin{frame}{The Spectual Theorem of Hermitian II\tiny{\cite{thespectraltheoremforhermitianmatrice}}}
+\begin{frame}{The Spectual Theorem of Hermitian - II\tiny{\cite{thespectraltheoremforhermitianmatrice}}}
   {\tiny
     \textbf{Theorem}: A Hermitian matrix $O \in \mathbb{C}^{n \times n}$ can be written as
     \begin{align*}
@@ -1456,8 +1513,12 @@
 \begin{frame}{Subspace decomposition and Hermitian}
   {\tiny
     While a Hermitian operator uniquely specifies a subspace decomposition,
-    for a given subspace decomposition there are many Hermitian operators whose eigenspace decomposition is that decomposition.\\
-    The Hermitian operator is only a convenient bookkeeping trick, a concise way of specifying the subspace decomposition associated with the measurement.\\
+    for a given subspace decomposition there are many Hermitian operators whose eigenspace decomposition is that decomposition.
+    What does matter is the number of distinct eigenvalues and the dimensions of eigenspaces.
+    Or in other words, it's the structure of the eigenspaces.
+    Say if an eigenvalue corresponds to multi-demensional eigenspaces, it stands for a subspace in the decomposition. \\
+    The Hermitian operator is only a convenient bookkeeping trick, a concise way of specifying the subspace decomposition associated with the measurement.
+    It leverages the symmetric matrices and their eigenvalues and eigenspaces. \\
     Hermitian operators ($O$ and $Z$) associated with the subspace decomposition of a single qubit in \textbf{standard basis}:
     \begin{align*}
       O &= 2 \ket0 \bra0 - 3 \ket1 \bra1
@@ -1524,7 +1585,14 @@
     V = \{\ket{00}, \ket{01}, \ket{10}\} \bigoplus \{\ket{11}\}
   \end{align*}
   Measuring $\ket{\psi} = 1/\sqrt2 (\ket{01}+\ket{10})$ with $O_4$ remains unchanged state.
-  But measuring with $O_1$ would result in either $\ket{01}$ or $\ket{10}$.
+  But measuring with $O_1$ would result in either $\ket{01}$ or $\ket{10}$. \\
+  When we write:
+  \begin{align*}
+    \ket{\phi} = a_{00}\ket{00} + a_{01}\ket{01} + a_{10}\ket{10} + a_{11}\ket{11}
+  \end{align*}
+  , it means for this quantum system, if we meansure it with 4 subspaces, the possibility
+  of the result falling into each subspaces is $a_{00}$, $a_{01}$, $a_{10}$, or $a_{11}$.
+  We can measure it with other decompositions, or write it with other decomposition of subspaces.
   }%
 \end{frame}
 
@@ -1539,13 +1607,18 @@
   }%
 \end{frame}
 
-\begin{frame}{Tensor Product of Hermitians}
+\begin{frame}{Tensor Product of Hermitians - I}
   {\tiny
-    Most Hermitian operators $O$ on $V_0 \otimes V_1$ cannot be written as $O_0 \otimes O_1$,
-    in which $O_0$ acts on $V_0$ and $O_1$ acts on $V_1$. \\
+    Most Hermitian operators $O$ on \textbf{vector space} $V_0 \otimes V_1$ cannot be written
+    as $O_0 \otimes O_1$,
+    in which $O_0$ acts on \textbf{vector subspace} $V_0$ and $O_1$ acts on \textbf{vector subspace} $V_1$. \\
+    $O$ stands for a decomposition of the whole space;
+    while $O_0$ and $O_1$ stand for a split of two subspaces.
+    And separately, with their eigenvectors and eigenspaces,
+    each $O_0$ and $O_1$ stand for a decomposition of corresponding subspace. \\
     Such a decomposition is possible only if each subspace in the subspace decomposition described by $O$
     can be written as $S = S_0 \bigoplus S_1$
-    for $S_0$ and $S_1$ in the subspace decompositions associated to $O_1$ and $O_2$ respectively. \\
+    for $S_0$ and $S_1$ in the subspace decompositions associated to $O_1 \otimes I$ and $I \otimes O_2$ respectively. \\
     \begin{align*}
       \begin{bmatrix} 
         1 & 0 \\
@@ -1575,8 +1648,11 @@
       = \ket{00} \bra{00} + \pi \ket{01} \bra{01} + \ket{10} \bra{10} + \pi \ket{11} \bra{11} \\
       & \rightarrow \{\ket{00}, \ket{10}\} \bigoplus \{\ket{01}, \ket{11}\}
     \end{align*}
+  }%
+\end{frame}
 
-    \vspace{0.2cm}
+\begin{frame}{Tensor Product of Hermitians - II}
+  {\tiny
     When talking about measurement of an n-qubit system, there are two totally distinct types of
     decompositions of the vector space V under consideration:\\
     \begin{enumerate}[I]
@@ -1592,7 +1668,6 @@
     Once it is in a quantum state, and before measuring it, we can't say there are 2 qubits in the quantum system anymore.
     What we can say is that we want to measure it with a specific subspace decomposition.
     The subspace decomposition can happen to be a separation of 2 qubits.
-
   }%
 \end{frame}
 
@@ -1607,6 +1682,8 @@
     \ket{\psi} = 1/\sqrt2(\ket{00} + \ket{11})
   \end{align*}
   is called EPR pair in honor of \textbf{E}insten, \textbf{P}odolsky, and \textbf{R}osen.
+  On each side, the particle will be measured by a polaroid.
+  The polaroids can be set to vertical, $+60^{\circ}$ off vertical, or $-60^{\circ}$ off vertical.
 
   \column{0.4\textwidth}
   \begin{figure}
@@ -1614,10 +1691,11 @@
     \caption{EPR}
   \end{figure}
   \end{columns}
-  The special relativity; the speed of light; the symmetry of observers. \\
   Even though the results themselves are perfectly compatible with relativity theory, the behavior remains mysterious.
   But this mysterious behavior could also be explained by a classical theory that postulates that
   particles have an internal \textbf{hidden} state that determines the result of the measurement.
+  The result of measurement is that the partical either passed \textbf{P} the polaroid or was absorbed \textbf(A).
+  What phehomenon can be observed to distinguish the two explainations?
 
   \vspace{0.3cm}
   Let $O_{\theta}$ be a single-qubit Hermitian associated with two-subspace decomposition:
@@ -1640,16 +1718,49 @@
   \end{align*}
   }%
 \end{frame}
-
-\begin{frame}{EPR Paradox and Bell's Theorem - II\tiny{\cite{solutionofexercise420}}}
+\begin{frame}{EPR Paradox and Bell's Theorem - II}
   {\tiny
+    For an ERP state $\ket{\psi} = \frac{1}{\sqrt{2}}(\ket{00} + \ket{11})$,
+    The two-qubit observable $O_1 \otimes O_2$ stands for: \\
+    in sense of physics, Alice measures the the EPR with $O_1 \otimes I_2$ and
+    Bob measures the EPR with $I_1 \otimes O_2$, then they multiply their results classically; \\
+    in sense of math,
     \begin{align*}
-      P &= (P^{\mathbf{v}_1} \otimes I)(I \otimes P^{\mathbf{v}_2}) +
-           (P^{\mathbf{v}_1^{\perp}} \otimes I) (I \otimes P^{\mathbf{v}_2^{\perp}}) \\
-      &=
+      (O_1 \otimes O_2) &= (O_1 \otimes I_2) (I_1 \otimes O_2) \\
+                        &= (I_1 \otimes O_2) (O_1 \otimes I_2)  \qquad \text{who measures firstly doesn't matter}
+    \end{align*} \\
+    Since any vector $\ket{\psi}$ in space $\mathbb{H}_1 \otimes \mathbb{H}_2$ can be written as
+    $$\ket{\psi} = \sum_{i, j} c_{ij} \ket{i}_1 \otimes \ket{j}_2$$,
+    check a vector $\ket{i}_1 \otimes \ket{j}_2$:
+    \begin{align*}
+      (O_1 \otimes O_2) (\ket{i}_1 \otimes \ket{j}_2) &= (O_1 \ket{i}_1) \otimes (O_2 \ket{j}_2) \\
+      (O_1 \otimes I_2) (I_1 \otimes O_2) (\ket{i}_1 \otimes \ket{j}_2) &=  (O_1 \otimes I_2) ( (I_1 \ket{i}_1) \otimes (O_2 \ket{j}_2) ) \\
+                                                                        &= (O_1 I_1 \ket{i}_1) \otimes (I_2 O_2 \ket{j}_2) \\
+                                                                        &= (O_1 \ket{i}_1) \otimes (O_2 \ket{j}_2)
+    \end{align*}
+    then it can be generalized to any vector in $\mathbb{H}_1 \otimes \mathbb{H}_2$. \\
+    For example, the observable $O_1 \otimes O_2$ can work on entanglment state which can't be
+    written as $(\ket{\psi_1} \otimes \ket{\psi_2})$.
+    \begin{align*}
+      (O_1 \otimes O_2) ( \frac{1}{\sqrt{2}}(\ket{00} + \ket{11}) ) =
+      \frac{1}{\sqrt{2}} ( (O_1 \ket{0}) \otimes (O_1 \ket{0}) + (O_2 \ket{1}) \otimes (O_2 \ket{1}) )
+    \end{align*} \\
+    The state collapses to an eigenvector of the observable $O_1 \otimes O_2$. \\
+    And the possibility of collapsing to that eigenvector is the product of eigenvalues of $O_1$ and $O_2$. \\
+
+  }%
+\end{frame}
+
+\begin{frame}{EPR Paradox and Bell's Theorem - III\tiny{\cite{solutionofexercise420}}}
+  {\tiny
+    Each person can perform measurements only on the particle he or she receives.
+    This projector $P$ stands for Alice and Bob observed the same result. What's the possibility?
+    \begin{align*}
+      P &=
       (P^{\mathbf{v}_1} \otimes P^{\mathbf{v}_2}) +
-      (P^{\mathbf{v}_1^{\perp}} \otimes P^{\mathbf{v}_2^{\perp}})
-      \\
+      (P^{\mathbf{v}_1^{\perp}} \otimes P^{\mathbf{v}_2^{\perp}}) \\
+        &= (P^{\mathbf{v}_1} \otimes I)(I \otimes P^{\mathbf{v}_2}) +
+           (P^{\mathbf{v}_1^{\perp}} \otimes I) (I \otimes P^{\mathbf{v}_2^{\perp}}) \\
       P^{\mathbf{v}_1\mathbf{v}_2} &= P^{\mathbf{v}_1} \otimes P^{\mathbf{v}_2} \\
       &= (\ket{\mathbf{v}_1}\bra{\mathbf{v}_1}) \otimes (\ket{\mathbf{v}_2}\bra{\mathbf{v}_2}) \\
       &= (\ket{\mathbf{v}_1} \otimes \ket{\mathbf{v}_2}) \; (\bra{\mathbf{v}_1} \otimes \bra{\mathbf{v}_2}) \\
@@ -1703,16 +1814,41 @@
   }%
 \end{frame}
 
-\begin{frame}{EPR Paradox and Bell's Theorem - III}
+\begin{frame}{EPR Paradox and Bell's Theorem - IV}
   {\tiny
+    \begin{align*}
+      \cos 0^{\circ} = 1 \quad
+      \cos 60^{\circ} = \frac{1}{2} \quad
+      \cos 120^{\circ} = -\frac{1}{2}
+    \end{align*}
+    \begin{table}[h!]
+    \begin{center}
+      \caption{Quantum theory}
+      \label{tab:table1}
+      \begin{tabular}{c|c}
+          Polaroids Setting & probability of agree \\
+        \hline
+        $\nwarrow \nwarrow$ & $1$\\
+        $\nwarrow \uparrow$ & $1/4$\\
+        $\nwarrow \nearrow$ & $1/4$\\
+        $\uparrow \nwarrow$ & $1/4$\\
+        $\uparrow \uparrow$ & $1$ \\
+        $\uparrow \nearrow$ & $1/4$ \\
+        $\nearrow \nwarrow$ & $1/4$\\
+        $\nearrow \uparrow$ & $1/4$ \\
+        $\nearrow \nearrow$ & $1$\\
+      \end{tabular}
+    \end{center}
+    \end{table}
     If the polaroids are set randomly for a series of EPR pairs emanating from the source, then
     \begin{enumerate}[I]
     \item with probability $1/3$ the polaroid orientation will be the same and the measurements will agree,
     \item with probability $2/3$ the polaroid orientation will differ and the measurements will agree with probability $1/4$.
     \end{enumerate}
-  }%
   Thus, overall, the measurements will agree half the time and disagree half the time. When such
-  an experiment is performed, these are indeed the probabilities that are seen.
+  an experiment is performed, these are indeed the probabilities that are seen:
+  $\frac{1}{3} + \frac{2}{3} \times \frac{1}{4} = \frac{1}{2}$
+  }%
 \end{frame}
 
 \begin{frame}{EPR Paradox and Bell's Theorem - IV}
@@ -1740,6 +1876,7 @@
     \end{tabular}
   \end{center}
   \end{table}
+  The explanation of hidden variable gives a different result on the probability: $\ge  \frac{5}{9}$.
   }%
 \end{frame}
 
@@ -1762,24 +1899,9 @@
     now transformation is modeled as a matrix called unitary $U$ with property $U^{\dagger}U = I$, i.e. $U\ket{\psi}$\\
     The unitarity condition simply ensures that the transformation does not violate any general principles of quantum theory.
     Geometrically, all quantum state transformations are rotations of the complex vector space associated with the quantum state space.
-    \begin{align*}
-      U^TU &=
-        \begin{bmatrix}
-          \mathbf{u}_1^T \\
-          \mathbf{u}_2^T \\
-          \mathbf{u}_3^T
-        \end{bmatrix}
-        \begin{bmatrix} \mathbf{u}_1 \mathbf{u}_2 \mathbf{u}_3 \end{bmatrix} 
-        = 
-        \begin{bmatrix}
-          \mathbf{u}_1^T \mathbf{u}_1 & \mathbf{u}_1^T \mathbf{u}_2 & \mathbf{u}_1^T \mathbf{u}_3 \\
-          \mathbf{u}_2^T \mathbf{u}_1 & \mathbf{u}_2^T \mathbf{u}_2 & \mathbf{u}_2^T \mathbf{u}_3 \\
-          \mathbf{u}_3^T \mathbf{u}_1 & \mathbf{u}_3^T \mathbf{u}_2 & \mathbf{u}_3^T \mathbf{u}_3
-        \end{bmatrix}
-    \end{align*}
     \vspace{0.3cm}
     The product $U_1 U_2$ of two unitary transformations is again unitary. \\
-    The tensor product $U_1 \otimes U_2$ is a unitary transformation of the space $X_1 \otimes X_2$ if $U_1$ and $U_2$ are unitary transformations of $X_1$ and $X_2$ respectively.\\
+    The tensor product $U_1 \otimes U_2$ is a unitary transformation of the space $\mathbb{X}_1 \otimes \mathbb{X}_2$ if $U_1$ and $U_2$ are unitary transformations of $\mathbb{X}_1$ and $\mathbb{X}_2$ respectively.\\
     Linear combinations of unitary operators, however, are not in general unitary.
   }%
 \end{frame}
@@ -1803,16 +1925,32 @@
 \begin{frame}{The Pauli Transformations}
   {\tiny
     \begin{align*}
+      X =
+      \begin{bmatrix}
+        0 & 1 \\
+        1 & 0
+      \end{bmatrix} \quad
+      Y =
+      \begin{bmatrix}
+        0 & -i \\
+        i & 0
+      \end{bmatrix} \quad
+      Z =
+      \begin{bmatrix}
+        1 & 0 \\
+        0 & -1
+      \end{bmatrix} \quad \checkmark
+    \end{align*}
+    \begin{align*}
       I &= \ket0\bra0 + \ket1\bra1 = \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix} \\
       X &= \ket1\bra0 + \ket0\bra1 = \begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix} \\
-      Y &= -\ket1\bra0 + \ket0\bra1 = \begin{bmatrix} 0 & 1 \\ -1 & 0 \end{bmatrix} \\
+      Y' &= -\ket1\bra0 + \ket0\bra1 = \begin{bmatrix} 0 & 1 \\ -1 & 0 \end{bmatrix} \\
+      Y &= -iY' = \begin{bmatrix} 0 & -i \\ i & 0 \end{bmatrix} \\
       Z &= \ket0\bra0 - \ket1\bra1 = \begin{bmatrix} 1 & 0 \\ 0 & -1 \end{bmatrix} \\
-      Y &= ZX \\
-      Y' &= -iY = \begin{bmatrix} 0 & -i \\ i & 0 \end{bmatrix} \\
-      \mathbf{X}^2 &= \mathbf{Y'}^2 = \mathbf{Z}^2 = -i\mathbf{XY'Z} = \mathbf{I} \\
-      \mathbf{XY'} &= -\mathbf{Y'X} = i\mathbf{Z} \\
-      \mathbf{Y'Z} &= -\mathbf{ZY'} = i\mathbf{X} \\
-      \mathbf{ZX} &= -\mathbf{XZ} = i\mathbf{Y'}
+      X^2 &= Y^2 = Z^2 = -iXYZ = I \\
+      XY &= -YX = iZ \\
+      YZ &= -ZY = iX \\
+      ZX &= -XZ = iY
     \end{align*}
   }%
 \end{frame}
@@ -1824,15 +1962,15 @@
         &= \frac{1}{\sqrt2} \begin{bmatrix} 1 & 1 \\ 1 & -1 \end{bmatrix} \\
       H\ket0 &= \ket+ = \frac{1}{\sqrt2} (\ket0 + \ket1) \\
       H\ket1 &= \ket- = \frac{1}{\sqrt2} (\ket0 - \ket1) \\
-      HH &= I
+      H^{\dagger} &= H \quad HH = I
     \end{align*}
     The graphical representation:
     % definitions for the circuit elements
     \def\gAxA{\op{H}\w\A{gAxA}}
-    
+
     % definitions for bit labels and initial states
     \def\bA{ \q{q_{0}}}
-    
+
     \begin{align*}
     % The quantum circuit as an xymatrix
     \xymatrix@R=5pt@C=10pt{
@@ -1844,35 +1982,51 @@
 
 \begin{frame}{The Controlled-NOT - I}
   {\tiny
+    Warm up:
     \begin{align*}
       \ket0\bra0 \otimes \ket1\bra1 &= \begin{bmatrix} 1 & 0 \\ 0 & 0 \end{bmatrix} \otimes \begin{bmatrix} 0 & 0 \\ 0 & 1 \end{bmatrix} \\
       \ket{01}\bra{01}
-      &= \begin{bmatrix} 0 \\ 1 \\ 0 \\ 1 \end{bmatrix} \begin{bmatrix} 0 & 1 & 0 & 0\end{bmatrix} 
+      &= \begin{bmatrix} 0 \\ 1 \\ 0 \\ 0 \end{bmatrix} \begin{bmatrix} 0 & 1 & 0 & 0\end{bmatrix} 
        = \begin{bmatrix} 0 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \end{bmatrix} \\
       \ket1\bra1 \otimes \ket1\bra0 &= \begin{bmatrix} 0 & 0 \\ 0 & 1 \end{bmatrix} \otimes \begin{bmatrix} 0 & 0 \\ 1 & 0 \end{bmatrix} \\
       \ket{11}\bra{10}
       &= \begin{bmatrix} 0 \\ 0 \\ 0 \\ 1 \end{bmatrix} \begin{bmatrix} 0 & 0 & 1 & 0\end{bmatrix} 
        = \begin{bmatrix} 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 1 & 0 \end{bmatrix} \\
     \end{align*}
+    Definition:
     \begin{align*}
-      C_{not} &= \ket0\bra0 \otimes I + \ket1\bra1 \otimes \mathbf{X} \\
-              &= \ket0\bra0 \otimes (\ket0\bra0 +\ket1\bra1) + \ket1\bra1 \otimes (\ket1\bra0 + \ket0\bra1) \\
-              &= \ket{00}\bra{00} + \ket{01}\bra{01} + \ket{11}\bra{10} + \ket{10}\bra{11} \\
-              &= \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 0 & 1 \\ 0 & 0 & 1 & 0 \end{bmatrix} 
+      X &= \begin{bmatrix} 0 & 1 \\ 1 & 0\end{bmatrix} = \ket{1} \bra{0} + \ket{0} \bra{1} \\
+      C_{not} &= \ket0\bra0 \otimes I + \ket1\bra1 \otimes X
+              = \ket0\bra0 \otimes (\ket0\bra0 +\ket1\bra1) + \ket1\bra1 \otimes (\ket1\bra0 + \ket0\bra1) \\
+              &= \ket{00}\bra{00} + \ket{01}\bra{01} + \ket{11}\bra{10} + \ket{10}\bra{11}
+              = \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 0 & 1 \\ 0 & 0 & 1 & 0 \end{bmatrix} 
               = \begin{bmatrix} I & 0 \\ 0 & X \end{bmatrix} \\
-      C_{not}C_{not} &= I
+              C_{not}^{\dagger} &= C_{not} \quad C_{not}C_{not} = I
     \end{align*}
   }%
 \end{frame}
 
 \begin{frame}{The Controlled-NOT - II}
   {\tiny
+    \begin{columns}[t]
+    \column{0.3\textwidth}
     \begin{align*}
       C_{not}\ket{00} &= \ket{00} \\
       C_{not}\ket{01} &= \ket{01} \\
       C_{not}\ket{10} &= \ket{11} \\
       C_{not}\ket{11} &= \ket{10}
     \end{align*}
+    \column{0.7\textwidth}
+    \begin{align*}
+      C_{not} \begin{bmatrix} 1 \\ 0 \\ 0 \\ 0 \end{bmatrix} = \begin{bmatrix} 1 \\ 0 \\ 0 \\ 0 \end{bmatrix}
+      \qquad
+      C_{not} \begin{bmatrix} 0 \\ 1 \\ 0 \\ 0 \end{bmatrix} = \begin{bmatrix} 0 \\ 1 \\ 0 \\ 0 \end{bmatrix}
+      \qquad
+      C_{not} \begin{bmatrix} 0 \\ 0 \\ 1 \\ 0 \end{bmatrix} = \begin{bmatrix} 0 \\ 0 \\ 0 \\ 1 \end{bmatrix}
+      \qquad
+      C_{not} \begin{bmatrix} 0 \\ 0 \\ 0 \\ 1 \end{bmatrix} = \begin{bmatrix} 0 \\ 0 \\ 1 \\ 0 \end{bmatrix}
+    \end{align*}
+    \end{columns}
     \begin{align*}
       \ket\psi &= \frac{1}{\sqrt2} (\ket0 + \ket1) \otimes \ket0 = \frac{1}{\sqrt2} (\ket0 \otimes \ket0 + \ket1 \otimes \ket0) \\
       &= \frac{1}{\sqrt2} (\begin{bmatrix} 1 \\ 0 \\ 0 \\ 0 \end{bmatrix}  + \begin{bmatrix} 0 \\ 0 \\ 1 \\ 0 \end{bmatrix})
@@ -1907,7 +2061,7 @@
   {\tiny
     \begin{align*}
       % definitions for the circuit elements
-      \def\gAxA{\op{X}\w\A{gAxA}}
+      \def\gAxA{\op{{\color{red}X}}\w\A{gAxA}}
       \def\gBxA{\b\w\A{gBxA}}
       \def\gBxB{\op{X}\w\A{gBxB}}
       \def\gCxA{\op{X}\w\A{gCxA}}
@@ -1922,7 +2076,7 @@
       \ar@{-}"gBxB";"gBxA" \\
       }
     \end{align*}
-    This circuit represents transformation: $(X \otimes I) \begin{bmatrix} I & 0 \\ 0 & X \end{bmatrix} (X \otimes I)$ \\
+    This circuit represents transformation: $(X \otimes I) \begin{bmatrix} I & 0 \\ 0 & X \end{bmatrix} ({\color{red}X} \otimes I)$ \\
     Given
     \begin{align*}
       X \otimes I &= \begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix} \otimes \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix}
@@ -1978,27 +2132,92 @@
   }%
 \end{frame}
 
-\begin{frame}{Some Simple Gates}
+\begin{frame}{Some Simple Gates - $\Lambda X = C_{not}$}
   {\tiny
     \begin{align*}
+      \ket0\bra0 &=
+      \begin{bmatrix}
+        1 \\
+        0 \\
+      \end{bmatrix}
+      \begin{bmatrix}
+        1 & 0
+      \end{bmatrix}
+      =
+      \begin{bmatrix}
+        1 & 0 \\
+        0 & 0 \\
+      \end{bmatrix}
+      \qquad
+      \begin{bmatrix}
+        1 & 0 \\
+        0 & 0 \\
+      \end{bmatrix}
+      \otimes
+      \begin{bmatrix}
+        1 & 0 \\
+        0 & 1 \\
+      \end{bmatrix}
+      =
+      \begin{bmatrix}
+        1 & 0 & 0 & 0 \\
+        0 & 1 & 0 & 0 \\
+        0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 \\
+      \end{bmatrix}
+      \\
+      \ket1\bra1 &=
+      \begin{bmatrix}
+        0 \\
+        1 \\
+      \end{bmatrix}
+      \begin{bmatrix}
+        0 & 1
+      \end{bmatrix}
+      =
+      \begin{bmatrix}
+        0 & 0 \\
+        0 & 1 \\
+      \end{bmatrix}
+      \qquad
+      \begin{bmatrix}
+        0 & 0 \\
+        0 & {\color{red}1} \\
+      \end{bmatrix}
+      \otimes
+      \begin{bmatrix}
+        {\color{red}0} & {\color{red}1} \\
+        {\color{red}1} & {\color{red}0} \\
+      \end{bmatrix}
+      =
+      \begin{bmatrix}
+        0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 \\
+        0 & 0 & {\color{red}0} & {\color{red}1} \\
+        0 & 0 & {\color{red}1} & {\color{red}0} \\
+      \end{bmatrix}
+      \\
       C_{not} &= \ket0\bra0 \otimes I + \ket1\bra1 \otimes \mathbf{X} = \begin{bmatrix} I & 0 \\ 0 & X \end{bmatrix} \\
       \Lambda Q &= \ket0\bra0 \otimes I + \ket1\bra1 \otimes \mathbf{Q} = \begin{bmatrix} I & 0 \\ 0 & Q \end{bmatrix} \\
       \Lambda X &= C_{not}
     \end{align*}
+  }%
+\end{frame}
 
-    The swap circuit:
+\begin{frame}{Some Simple Gates - swap circuit}
+  {\tiny
     % definitions for the circuit elements
     \def\gAxA{\b\w\A{gAxA}}
-    \def\gAxB{\o\w\A{gAxB}}
+    \def\gAxB{\op{X}\w\A{gAxB}}
     \def\gBxB{\b\w\A{gBxB}}
-    \def\gBxA{\o\w\A{gBxA}}
+    \def\gBxA{\op{X}\w\A{gBxA}}
     \def\gCxA{\b\w\A{gCxA}}
-    \def\gCxB{\o\w\A{gCxB}}
-    
+    \def\gCxB{\op{X}\w\A{gCxB}}
+
     % definitions for bit labels and initial states
     \def\bA{ \q{q_{0}}}
     \def\bB{ \q{q_{1}}}
-    
+
     \begin{align*}
     % The quantum circuit as an xymatrix
     \xymatrix@R=5pt@C=10pt{
@@ -2012,9 +2231,98 @@
     \ar@{-}"gCxB";"gCxA"
     }
     \end{align*}
-
-    $C_{not}$ in Hadamard basis (We have not changed the transformation at all, only the way we are thinking about it):
     \begin{align*}
+      C_{not} &= \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 0 & 1 \\ 0 & 0 & 1 & 0 \end{bmatrix}
+      \qquad
+      C_{not} \begin{bmatrix} 1 \\ 0 \\ 0 \\ 0 \end{bmatrix} = \begin{bmatrix} 1 \\ 0 \\ 0 \\ 0 \end{bmatrix}
+      \qquad
+      C_{not} \begin{bmatrix} 0 \\ 1 \\ 0 \\ 0 \end{bmatrix} = \begin{bmatrix} 0 \\ 1 \\ 0 \\ 0 \end{bmatrix}
+      \qquad
+      C_{not} \begin{bmatrix} 0 \\ 0 \\ 1 \\ 0 \end{bmatrix} = \begin{bmatrix} 0 \\ 0 \\ 0 \\ 1 \end{bmatrix}
+      \qquad
+      C_{not} \begin{bmatrix} 0 \\ 0 \\ 0 \\ 1 \end{bmatrix} = \begin{bmatrix} 0 \\ 0 \\ 1 \\ 0 \end{bmatrix}
+      \\
+      C_{not}' &= \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0 & 0 & 0 & 1 \\ 0 & 0 & 1 & 0 \\ 0 & 1 & 0 & 0 \end{bmatrix}
+      \qquad
+      C_{not}' \begin{bmatrix} 1 \\ 0 \\ 0 \\ 0 \end{bmatrix} = \begin{bmatrix} 1 \\ 0 \\ 0 \\ 0 \end{bmatrix}
+      \qquad
+      C_{not}' \begin{bmatrix} 0 \\ 1 \\ 0 \\ 0 \end{bmatrix} = \begin{bmatrix} 0 \\ 0 \\ 0 \\ 1 \end{bmatrix}
+      \qquad
+      C_{not}' \begin{bmatrix} 0 \\ 0 \\ 1 \\ 0 \end{bmatrix} = \begin{bmatrix} 0 \\ 0 \\ 1 \\ 0 \end{bmatrix}
+      \qquad
+      C_{not}' \begin{bmatrix} 0 \\ 0 \\ 0 \\ 1 \end{bmatrix} = \begin{bmatrix} 0 \\ 1 \\ 0 \\ 0 \end{bmatrix} \\
+    \end{align*}
+    \begin{align*}
+      C_{not} C_{not}' C_{not} \begin{bmatrix} 1 \\ 0 \\ 0 \\ 0 \end{bmatrix}
+      & = 
+      C_{not} C_{not}' \begin{bmatrix} 1 \\ 0 \\ 0 \\ 0 \end{bmatrix}
+      =
+      C_{not} \begin{bmatrix} 1 \\ 0 \\ 0 \\ 0 \end{bmatrix}
+      =
+      \begin{bmatrix} 1 \\ 0 \\ 0 \\ 0 \end{bmatrix} 
+      \qquad
+      C_{not} C_{not}' C_{not} \begin{bmatrix} 0 \\ 1 \\ 0 \\ 0 \end{bmatrix}
+      = 
+      C_{not} C_{not}' \begin{bmatrix} 0 \\ 1 \\ 0 \\ 0 \end{bmatrix}
+      =
+      C_{not} \begin{bmatrix} 0 \\ 0 \\ 0 \\ 1 \end{bmatrix}
+      =
+      \begin{bmatrix} 0 \\ 0 \\ 1 \\ 0 \end{bmatrix} 
+      \\
+      C_{not} C_{not}' C_{not} \begin{bmatrix} 0 \\ 0 \\ 1 \\ 0 \end{bmatrix}
+      &= 
+      C_{not} C_{not}' \begin{bmatrix} 0 \\ 0 \\ 0 \\ 1 \end{bmatrix}
+      =
+      C_{not} \begin{bmatrix} 0 \\ 0 \\ 0 \\ 1 \end{bmatrix}
+      =
+      \begin{bmatrix} 0 \\ 1 \\ 0 \\ 0 \end{bmatrix} 
+      \qquad
+      C_{not} C_{not}' C_{not} \begin{bmatrix} 0 \\ 0 \\ 0 \\ 1 \end{bmatrix}
+      = 
+      C_{not} C_{not}' \begin{bmatrix} 0 \\ 0 \\ 1 \\ 0 \end{bmatrix}
+      =
+      C_{not} \begin{bmatrix} 0 \\ 0 \\ 1 \\ 0 \end{bmatrix}
+      =
+      \begin{bmatrix} 0 \\ 0 \\ 0 \\ 1 \end{bmatrix} 
+    \end{align*}
+  }%
+\end{frame}
+
+\begin{frame}{Some Simple Gates - $C_{not}$ on Hadamard basis - I}
+  {\tiny
+    \begin{align*}
+      \ket{+} &= \frac{1}{\sqrt{2}} (\ket{0} + \ket{1}) = \begin{bmatrix} 1 / \sqrt{2} \\ 1 / \sqrt{2} \end{bmatrix} \\
+      \ket{-} &= \frac{1}{\sqrt{2}} (\ket{0} - \ket{1})  = \begin{bmatrix} 1 / \sqrt{2} \\ - 1 / \sqrt{2} \end{bmatrix} \\
+    \end{align*}
+    \begin{align*}
+      \ket{++} &= \begin{bmatrix} 1 / \sqrt{2} \\ 1 / \sqrt{2}  \end{bmatrix} \otimes \begin{bmatrix} 1 / \sqrt{2} \\ 1 / \sqrt{2}  \end{bmatrix} = \begin{bmatrix}  1 / 2 \\ 1 / 2 \\ 1 / 2 \\ 1 / 2 \end{bmatrix} \\
+      \ket{+-} &= \begin{bmatrix} 1 / \sqrt{2} \\ 1 / \sqrt{2}  \end{bmatrix} \otimes \begin{bmatrix} 1 / \sqrt{2} \\ - 1 / \sqrt{2} \end{bmatrix} = \begin{bmatrix}  1 / 2 \\ -1 / 2 \\ 1 / 2 \\ - 1 / 2 \end{bmatrix} \\
+      \ket{-+} &= \begin{bmatrix} 1 / \sqrt{2} \\ - 1 / \sqrt{2}  \end{bmatrix} \otimes \begin{bmatrix} 1 / \sqrt{2} \\  1 / \sqrt{2} \end{bmatrix} = \begin{bmatrix}  1 / 2 \\ 1 / 2 \\ - 1 / 2 \\ - 1 / 2 \end{bmatrix} \\
+      \ket{--} &= \begin{bmatrix} 1 / \sqrt{2} \\ - 1 / \sqrt{2}  \end{bmatrix} \otimes \begin{bmatrix} 1 / \sqrt{2} \\   - 1 / \sqrt{2} \end{bmatrix} = \begin{bmatrix}  1 / 2 \\ -1 / 2 \\ - 1 / 2 \\ 1 / 2 \end{bmatrix} \\
+    \end{align*}
+  }%
+
+\end{frame}
+
+\begin{frame}{Some Simple Gates - $C_{not}$ on Hadamard basis - II}
+  {\tiny
+    \begin{align*}
+      C_{not}\ket{++} &= \frac{1}{2} C_{not} ( \ket{00} + \ket{01} + \ket{10}+ \ket{11} ) = \frac{1}{2} (\ket{00} + \ket{01} + \ket{11} + \ket{10} )  = \ket{++}\\
+      C_{not}\ket{+-} &= \frac{1}{2} C_{not} ( \ket{00} - \ket{01} + \ket{10} - \ket{11} ) = \frac{1}{2} (\ket{00} - \ket{01} + \ket{11} - \ket{10} )  = \ket{--}\\
+      C_{not}\ket{-+} &= \frac{1}{2} C_{not} ( \ket{00} + \ket{01} - \ket{10} - \ket{11} ) = \frac{1}{2} (\ket{00} + \ket{01} - \ket{11} - \ket{10} )  = \ket{-+}\\
+      C_{not}\ket{--} &= \frac{1}{2} C_{not} ( \ket{00} - \ket{01} - \ket{10} + \ket{11} ) = \frac{1}{2} (\ket{00} - \ket{01} - \ket{11} + \ket{10} )  = \ket{+-}\\
+    \end{align*}
+    We don't change the state at all, only the way we are thinking about it.
+  }%
+\end{frame}
+
+\begin{frame}{Some Simple Gates - $H$ and $C_{not}$}
+  {\tiny
+    \begin{align*}
+      H &= \frac{1}{\sqrt2}(\ket0\bra0 + \ket1\bra0 + \ket0\bra1 -\ket1\bra1) \\
+        &= \frac{1}{\sqrt2} \begin{bmatrix} 1 & 1 \\ 1 & -1 \end{bmatrix} \\
+      H\ket0 &= \ket+ = \frac{1}{\sqrt2} (\ket0 + \ket1) \\
+      H\ket1 &= \ket- = \frac{1}{\sqrt2} (\ket0 - \ket1) \\
       C_{not}\ket{++} &= \ket{++} \\
       C_{not}\ket{+-} &= \ket{--} \\
       C_{not}\ket{-+} &= \ket{-+} \\
@@ -2026,17 +2334,17 @@
     \def\gAxA{\op{H}\w\A{gAxA}}
     \def\gAxB{\op{H}\w\A{gAxB}}
     \def\gBxA{\b\w\A{gBxA}}
-    \def\gBxB{\o\w\A{gBxB}}
+    \def\gBxB{\op{X}\w\A{gBxB}}
     \def\gCxA{\op{H}\w\A{gCxA}}
     \def\gCxB{\op{H}\w\A{gCxB}}
     \def\gDxA{\b\w\A{gDxA}}
-    \def\gDxB{\o\w\A{gDxB}}
-    
+    \def\gDxB{\op{X}\w\A{gDxB}}
+
     % definitions for bit labels and initial states
-    
+
     \def\bA{ \q{q_{0}}}
     \def\bB{ \q{q_{1}}}
-    
+
     \begin{align*}
     % The quantum circuit as an xymatrix
     \xymatrix@R=7pt@C=21pt{
@@ -2052,9 +2360,94 @@
   }%
 \end{frame}
 
+\begin{frame}{Dense Coding - preparation in math}
+    {\tiny
+    \begin{align*}
+      & X \otimes I =
+      \begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix} 
+      \otimes
+      I
+      =
+      \begin{bmatrix}
+        0 & 0 & 1 & 0 \\
+        0 & 0 & 0 & 1 \\
+        1 & 0 & 0 & 0 \\
+        0 & 1 & 0 & 0 \\
+      \end{bmatrix}
+      \\
+      & (X \otimes I) \ket{00} = \ket{10}
+      \quad
+      (X \otimes I) \ket{01} = \ket{11}
+      \quad
+      (X \otimes I) \ket{10} = \ket{00}
+      \quad
+      (X \otimes I) \ket{11} = \ket{01}
+      \\
+      & Y \otimes I =
+      \begin{bmatrix} 0 & 1 \\ -1 & 0 \end{bmatrix} 
+      \otimes
+      I
+      =
+      \begin{bmatrix}
+        0 & 1 & 0 & 0 \\
+        -1 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 1 \\
+        0 & 0 & -1 & 0 \\
+      \end{bmatrix}
+      \\
+      & (Y \otimes I) \ket{00} = -\ket{01}
+      \quad
+      (Y \otimes I) \ket{01} = \ket{00}
+      \quad
+      (Y \otimes I) \ket{10} = -\ket{11}
+      \quad
+      (Y \otimes I) \ket{11} = \ket{10}
+      \\
+      & Z \otimes I =
+      \begin{bmatrix} 1 & 0 \\ 0 & -1 \end{bmatrix} 
+      \otimes
+      I
+      =
+      \begin{bmatrix}
+        1 & 0 & 0 & 0 \\
+        0 & -1 & 0 & 0 \\
+        0 & 0 & 1 & 0 \\
+        0 & 0 & 0 & -1 \\
+      \end{bmatrix}
+      \\
+      & (Z \otimes I) \ket{00} = \ket{00}
+      \quad
+      (Z \otimes I) \ket{01} = -\ket{01}
+      \quad
+      (Z \otimes I) \ket{10} = -\ket{10}
+      \quad
+      (Z \otimes I) \ket{11} = -\ket{11}
+      \\
+      & H \otimes I =
+      \frac{1}{\sqrt{2}} \begin{bmatrix} 1 & 1 \\ 1 & -1 \end{bmatrix} 
+      \otimes I
+      =
+      \begin{bmatrix}
+        1 & 0 & 1 & 0 \\
+        0 & 1 & 0 & 1 \\
+        1 & 0 & -1 & 0 \\
+        0 & 1 & 0 & -1 \\
+      \end{bmatrix} 
+      \\
+      & (H \otimes I) \ket{00} = \ket{00} + \ket{10}
+      \quad
+      (H \otimes I) \ket{01} = \ket{01} + \ket{11}
+      \quad
+      (H \otimes I) \ket{10} = \ket{00} -\ket{10}
+      \quad
+      (H \otimes I) \ket{11} = \ket{01} - \ket{11}
+    \end{align*}
+    }%
+\end{frame}
+
 \begin{frame}{Dense Coding}
     {\tiny
-    Alice wants to send 2 bits to Bob with help of a EPR $\ket{\psi} = \frac{1}{\sqrt2} (\ket{00} + \ket{11} )$
+    Alice wants to send 2 classical bits (four possible values: 0, 1, 2, or 3) to Bob with help of a EPR $\ket{\psi} = \frac{1}{\sqrt2} (\ket{00} + \ket{11} )$
     }%
     \begin{figure}
       \includegraphics[scale=0.15]{figures/dense-coding}
@@ -2063,7 +2456,7 @@
     \begin{columns}[t]
     \column{0.5\textwidth}
     {\tiny
-    Alice encodes 2 bits with $q_0$ and sends the qubit to Bob:
+      Alice encodes 2 classical bits with $q_0$ and sends $q_{0}$ to Bob:
     \begin{align*}
       \ket{\psi_0} &= (I \otimes I) \ket{\psi} = \frac{1}{\sqrt2} (\ket{00} + \ket{11} ) \\
       \ket{\psi_1} &= (X \otimes I) \ket{\psi} = \frac{1}{\sqrt2} (\ket{10} + \ket{01} ) \\
@@ -2075,13 +2468,19 @@
     {\tiny
     % definitions for the circuit elements
     \def\gAxA{\b\w\A{gAxA}}
-    \def\gAxB{\o\w\A{gAxB}}
+    \def\gAxB{\op{X}\w\A{gAxB}}
     \def\gBxA{\op{H}\w\A{gBxA}}
     % definitions for bit labels and initial states
     \def\bA{ \q{q_{0}}}
     \def\bB{ \q{q_{1}}}
     % The quantum circuit as an xymatrix
     Bob decodes the qubit with gates:
+    \begin{align*}
+      (H \otimes I) C_{not} \ket{\psi_0} &= (H \otimes I)\frac{1}{\sqrt2} (\ket{00} + \ket{10} ) = \ket{00} \\
+      (H \otimes I) C_{not} \ket{\psi_1} &= (H \otimes I)\frac{1}{\sqrt2} (\ket{11} + \ket{01} ) = \ket{01} \\
+      (H \otimes I) C_{not} \ket{\psi_2} &= (H \otimes I)\frac{1}{\sqrt2} (\ket{00} - \ket{10} ) = \ket{10} \\
+      (H \otimes I) C_{not} \ket{\psi_3} &= (H \otimes I)\frac{1}{\sqrt2} (\ket{01} - \ket{11} ) = \ket{11}
+    \end{align*}
     \begin{align*}
     \xymatrix@R=5pt@C=10pt{
         \bA & \gAxA &\gBxA &\n
@@ -2090,14 +2489,113 @@
     \ar@{-}"gAxB";"gAxA"
     }
     \end{align*}
-    \begin{align*}
-      (H \otimes I) C_{not} \ket{\psi_0} &= (H \otimes I)\frac{1}{\sqrt2} (\ket{00} + \ket{10} ) = \ket{00} \\
-      (H \otimes I) C_{not} \ket{\psi_1} &= (H \otimes I)\frac{1}{\sqrt2} (\ket{11} + \ket{01} ) = \ket{01} \\
-      (H \otimes I) C_{not} \ket{\psi_2} &= (H \otimes I)\frac{1}{\sqrt2} (\ket{00} - \ket{10} ) = \ket{10} \\
-      (H \otimes I) C_{not} \ket{\psi_3} &= (H \otimes I)\frac{1}{\sqrt2} (\ket{01} - \ket{11} ) = \ket{11}
-    \end{align*}
     }%
     \end{columns}
+\end{frame}
+
+\begin{frame}{Teleportation: math -I}
+  {\tiny
+    \begin{align*}
+      \ket{\phi} = a \ket{0} + b\ket{1} \quad \ket{\psi} = \frac{1}{\sqrt{2}} (\ket{00} + \ket{11} ) \\
+    \end{align*}
+    \begin{align*}
+      \ket{\phi} \otimes \ket{\psi} &=
+      ( a \begin{bmatrix} 1 \\ 0 \end{bmatrix} + b \begin{bmatrix}  0 \\ 1 \end{bmatrix} )
+      \otimes
+      \frac{1}{\sqrt2}
+      (
+      \begin{bmatrix} 1 \\ 0 \\ 0 \\ 0 \end{bmatrix} 
+      +
+      \begin{bmatrix} 0 \\ 0 \\ 0 \\ 1 \end{bmatrix} 
+      )
+      =
+      \frac{a}{\sqrt{2}} \begin{bmatrix} 1 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \end{bmatrix} 
+      +
+      \frac{a}{\sqrt{2}} \begin{bmatrix} 0 \\ 0 \\ 0 \\ 1 \\ 0 \\ 0 \\ 0 \\ 0 \end{bmatrix} 
+      +
+      \frac{b}{\sqrt{2}} \begin{bmatrix} 0 \\ 0 \\ 0 \\ 0 \\ 1 \\ 0 \\ 0 \\ 0 \end{bmatrix} 
+      +
+      \frac{b}{\sqrt{2}} \begin{bmatrix} 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 1 \end{bmatrix}  \\
+      &= \frac{1}{\sqrt{2}} ( a\ket{000} + a\ket{011} + b\ket{100} + b\ket{111})
+    \end{align*}
+    \begin{align*}
+      C_{not} \otimes I =
+      \begin{bmatrix}
+        1  & 0 & 0 & 0 \\
+        0  & 1 & 0 & 0 \\
+        0  & 0 & 0 & 1 \\
+        0  & 0 & 1 & 0 \\
+      \end{bmatrix} 
+      \otimes
+      \begin{bmatrix}
+        1 & 0 \\
+        0 & 1 \\
+      \end{bmatrix} 
+      =
+      \begin{bmatrix} 
+        1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+        0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
+        0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 \\
+        0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\
+        0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\
+      \end{bmatrix}  \\
+      (C_{not} \otimes I) \ket{000} = \ket{000}
+      \quad
+      (C_{not} \otimes I) \ket{011} = \ket{011}
+      \quad
+      (C_{not} \otimes I) \ket{100} = \ket{110}
+      \quad
+      (C_{not} \otimes I) \ket{111} = \ket{101}
+    \end{align*}
+    }%
+\end{frame}
+
+\begin{frame}{Teleportation: math - II}
+  {\tiny
+    \begin{align*}
+      & H =
+      \frac{1}{\sqrt{2}}
+      \begin{bmatrix} 1 & 1 \\ 1 & -1 \end{bmatrix}
+      \quad
+      H \ket{0}  = \frac{1}{\sqrt{2}} \begin{bmatrix} 1 \\ 1 \end{bmatrix} 
+      \quad
+      H \ket{1}  = \frac{1}{\sqrt{2}} \begin{bmatrix} 1 \\ -1 \end{bmatrix}
+      \\
+      & I =
+      \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix}
+      \quad
+      I \ket{0}  = \begin{bmatrix} 1 \\ 0 \end{bmatrix} 
+      \quad
+      I \ket{1}  = \begin{bmatrix} 0 \\ 1 \end{bmatrix}
+      \quad
+      \ket{000} = \ket{0} \otimes \ket{0} \otimes \ket{0} \\
+    \end{align*}
+    \begin{align*}
+      (H \otimes I \otimes I) \ket{000} & = (H \ket{0}) \otimes (I \ket{0}) \otimes (I \ket{0})
+      =\frac{1}{\sqrt{2}} \begin{bmatrix} 1 \\ 1 \end{bmatrix} \otimes \ket{0} \otimes \ket{0} \\
+      & =\frac{1}{\sqrt{2}} (\begin{bmatrix} 1 \\ 0 \end{bmatrix} + \begin{bmatrix} 0 \\ 1 \end{bmatrix}) \otimes \ket{0} \otimes  \ket{0}
+      =\frac{1}{\sqrt{2}} (\ket{000} + \ket{100})
+      \\
+      (H \otimes I \otimes I) \ket{011} & = (H \ket{0}) \otimes (I \ket{1}) \otimes (I \ket{1})
+      =\frac{1}{\sqrt{2}} \begin{bmatrix} 1 \\ 1 \end{bmatrix} \otimes \ket{1} \otimes \ket{1} \\
+                                        & =\frac{1}{\sqrt{2}} (\begin{bmatrix} 1 \\ 0 \end{bmatrix} + \begin{bmatrix} 0 \\ 1 \end{bmatrix}) \otimes \ket{1} \otimes \ket{1} 
+      =\frac{1}{\sqrt{2}} (\ket{011} + \ket{111})
+      \\
+      (H \otimes I \otimes I) \ket{110} & = (H \ket{1}) \otimes (I \ket{1}) \otimes (I \ket{0})
+      =\frac{1}{\sqrt{2}} \begin{bmatrix} 1 \\ -1 \end{bmatrix} \otimes \ket{1} \otimes \ket{0} \\
+                                        & =\frac{1}{\sqrt{2}} (\begin{bmatrix} 1 \\ 0 \end{bmatrix} - \begin{bmatrix} 0 \\ 1 \end{bmatrix}) \otimes \ket{1} \otimes \ket{0} 
+      =\frac{1}{\sqrt{2}} (\ket{01010} - \ket{110})
+      \\
+      (H \otimes I \otimes I) \ket{101} & = (H \ket{1}) \otimes (I \ket{0}) \otimes (I \ket{1})
+      =\frac{1}{\sqrt{2}} \begin{bmatrix} 1 \\ -1 \end{bmatrix} \otimes \ket{0} \otimes \ket{1} \\
+                                        & =\frac{1}{\sqrt{2}} (\begin{bmatrix} 1 \\ 0 \end{bmatrix} - \begin{bmatrix} 0 \\ 1 \end{bmatrix}) \otimes \ket{0} \otimes \ket{1} 
+      =\frac{1}{\sqrt{2}} (\ket{001} - \ket{101})
+      \\
+    \end{align*}
+  }%
 \end{frame}
 
 \begin{frame}{Teleportation}
@@ -2229,39 +2727,162 @@
   }%
 \end{frame}
 
+\begin{frame}{A Set of Primitive Transformations - details}
+  {\tiny
+    \begin{align*}
+      & \begin{bmatrix}
+      \cos \beta & \sin \beta \\
+      -\sin \beta & \cos \beta \\
+      \end{bmatrix} 
+      \begin{bmatrix}
+      \cos (-\beta) & \sin (-\beta) \\
+      -\sin (-\beta) & \cos (-\beta) \\
+      \end{bmatrix}
+      = 
+      \begin{bmatrix} 
+        \cos^2 \beta + \sin^2 \beta & - \sin \beta \cos \beta + \sin \beta \cos \beta \\
+        -\sin \beta \cos \beta + \sin \beta \cos \beta & \sin^2 \beta + \cos ^2 \beta
+      \end{bmatrix} 
+       = I \\
+      & \begin{bmatrix} 
+        e^{i\alpha} & 0 \\
+        0 & e^{-i\alpha} \\
+      \end{bmatrix} 
+      \begin{bmatrix} 
+        e^{-i\alpha} & 0 \\
+        0 & e^{i\alpha} \\
+      \end{bmatrix} 
+      = I \\
+    \end{align*}
+    \begin{align*}
+      K(\delta)T(\alpha)R(\beta)T(\gamma) &=
+      \begin{bmatrix} 
+        e^{i\delta}  & 0 \\
+        0 & e^{i\delta} \\
+      \end{bmatrix} 
+      \begin{bmatrix} 
+        e^{i\alpha}  & 0 \\
+        0 & e^{-i\alpha} \\
+      \end{bmatrix} 
+      \begin{bmatrix} 
+        cos \beta & \sin \beta \\
+        - \sin \beta & \cos \beta \\
+      \end{bmatrix} 
+      \begin{bmatrix} 
+        e^{i\gamma}  & 0 \\
+        0 & e^{-i\gamma} \\
+      \end{bmatrix}  \\
+      &= 
+      \begin{bmatrix} 
+        e^{i(\delta + \alpha)}  & 0 \\
+        0 & e^{i(\delta - \alpha)} \\
+      \end{bmatrix} 
+      \begin{bmatrix} 
+        cos \beta & \sin \beta \\
+        - \sin \beta & \cos \beta \\
+      \end{bmatrix} 
+      \begin{bmatrix} 
+        e^{i\gamma}  & 0 \\
+        0 & e^{-i\gamma} \\
+      \end{bmatrix} \\
+      &=
+      \begin{bmatrix} 
+        e^{i(\delta + \alpha)} \cos \beta  & e^{i(\delta + \alpha)} \sin \beta \\
+        -e^{i(\delta - \alpha)} \sin \beta & e^{i(\delta - \alpha)} \cos \beta \\
+      \end{bmatrix} 
+      \begin{bmatrix} 
+        e^{i\gamma}  & 0 \\
+        0 & e^{-i\gamma} \\
+      \end{bmatrix} \\
+      &=
+      \begin{bmatrix} 
+        e^{i(\delta + \alpha + \gamma)} \cos \beta  & e^{i(\delta + \alpha - \gamma)} \sin \beta \\
+        -e^{i(\delta - \alpha + \gamma)} \sin \beta & e^{i(\delta - \alpha - \gamma)} \cos \beta \\
+      \end{bmatrix} 
+    \end{align*}
+  }%
+\end{frame}
 
 \begin{frame}{Examples of Primitive Transformations}
   {\tiny
     \begin{align*}
-      K(\delta)T(\alpha)R(\beta)T(\gamma) =
-       \begin{bmatrix}
+      Q &= K(\delta)T(\alpha)R(\beta)T(\gamma)  \qquad I = K(0) T(0) R(0) T(0) \\
+      X &= K(-\frac{\pi}{2}) T(\frac{\pi}{2}) R(\frac{\pi}{2}) T(0) \\
+        &=
+        \begin{bmatrix}
           e^{i(\delta + \alpha + \gamma)} \cos\beta & e^{i(\delta + \alpha - \gamma)} \sin\beta \\
          -e^{i(\delta - \alpha + \gamma)} \sin\beta & e^{i(\delta - \alpha - \gamma)} \cos\beta
-       \end{bmatrix}
-    \end{align*}
-    \begin{align*}
-      Q &= K(\delta)T(\alpha)R(\beta)T(\gamma) \\
-      I &= K(0) T(0) R(0) T(0) \\
-      X &= K(-\frac{\pi}{2}) T(\frac{\pi}{2}) R(\frac{\pi}{2}) T(0) \\
-      H &= K(-\frac{\pi}{2}) T(\frac{\pi}{2}) R(\frac{\pi}{4}) T(0) = \frac{1}{\sqrt{2}}\begin{bmatrix} 1 & 1 \\ 1 & -1\end{bmatrix}
+        \end{bmatrix}
+        =
+        \begin{bmatrix}
+          e^{i(\delta + \alpha)} \cos\beta & e^{i(\delta + \alpha)} \sin\beta \\
+         -e^{i(\delta - \alpha)} \sin\beta & e^{i(\delta - \alpha)} \cos\beta
+        \end{bmatrix} \\
+        & =
+        \begin{bmatrix}
+          e^{i(-\frac{\pi}{2} + \frac{\pi}{2})} \cos\beta & e^{i(-\frac{\pi}{2} + \frac{\pi}{2})} \sin\beta \\
+         -e^{i(-\frac{\pi}{2} - \frac{\pi}{2})} \sin\beta & e^{i(-\frac{\pi}{2} - \frac{\pi}{2})} \cos\beta
+        \end{bmatrix}
+        =
+        \begin{bmatrix}
+          \cos\beta & \sin\beta \\
+         -e^{-i\pi} \sin\beta & e^{-i\pi} \cos\beta
+        \end{bmatrix}
+        =
+        \begin{bmatrix}
+          0 & 1 \\
+         -e^{-i\pi} 1 & 0 
+        \end{bmatrix}
+      = \begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix} 
+       \\
+      & \text{, as } e^{-i\pi} = \frac{1}{\cos \pi + i \sin\pi} = \frac{1}{-1 + 0}  = -1
+       \\
+       \\
+      H &= K(-\frac{\pi}{2}) T(\frac{\pi}{2}) R(\frac{\pi}{4}) T(0)
+        =
+        \begin{bmatrix}
+          e^{i(\delta + \alpha )} \cos\beta & e^{i(\delta + \alpha)} \sin\beta \\
+         -e^{i(\delta - \alpha)} \sin\beta & e^{i(\delta - \alpha)} \cos\beta
+        \end{bmatrix}
+        =
+        \begin{bmatrix}
+          e^{i 0} \cos\beta & e^{i0} \sin\beta \\
+         -e^{i(-\pi)} \sin\beta & e^{i(-\pi)} \cos\beta
+        \end{bmatrix}
+        \\
+        &=
+        \begin{bmatrix}
+          \cos \frac{\pi}{4} & \sin \frac{\pi}{4} \\
+          \\
+          \sin \frac{\pi}{4} & - \cos \frac{\pi}{4}
+        \end{bmatrix}
+        =
+        \begin{bmatrix} 
+          \frac{\sqrt{2}}{2} & \frac{\sqrt{2}}{2} \\
+          \\
+          \frac{\sqrt{2}}{2} & -\frac{\sqrt{2}}{2} \\
+        \end{bmatrix} 
+      = \frac{1}{\sqrt{2}} \begin{bmatrix} 1 & 1 \\ 1 & -1 \end{bmatrix} 
     \end{align*}
   }%
 \end{frame}
+
 
 \begin{frame}{Decomposition of Single-Controlled-Not - I}
   {\tiny
     Let $Q=K(\delta)T(\alpha)R(\beta)T(\gamma)$, then:
     \begin{align*}
-      \Lambda Q &= (\Lambda K(\delta)) (\Lambda (T(\alpha)R(\beta)T(\gamma))) \\
-               &= (\Lambda K(\delta)) (\Lambda Q')
+      \Lambda Q &= \ket0\bra0 \otimes I + \ket1\bra1 \otimes \mathbf{Q} = \begin{bmatrix} I & 0 \\ 0 & Q \end{bmatrix} \\
+      \Lambda Q &= \Lambda K(\delta) \, \Lambda ( T(\alpha) \, R(\beta) \, T(\gamma)) \\
+               &= \Lambda K(\delta) \, \Lambda Q'
     \end{align*}
     \begin{align*}
       \Lambda K(\delta) &= \ket0 \bra0 \otimes I + \ket1 \bra1 K(\delta)
        = \ket0 \bra0 \otimes I + e^{i\delta}\ket1 \bra1 I \\
       &= (\begin{bmatrix} 1 & 0 \\ 0 & 0 \end{bmatrix} + e^{i\delta} \begin{bmatrix} 0 & 0 \\ 0 & 1 \end{bmatrix}) \otimes I
        = (\begin{bmatrix} e^{i\frac{\delta}{2}} & 0 \\ 0 & e^{i\frac{\delta}{2}}\end{bmatrix}
-         + e^{i\delta} \begin{bmatrix} e^{-i\frac{\delta}{2}} & 0 \\ 0 & e^{i\frac{\delta}{2}} \end{bmatrix}) \otimes I \\
-      &= (K(\frac{\delta}{2})T(-\frac{\delta}{2})) \otimes I
+         + \begin{bmatrix} e^{-i\frac{\delta}{2}} & 0 \\ 0 & e^{i\frac{\delta}{2}} \end{bmatrix}) \otimes I \\
+      &= ( \, K(\frac{\delta}{2})T(-\frac{\delta}{2}) \, ) \otimes I
     \end{align*}
     Graphically,
     \begin{align*}
@@ -2275,8 +2896,9 @@
     \def\bB{ \q{q_{1}}}
     % The quantum circuit as an xymatrix
     \xymatrix@R=5pt@C=10pt{
-        \bA & \gAxA &\n & &\gBxA &\gCxA &\n
-    \\  \bB & \gAxB &\n & &\n    &\n    &\n
+      \bA & \gAxA &\n & & \,&\gBxA &\gCxA &\n
+  \\      &       & \quad &= &
+      \\  \bB & \gAxB &\n & & \, &\n    &\n    &\n
     % Vertical lines and other post-xymatrix latex
     \ar@{-}"gAxB";"gAxA"
     }
@@ -2294,12 +2916,11 @@
     \end{align*}
     Following hold:
     \begin{align*}
-      Q_0 Q_1 Q_2 &= T(\alpha)R(\frac{\beta}{2}) R(-\frac{\beta}{2})T(\frac{-\gamma - \alpha}{2}) T(\frac{\gamma - \alpha}{2}) = I \\
+      Q_0 Q_1 Q_2 &= T(\alpha) \, R(\frac{\beta}{2}) \, R(-\frac{\beta}{2}) \, T(\frac{-\gamma - \alpha}{2}) \, T(\frac{\gamma - \alpha}{2}) = I \\
       Q_0 X Q_1 X Q_2 &=
-      T(\alpha)R(\frac{\beta}{2}) X R(-\frac{\beta}{2}) X X T(\frac{-\gamma - \alpha}{2}) X T(\frac{\gamma - \alpha}{2}) \\
-      &= T(\alpha) R(\beta) T(\gamma) = Q'
+      T(\alpha) \, R(\frac{\beta}{2}) \, X \, R(-\frac{\beta}{2}) \, X \, X \, T(\frac{-\gamma - \alpha}{2}) \, X \, T(\frac{\gamma - \alpha}{2}) = T(\alpha) \, R(\beta) \, T(\gamma) = Q'
     \end{align*}
-    A circuit is constructed as:
+    A circuit is constructed as $\Lambda Q' = ( I \otimes Q_0) \, C_{not} \, ( I \otimes Q_1 ) \, C_{not} \, ( I \otimes Q_2 )$:
     \begin{align*}
     % definitions for the circuit elements
     \def\gAxB{\op{Q_2}\w\A{gAxB}}
@@ -2329,8 +2950,178 @@
   }%
 \end{frame}
 
-\begin{frame}{Toffoli gate}
+\begin{frame}{Decomposition of Single-Controlled-Not - math - I}
   {\tiny
+    \begin{align*}
+      K(\delta) &= e^{i\delta}I & \mbox{A phase shift} \\
+      R(\beta)  &= \begin{bmatrix} \cos\beta & \sin\beta \\ -\sin\beta & \cos\beta \end{bmatrix}  & \mbox{A rotation $2\beta$ (left-hand) about the y-axis} \\
+      T(\alpha) &= \begin{bmatrix} e^{i\alpha} & 0 \\ 0 & e^{-i\alpha} \end{bmatrix} & \mbox{A rotation $2\alpha$ (left-hand) about the z-axis} \\
+    \end{align*}
+    \begin{align*}
+      & Q_0 Q_1 Q_2 = T(\alpha) \, R(\frac{\beta}{2}) \, R(-\frac{\beta}{2}) \, T(\frac{-\gamma - \alpha}{2}) \, T(\frac{\gamma - \alpha}{2}) \\
+      & R(\frac{\beta}{2}) R(-\frac{\beta}{2})
+      =
+      \begin{bmatrix} 
+        \cos \frac{\beta}{2} & \sin \frac{\beta}{2} \\
+        \\
+        -\sin \frac{\beta}{2} & \cos \frac{\beta}{2} \\
+      \end{bmatrix} 
+      \begin{bmatrix} 
+        \cos (-\frac{\beta}{2}) & \sin (-\frac{\beta}{2}) \\
+        \\
+        -\sin (-\frac{\beta}{2}) & \cos (-\frac{\beta}{2}) \\
+      \end{bmatrix} 
+      =
+      (\cos^2 \frac{\beta}{2} + \sin ^2 \frac{\beta}{2}) I
+      \\
+      & T(\frac{-\gamma - \alpha}{2}) \, T(\frac{\gamma - \alpha}{2})
+      =
+      \begin{bmatrix} 
+        e^{i\frac{-\gamma - \alpha}{2}} & 0 \\
+        0 & e^{i\frac{\gamma + \alpha}{2}}
+      \end{bmatrix} 
+      \begin{bmatrix} 
+        e^{i\frac{\gamma - \alpha}{2}} & 0 \\
+        0 & e^{i\frac{-\gamma + \alpha}{2}}
+      \end{bmatrix} 
+      =
+      \begin{bmatrix} 
+        e^{- i\alpha} & 0 \\
+        0 & e^{i\alpha}
+      \end{bmatrix} 
+      =
+      T(-\alpha)
+      \\
+      & T(\alpha) T(-\alpha) = 
+      \begin{bmatrix} 
+        e^{i\alpha} & 0 \\
+        0 & e^{-i\alpha}
+      \end{bmatrix} 
+      \begin{bmatrix} 
+        e^{- i\alpha} & 0 \\
+        0 & e^{i\alpha}
+      \end{bmatrix} 
+      = I
+    \end{align*}
+  }%
+\end{frame}
+
+\begin{frame}{Decomposition of Single-Controlled-Not - math - II}
+  {\tiny
+    \begin{align*}
+      XX &=
+      \begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix} 
+      \begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix} 
+      = I
+      \\
+      R(\frac{\beta}{2}) X R(-\frac{\beta}{2}) X
+      &=
+      \begin{bmatrix} 
+        \cos \frac{\beta}{2} & \sin \frac{\beta}{2} \\
+        \\
+        -\sin \frac{\beta}{2} & \cos \frac{\beta}{2} \\
+      \end{bmatrix} 
+      \begin{bmatrix} 
+        0 & 1 \\
+        \\
+        1 & 0
+      \end{bmatrix} 
+      \begin{bmatrix} 
+        \cos (-\frac{\beta}{2}) & \sin (-\frac{\beta}{2}) \\
+        \\
+        -\sin (-\frac{\beta}{2}) & \cos (-\frac{\beta}{2}) \\
+      \end{bmatrix}  X
+      \\
+      &=
+      \begin{bmatrix} 
+         \sin \frac{\beta}{2} & \cos \frac{\beta}{2}\\
+        \\
+         \cos \frac{\beta}{2} & -\sin \frac{\beta}{2} \\
+      \end{bmatrix} 
+      \begin{bmatrix} 
+        \cos (-\frac{\beta}{2}) & \sin (-\frac{\beta}{2}) \\
+        \\
+        -\sin (-\frac{\beta}{2}) & \cos (-\frac{\beta}{2}) \\
+      \end{bmatrix}
+      X
+      =
+      \begin{bmatrix} 
+        2 \sin \frac{\beta}{2} \cos \frac{\beta}{2} & \cos^2 \frac{\beta}{2} - \sin^2 \frac{\beta}{2} \\
+        \\
+        \cos^2 \frac{\beta}{2} - \sin ^2 \frac{\beta}{2} & - 2 \sin \frac{\beta}{2} \cos \frac{\beta}{2}
+      \end{bmatrix} 
+      X
+      \\
+      &=
+      \begin{bmatrix} 
+        \sin \beta &  \cos \beta\\
+        \cos \beta & -\sin \beta
+      \end{bmatrix} 
+      X
+      =
+      \begin{bmatrix} 
+        \cos \beta &  \sin \beta\\
+        -\sin \beta & \cos \beta
+      \end{bmatrix} 
+      = R(\beta)
+      \\
+      X T(\frac{-\gamma - \alpha}{2})  X  T(\frac{\gamma - \alpha}{2})
+      &=
+      \begin{bmatrix} 
+        0 & 1 \\
+        1 & 0
+      \end{bmatrix} 
+      \begin{bmatrix} 
+        e^{i\frac{-\gamma - \alpha}{2}} & 0 \\
+        0 & e^{i\frac{\gamma + \alpha}{2}}
+      \end{bmatrix} 
+      \begin{bmatrix} 
+        0 & 1 \\
+        1 & 0
+      \end{bmatrix} 
+      \begin{bmatrix} 
+        e^{i\frac{\gamma - \alpha}{2}} & 0 \\
+        0 & e^{i\frac{-\gamma + \alpha}{2}}
+      \end{bmatrix} 
+      \\
+      &=
+      \begin{bmatrix} 
+        0 & e^{i\frac{\gamma + \alpha}{2}} \\
+        e^{i\frac{-\gamma - \alpha}{2}} & 0
+      \end{bmatrix} 
+      \begin{bmatrix} 
+        0 & 1 \\
+        1 & 0
+      \end{bmatrix} 
+      \begin{bmatrix} 
+        e^{i\frac{\gamma - \alpha}{2}} & 0 \\
+        0 & e^{i\frac{-\gamma + \alpha}{2}}
+      \end{bmatrix} 
+      \\
+      &=
+      \begin{bmatrix} 
+        e^{i\frac{\gamma + \alpha}{2}} & 0\\
+        0 & e^{i\frac{-\gamma - \alpha}{2}}
+      \end{bmatrix} 
+      \begin{bmatrix} 
+        e^{i\frac{\gamma - \alpha}{2}} & 0 \\
+        0 & e^{i\frac{-\gamma + \alpha}{2}}
+      \end{bmatrix} 
+      =
+      \begin{bmatrix} 
+        e^{i\gamma} \\
+        0 & e^{-i\gamma}
+      \end{bmatrix} 
+      = T(\gamma)
+    \end{align*}
+  }%
+\end{frame}
+
+
+\begin{frame}{Toffoli gate - I}
+  {\tiny
+  \begin{columns}
+    \column{0.5\textwidth}
     \begin{align*}
       % definitions for the circuit elements
       \def\gAxA{\b\w\A{gAxA}}
@@ -2349,6 +3140,7 @@
       \ar@{-}"gAxC";"gAxA"\ar@{-}"gAxC";"gAxB"
       }
     \end{align*}
+    \column{0.5\textwidth}
     \begin{align*}
       \begin{bmatrix}
         1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
@@ -2361,12 +3153,151 @@
         0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 \\
       \end{bmatrix}
     \end{align*}
+  \end{columns}
+    \begin{align*}
+      \Lambda_2 X \ket{000}
+      =
+      \begin{bmatrix}
+        1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+        0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
+        0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\
+        0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\
+        0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 \\
+      \end{bmatrix}
+      \begin{bmatrix} 
+        1 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0
+      \end{bmatrix} 
+      =
+      \begin{bmatrix} 
+        1 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0
+      \end{bmatrix} 
+      \\
+      \Lambda_2 X \ket{101}
+      =
+      \begin{bmatrix}
+        1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+        0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
+        0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\
+        0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\
+        0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 \\
+      \end{bmatrix}
+      \begin{bmatrix} 
+        0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 1 \\ 0 \\ 0
+      \end{bmatrix} 
+      =
+      \begin{bmatrix} 
+        0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 1 \\ 0 \\ 0
+      \end{bmatrix} 
+    \end{align*}
   }%
 \end{frame}
 
-\begin{frame}{Multiply Controlled Single-Qubit Transformations}
+
+\begin{frame}{Toffoli gate - II}
   {\tiny
     \begin{align*}
+      \Lambda_2 X \ket{110}
+      =
+      \begin{bmatrix}
+        1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+        0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
+        0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\
+        0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\
+        0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 \\
+      \end{bmatrix}
+      \begin{bmatrix} 
+        0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 1 \\ 0
+      \end{bmatrix} 
+      =
+      \begin{bmatrix} 
+        0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 1
+      \end{bmatrix} 
+      \\
+      \Lambda_2 X \ket{111}
+      =
+      \begin{bmatrix}
+        1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+        0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
+        0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\
+        0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\
+        0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 \\
+      \end{bmatrix}
+      \begin{bmatrix} 
+        0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 1
+      \end{bmatrix} 
+      =
+      \begin{bmatrix} 
+        0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 1 \\ 0
+      \end{bmatrix} 
+    \end{align*}
+  }%
+\end{frame}
+
+\begin{frame}{Toffoli gate - III}
+  {\tiny
+    \begin{align*}
+      X &= K(-\frac{\pi}{2}) T(\frac{\pi}{2}) R(\frac{\pi}{2}) T(0) \\
+        &= K(\delta)T(\alpha)R(\beta)T(\gamma) \\
+      X_0 &= T(\alpha)R(\frac{\beta}{2}) = T(\frac{\pi}{2})R(\frac{\pi}{4}) \\
+      X_1 &= R(-\frac{\beta}{2})T(\frac{-\gamma - \alpha}{2}) = R(-\frac{\pi}{4})T(-\frac{\pi}{4}) \\
+      X_2 &= T(\frac{\gamma - \alpha}{2}) = T(-\frac{\pi}{4})
+    \end{align*}
+  }%
+\end{frame}
+
+\begin{frame}{2 qubits Controlled Single-Qubit Transformations}
+  {\tiny
+  \begin{columns}
+    \column{0.5\textwidth}
+    \begin{align*}
+      K(\delta) &= e^{i\delta}I \\
+      R(\beta)  &= \begin{bmatrix} \cos\beta & \sin\beta \\ -\sin\beta & \cos\beta \end{bmatrix} \\
+      T(\alpha) &= \begin{bmatrix} e^{i\alpha} & 0 \\ 0 & e^{-i\alpha} \end{bmatrix}
+    \end{align*}
+    \column{0.5\textwidth}
+    \begin{align*}
+      Q &= K(\delta)T(\alpha)R(\beta)T(\gamma) \\
+      Q_0 &= T(\alpha)R(\frac{\beta}{2}) \\
+      Q_1 &= R(-\frac{\beta}{2})T(\frac{-\gamma - \alpha}{2}) \\
+      Q_2 &= T(\frac{\gamma - \alpha}{2})
+    \end{align*}
+  \end{columns}
+  \begin{align*}
+    \def\gXxA{\op{T(-\frac{\delta}{2})}\w\A{gXxA}}
+    \def\gXxB{\op{K(\frac{\delta}{2})}\w\A{gXxB}}
+    % definitions for the circuit elements
+    \def\gAxB{\op{Q_2}\w\A{gAxB}}
+    \def\gBxA{\b\w\A{gBxA}}
+    \def\gBxB{\op{X}\w\A{gBxB}}
+    \def\gCxB{\op{Q_1}\w\A{gCxB}}
+    \def\gDxA{\b\w\A{gDxA}}
+    \def\gDxB{\op{X}\w\A{gDxB}}
+    \def\gExB{\op{Q_0}\w\A{gExB}}
+    % definitions for bit labels and initial states
+    \def\bA{ \q{q_{1}}}
+    \def\bB{ \q{q_{2}}}
+    % The quantum circuit as an xymatrix
+    \xymatrix@R=5pt@C=10pt{
+      \bA & \gXxA & \gXxB & \n    &\gBxA &\n    &\gDxA &\n    &\n \\
+      \bB & \n    &  \n   & \gAxB &\gBxB &\gCxB &\gDxB &\gExB &\n
+    % Vertical lines and other post-xymatrix latex
+    \ar@{-}"gBxB";"gBxA"
+    \ar@{-}"gDxB";"gDxA"
+    }
+  \end{align*}
+  \begin{align*}
     % definitions for the circuit elements
     \def\gAxA{\b\w\A{gAxA}}
     \def\gAxB{\op{T(-\frac{\delta}{2})}\w\A{gAxB}}
@@ -2374,12 +3305,12 @@
     \def\gBxB{\op{K(\frac{\delta}{2})}\w\A{gBxB}}
     \def\gCxA{\b\w\A{gCxA}}
     \def\gCxC{\op{Q_2}\w\A{gCxC}}
-    \def\gDxA{\b\w\A{gDxA}}
+    \def\gDxA{\n\w\A{gDxA}}
     \def\gDxB{\b\w\A{gDxB}}
     \def\gDxC{\op{X}\w\A{gDxC}}
     \def\gExA{\b\w\A{gExA}}
     \def\gExC{\op{Q_1}\w\A{gExC}}
-    \def\gFxA{\b\w\A{gFxA}}
+    \def\gFxA{\n\w\A{gFxA}}
     \def\gFxB{\b\w\A{gFxB}}
     \def\gFxC{\op{X}\w\A{gFxC}}
     \def\gGxA{\b\w\A{gGxA}}
@@ -2390,19 +3321,24 @@
     \def\bC{ \q{q_{2}}}
     % The quantum circuit as an xymatrix
     \xymatrix@R=5pt@C=10pt{
-        \bA & \gAxA &\gBxA &\gCxA &\gDxA &\gExA &\gFxA &\gGxA &\n
-    \\  \bB & \gAxB &\gBxB &\n   &\gDxB &\n   &\gFxB &\n   &\n
-    \\  \bC & \n   &\n   &\gCxC &\gDxC &\gExC &\gFxC &\gGxC &\n
+       \bA & \gAxA &\gBxA &\gCxA &\gDxA &\gExA &\gFxA &\gGxA &\n
+    \\  \bB & \gAxB &\gBxB &\n    &\gDxB &\n    &\gFxB &\n    &\n
+    \\  \bC & \n    &\n    &\gCxC &\gDxC &\gExC &\gFxC &\gGxC &\n
     % Vertical lines and other post-xymatrix latex
     \ar@{-}"gAxB";"gAxA"
     \ar@{-}"gBxB";"gBxA"
     \ar@{-}"gCxC";"gCxA"
-    \ar@{-}"gDxC";"gDxA"\ar@{-}"gDxC";"gDxB"
+    \ar@{-}"gDxC";"gDxB"
     \ar@{-}"gExC";"gExA"
-    \ar@{-}"gFxC";"gFxA"\ar@{-}"gFxC";"gFxB"
+    \ar@{-}"gFxC";"gFxB"
     \ar@{-}"gGxC";"gGxA"
     }
-    \end{align*}
+  \end{align*}
+  }%
+\end{frame}
+
+\begin{frame}{Multiply Controlled Single-Qubit Transformations}
+  {\tiny
     \begin{align*}
       \Lambda^{0}_{10}Q &= \Lambda Q \\
       \Lambda^{0}_{11}Q &= \Lambda XQX \\
